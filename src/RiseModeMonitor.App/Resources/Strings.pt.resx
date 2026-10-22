@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Nav_Dashboard" xml:space="preserve"><value>Painel</value></data>
+  <data name="Nav_Hardware" xml:space="preserve"><value>Hardware</value></data>
+  <data name="Nav_Fans" xml:space="preserve"><value>Ventoinhas</value></data>
+  <data name="Nav_Lighting" xml:space="preserve"><value>Iluminação</value></data>
+  <data name="Nav_Settings" xml:space="preserve"><value>Configurações</value></data>
+
+  <data name="Dashboard_Memory" xml:space="preserve"><value>Memória</value></data>
+  <data name="Dashboard_Storage" xml:space="preserve"><value>Armazenamento</value></data>
+  <data name="Dashboard_MemoryUsed" xml:space="preserve"><value>{0:0.#} GB em uso</value></data>
+  <data name="Dashboard_DriveSummary" xml:space="preserve"><value>{0:0.#} GB usados · {1:0.#} GB livres de {2:0.#} GB</value></data>
+
+  <data name="Hardware_Search" xml:space="preserve"><value>Pesquisar sensores</value></data>
+  <data name="Hardware_NoSensors" xml:space="preserve"><value>Nenhum sensor para mostrar.</value></data>
+  <data name="Hardware_ColSensor" xml:space="preserve"><value>Sensor</value></data>
+  <data name="Hardware_ColValue" xml:space="preserve"><value>Valor</value></data>
+  <data name="Hardware_ColMin" xml:space="preserve"><value>Mín</value></data>
+  <data name="Hardware_ColMax" xml:space="preserve"><value>Máx</value></data>
+
+  <data name="Group_Temperature" xml:space="preserve"><value>Temperaturas</value></data>
+  <data name="Group_Load" xml:space="preserve"><value>Uso</value></data>
+  <data name="Group_Clock" xml:space="preserve"><value>Clocks</value></data>
+  <data name="Group_Power" xml:space="preserve"><value>Potência</value></data>
+  <data name="Group_Voltage" xml:space="preserve"><value>Tensões</value></data>
+  <data name="Group_Fan" xml:space="preserve"><value>Ventoinhas</value></data>
+  <data name="Group_Control" xml:space="preserve"><value>Controles</value></data>
+  <data name="Group_Data" xml:space="preserve"><value>Dados</value></data>
+  <data name="Group_SmallData" xml:space="preserve"><value>Dados (pequenos)</value></data>
+  <data name="Group_Throughput" xml:space="preserve"><value>Taxa de transferência</value></data>
+  <data name="Group_Other" xml:space="preserve"><value>Outros</value></data>
+
+  <data name="Settings_Theme" xml:space="preserve"><value>Tema</value></data>
+  <data name="Settings_ThemeHint" xml:space="preserve"><value>O modo Sistema segue o modo de aplicativos do Windows.</value></data>
+  <data name="Theme_System" xml:space="preserve"><value>Sistema</value></data>
+  <data name="Theme_Light" xml:space="preserve"><value>Claro</value></data>
+  <data name="Theme_Dark" xml:space="preserve"><value>Escuro</value></data>
+  <data name="Settings_Language" xml:space="preserve"><value>Idioma</value></data>
+  <data name="Settings_LanguageHint" xml:space="preserve"><value>As alterações são aplicadas imediatamente.</value></data>
+  <data name="Settings_Startup" xml:space="preserve"><value>Inicialização e bandeja</value></data>
+  <data name="Settings_StartWithWindows" xml:space="preserve"><value>Iniciar com o Windows</value></data>
+  <data name="Settings_StartWithWindowsHint" xml:space="preserve"><value>Executa como administrador sem aviso do UAC (tarefa agendada).</value></data>
+  <data name="Settings_StartMinimized" xml:space="preserve"><value>Iniciar minimizado na bandeja do sistema</value></data>
+  <data name="Settings_CloseToTray" xml:space="preserve"><value>O botão fechar oculta o app na bandeja do sistema</value></data>
+  <data name="Settings_AutostartError" xml:space="preserve"><value>Não foi possível atualizar a tarefa de inicialização. Execute o app como administrador e tente novamente.</value></data>
+  <data name="Settings_MoreSoon" xml:space="preserve"><value>Mais opções (visor do water cooler) em breve.</value></data>
+
+  <data name="Fans_Description" xml:space="preserve"><value>Controle de velocidade e curvas das ventoinhas. Em breve.</value></data>
+  <data name="Lighting_Description" xml:space="preserve"><value>Cores e efeitos RGB / ARGB. Em breve.</value></data>
+
+  <data name="Tray_Open" xml:space="preserve"><value>Abrir</value></data>
+  <data name="Tray_Exit" xml:space="preserve"><value>Sair</value></data>
+</root>
