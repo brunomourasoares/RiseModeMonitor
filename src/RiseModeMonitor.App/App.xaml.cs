@@ -20,6 +20,7 @@ public partial class App : Application
         services.AddSingleton<ThemeService>();
         services.AddSingleton<ISensorService, LibreHardwareSensorService>();
         services.AddSingleton<DashboardViewModel>();
+        services.AddSingleton<HardwareViewModel>();
         services.AddSingleton<SettingsViewModel>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<MainWindow>();
