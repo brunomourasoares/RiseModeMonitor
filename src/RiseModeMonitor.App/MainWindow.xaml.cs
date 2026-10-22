@@ -1,9 +1,9 @@
-using System.Windows;
 using RiseModeMonitor.ViewModels;
+using Wpf.Ui.Controls;
 
 namespace RiseModeMonitor;
 
-public partial class MainWindow : Window
+public partial class MainWindow : FluentWindow
 {
     public MainWindow(MainViewModel viewModel)
     {
