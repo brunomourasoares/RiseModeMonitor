@@ -1,11 +1,12 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- TODO: replace the placeholder palette with the official Rise Mode brand colors. -->
-    <SolidColorBrush x:Key="BgBrush" Color="#0E1013" />
-    <SolidColorBrush x:Key="SurfaceBrush" Color="#171A1F" />
-    <SolidColorBrush x:Key="SurfaceAltBrush" Color="#20242B" />
-    <SolidColorBrush x:Key="LineBrush" Color="#2A2F38" />
-    <SolidColorBrush x:Key="TextBrush" Color="#F2F4F7" />
-    <SolidColorBrush x:Key="TextMutedBrush" Color="#9AA3B2" />
+    <!-- Background #0B0F19 is the Rise Mode site theme-color. -->
+    <!-- TODO: confirm AccentBrush (and text colors) with the official Rise Mode brand palette. -->
+    <SolidColorBrush x:Key="BgBrush" Color="#0B0F19" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#121826" />
+    <SolidColorBrush x:Key="SurfaceAltBrush" Color="#1A2233" />
+    <SolidColorBrush x:Key="LineBrush" Color="#232C40" />
+    <SolidColorBrush x:Key="TextBrush" Color="#F1F4FA" />
+    <SolidColorBrush x:Key="TextMutedBrush" Color="#8F9BB3" />
     <SolidColorBrush x:Key="AccentBrush" Color="#E5383B" />
 </ResourceDictionary>
