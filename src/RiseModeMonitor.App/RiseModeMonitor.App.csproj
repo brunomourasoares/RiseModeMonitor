@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>RiseModeMonitor</AssemblyName>
+    <RootNamespace>RiseModeMonitor</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RiseModeMonitor.Core\RiseModeMonitor.Core.csproj" />
+    <ProjectReference Include="..\RiseModeMonitor.Hardware\RiseModeMonitor.Hardware.csproj" />
+  </ItemGroup>
+</Project>
