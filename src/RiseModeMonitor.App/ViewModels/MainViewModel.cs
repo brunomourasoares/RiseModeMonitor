@@ -13,7 +13,7 @@ public sealed partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private NavItem _selected;
 
-    public MainViewModel(DashboardViewModel dashboard)
+    public MainViewModel(DashboardViewModel dashboard, SettingsViewModel settings)
     {
         Items = new NavItem[]
         {
@@ -21,7 +21,7 @@ public sealed partial class MainViewModel : ObservableObject
             new("Hardware", new PlaceholderViewModel("Hardware", "Full hardware tree with every sensor. Coming soon.")),
             new("Fans", new PlaceholderViewModel("Fans", "Fan speed control and curves. Coming soon.")),
             new("Lighting", new PlaceholderViewModel("Lighting", "RGB / ARGB colors and effects. Coming soon.")),
-            new("Settings", new PlaceholderViewModel("Settings", "Theme, language, autostart and water cooler display. Coming soon.")),
+            new("Settings", settings),
         };
         _selected = Items[0];
     }
