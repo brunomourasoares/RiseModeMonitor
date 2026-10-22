@@ -4,18 +4,16 @@ using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using RiseModeMonitor.Core.Models;
 using RiseModeMonitor.Core.Services;
+using RiseModeMonitor.Localization;
 
 namespace RiseModeMonitor.ViewModels;
 
-public sealed record DriveViewModel(string Name, double TotalGb, double UsedGb, double FreeGb)
-{
-    public double UsedPercent => TotalGb <= 0 ? 0 : UsedGb / TotalGb * 100;
-    public string Summary => $"{UsedGb:0.#} GB used \u00B7 {FreeGb:0.#} GB free of {TotalGb:0.#} GB";
-}
+public sealed record DriveViewModel(string Name, double UsedPercent, string Summary);
 
 public sealed partial class DashboardViewModel : ObservableObject, IDisposable
 {
     private readonly ISensorService _sensors;
+    private readonly LocalizationService _loc;
     private int _tick;
 
     [ObservableProperty] private string _cpuName = "CPU";
@@ -34,13 +32,17 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
 
     public ObservableCollection<DriveViewModel> Drives { get; } = new();
 
-    public DashboardViewModel(ISensorService sensors)
+    public DashboardViewModel(ISensorService sensors, LocalizationService loc)
     {
         _sensors = sensors;
+        _loc = loc;
         _sensors.SnapshotUpdated += OnSnapshot;
+        _loc.LanguageChanged += OnLanguageChanged;
         if (_sensors.Latest is { } latest) Apply(latest);
         RefreshDrives();
     }
+
+    private void OnLanguageChanged(object? sender, EventArgs e) => RefreshDrives();
 
     private void OnSnapshot(object? sender, HardwareSnapshot snapshot) =>
         Application.Current?.Dispatcher.BeginInvoke(new Action(() => Apply(snapshot)));
@@ -66,7 +68,8 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
         var memLoad = Pick(mem, SensorKind.Load, "Memory");
         MemoryLoad = memLoad ?? 0;
         MemoryText = Format(memLoad, "%");
-        MemoryUsedText = Format(Pick(mem, SensorKind.Data, "Memory Used"), "GB used");
+        var memUsed = Pick(mem, SensorKind.Data, "Memory Used");
+        MemoryUsedText = memUsed is null ? "--" : _loc.Format("Dashboard_MemoryUsed", memUsed.Value);
 
         if (_tick++ % 10 == 0) RefreshDrives();
     }
@@ -96,7 +99,10 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
                 if (d.DriveType != DriveType.Fixed || !d.IsReady) continue;
                 var total = d.TotalSize / gb;
                 var free = d.AvailableFreeSpace / gb;
-                fresh.Add(new DriveViewModel(d.Name.TrimEnd('\\'), total, total - free, free));
+                var used = total - free;
+                var percent = total <= 0 ? 0 : used / total * 100;
+                var summary = _loc.Format("Dashboard_DriveSummary", used, free, total);
+                fresh.Add(new DriveViewModel(d.Name.TrimEnd('\\'), percent, summary));
             }
             catch (IOException) { }
             catch (UnauthorizedAccessException) { }
@@ -106,5 +112,9 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
         foreach (var d in fresh) Drives.Add(d);
     }
 
-    public void Dispose() => _sensors.SnapshotUpdated -= OnSnapshot;
+    public void Dispose()
+    {
+        _sensors.SnapshotUpdated -= OnSnapshot;
+        _loc.LanguageChanged -= OnLanguageChanged;
+    }
 }
