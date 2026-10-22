@@ -3,10 +3,17 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <!-- WinForms is only used for the tray NotifyIcon. -->
+    <UseWindowsForms>true</UseWindowsForms>
     <AssemblyName>RiseModeMonitor</AssemblyName>
     <RootNamespace>RiseModeMonitor</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- Avoid WPF/WinForms type ambiguities (Application, Button, Color...). -->
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
