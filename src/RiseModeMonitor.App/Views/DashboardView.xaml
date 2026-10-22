@@ -1,9 +1,10 @@
 <UserControl x:Class="RiseModeMonitor.Views.DashboardView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:RiseModeMonitor.Localization">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <TextBlock Text="Dashboard" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,16" />
+            <TextBlock Text="{loc:Loc Nav_Dashboard}" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,16" />
 
             <UniformGrid Columns="3">
                 <Border Style="{StaticResource Card}" Margin="0,0,12,12">
@@ -30,7 +31,7 @@
 
                 <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                     <StackPanel>
-                        <TextBlock Text="Memory" Foreground="{DynamicResource TextMutedBrush}" />
+                        <TextBlock Text="{loc:Loc Dashboard_Memory}" Foreground="{DynamicResource TextMutedBrush}" />
                         <TextBlock Text="RAM" Margin="0,2,0,8" />
                         <TextBlock Text="{Binding MemoryText}" FontSize="32" FontWeight="SemiBold" />
                         <TextBlock Text="{Binding MemoryUsedText}" Margin="0,8,0,4" />
@@ -40,7 +41,7 @@
                 </Border>
             </UniformGrid>
 
-            <TextBlock Text="Storage" FontSize="18" FontWeight="SemiBold" Margin="0,12,0,12" />
+            <TextBlock Text="{loc:Loc Dashboard_Storage}" FontSize="18" FontWeight="SemiBold" Margin="0,12,0,12" />
             <ItemsControl ItemsSource="{Binding Drives}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

@@ -2,6 +2,7 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using RiseModeMonitor.Core.Services;
 using RiseModeMonitor.Hardware;
+using RiseModeMonitor.Localization;
 using RiseModeMonitor.Services;
 using RiseModeMonitor.ViewModels;
 
@@ -33,6 +34,7 @@ public partial class App : Application
         ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
         var services = new ServiceCollection();
+        services.AddSingleton(LocalizationService.Instance);
         services.AddSingleton<ISettingsService, JsonSettingsService>();
         services.AddSingleton<IAutostartService, TaskSchedulerAutostartService>();
         services.AddSingleton<ThemeService>();
@@ -46,6 +48,7 @@ public partial class App : Application
         _services = services.BuildServiceProvider();
 
         var settings = _services.GetRequiredService<ISettingsService>();
+        LocalizationService.Instance.SetLanguage(settings.Current.Language);
         _services.GetRequiredService<ThemeService>().Apply(settings.Current.Theme);
         _services.GetRequiredService<ISensorService>().Start(TimeSpan.FromSeconds(1));
 

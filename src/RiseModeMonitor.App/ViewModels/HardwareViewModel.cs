@@ -3,6 +3,7 @@ using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using RiseModeMonitor.Core.Models;
 using RiseModeMonitor.Core.Services;
+using RiseModeMonitor.Localization;
 
 namespace RiseModeMonitor.ViewModels;
 
@@ -44,6 +45,7 @@ public sealed partial class HardwareViewModel : ObservableObject, IDisposable
     private sealed record FlatHardware(string Id, string Name, HardwareKind Kind, int Depth, IReadOnlyList<SensorReading> Sensors);
 
     private readonly ISensorService _sensors;
+    private readonly LocalizationService _loc;
     private readonly Dictionary<string, SensorItemViewModel> _sensorVms = new();
     private readonly List<string> _displayedIds = new();
     private IReadOnlyList<FlatHardware> _flat = Array.Empty<FlatHardware>();
@@ -56,16 +58,25 @@ public sealed partial class HardwareViewModel : ObservableObject, IDisposable
     [ObservableProperty] private string _searchText = string.Empty;
     [ObservableProperty] private bool _isEmpty = true;
 
-    public HardwareViewModel(ISensorService sensors)
+    public HardwareViewModel(ISensorService sensors, LocalizationService loc)
     {
         _sensors = sensors;
+        _loc = loc;
         _sensors.SnapshotUpdated += OnSnapshot;
+        _loc.LanguageChanged += OnLanguageChanged;
         if (_sensors.Latest is { } latest) Apply(latest);
     }
 
     partial void OnSelectedChanged(HardwareItemViewModel? value) => Refresh();
 
     partial void OnSearchTextChanged(string value) => Refresh();
+
+    private void OnLanguageChanged(object? sender, EventArgs e)
+    {
+        // Group titles are translated: force the groups to be rebuilt.
+        _displayedIds.Clear();
+        Refresh();
+    }
 
     private void OnSnapshot(object? sender, HardwareSnapshot snapshot) =>
         Application.Current?.Dispatcher.BeginInvoke(new Action(() => Apply(snapshot)));
@@ -111,7 +122,7 @@ public sealed partial class HardwareViewModel : ObservableObject, IDisposable
             else _sensorVms[reading.Id] = new SensorItemViewModel(reading);
         }
 
-        // Rebuild the groups only when the set of visible sensors changed.
+        // Rebuild the groups only when the set of visible sensors (or the language) changed.
         if (ids.SequenceEqual(_displayedIds)) return;
 
         _displayedIds.Clear();
@@ -119,7 +130,7 @@ public sealed partial class HardwareViewModel : ObservableObject, IDisposable
 
         Groups.Clear();
         foreach (var group in visible.GroupBy(r => r.Kind).OrderBy(g => g.Key))
-            Groups.Add(new SensorGroupViewModel(Label(group.Key), group.Select(r => _sensorVms[r.Id]).ToList()));
+            Groups.Add(new SensorGroupViewModel(_loc[$"Group_{group.Key}"], group.Select(r => _sensorVms[r.Id]).ToList()));
 
         IsEmpty = Groups.Count == 0;
     }
@@ -128,20 +139,9 @@ public sealed partial class HardwareViewModel : ObservableObject, IDisposable
         string.IsNullOrWhiteSpace(SearchText) ||
         reading.Name.Contains(SearchText.Trim(), StringComparison.OrdinalIgnoreCase);
 
-    private static string Label(SensorKind kind) => kind switch
+    public void Dispose()
     {
-        SensorKind.Temperature => "Temperatures",
-        SensorKind.Load => "Load",
-        SensorKind.Clock => "Clocks",
-        SensorKind.Power => "Power",
-        SensorKind.Voltage => "Voltages",
-        SensorKind.Fan => "Fans",
-        SensorKind.Control => "Controls",
-        SensorKind.Data => "Data",
-        SensorKind.SmallData => "Data (small)",
-        SensorKind.Throughput => "Throughput",
-        _ => "Other"
-    };
-
-    public void Dispose() => _sensors.SnapshotUpdated -= OnSnapshot;
+        _sensors.SnapshotUpdated -= OnSnapshot;
+        _loc.LanguageChanged -= OnLanguageChanged;
+    }
 }

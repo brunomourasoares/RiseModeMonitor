@@ -8,6 +8,8 @@
     <AssemblyName>RiseModeMonitor</AssemblyName>
     <RootNamespace>RiseModeMonitor</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- Strings.resx (no culture suffix) is the English fallback. -->
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup>
     <!-- Avoid WPF/WinForms type ambiguities (Application, Button, Color...). -->
