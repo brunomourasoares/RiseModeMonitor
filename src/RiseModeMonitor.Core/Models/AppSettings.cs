@@ -7,6 +7,9 @@ public sealed class AppSettings
 {
     public ThemeMode Theme { get; set; } = ThemeMode.System;
 
+    /// <summary>UI language code: en (default), pt, es, it, fr, zh-Hans.</summary>
+    public string Language { get; set; } = "en";
+
     /// <summary>When launched by the startup task (--minimized), stay hidden in the tray.</summary>
     public bool StartMinimized { get; set; } = true;
 
