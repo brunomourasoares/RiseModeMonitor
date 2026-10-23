@@ -52,6 +52,25 @@
 
             <Border Style="{StaticResource Card}" MaxWidth="560" HorizontalAlignment="Left" Margin="0,0,0,12">
                 <StackPanel>
+                    <TextBlock Text="{loc:Loc Settings_Display}" FontWeight="SemiBold" Margin="0,0,0,12" />
+
+                    <CheckBox IsChecked="{Binding DisplayEnabled}" Margin="0,0,0,8">
+                        <StackPanel>
+                            <TextBlock Text="{loc:Loc Settings_DisplayEnabled}" />
+                            <TextBlock Text="{loc:Loc Settings_DisplayHint}" TextWrapping="Wrap"
+                                       FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                        </StackPanel>
+                    </CheckBox>
+
+                    <TextBlock Text="{Binding DisplayStatusText}" TextWrapping="Wrap" Margin="0,4,0,0"
+                               Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="{Binding DisplayTelemetryText}" TextWrapping="Wrap" Margin="0,4,0,0" FontSize="12"
+                               Foreground="{DynamicResource TextMutedBrush}" />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}" MaxWidth="560" HorizontalAlignment="Left" Margin="0,0,0,12">
+                <StackPanel>
                     <TextBlock Text="{loc:Loc Settings_Startup}" FontWeight="SemiBold" Margin="0,0,0,12" />
 
                     <CheckBox IsChecked="{Binding StartWithWindows}" Margin="0,0,0,8">
@@ -69,9 +88,6 @@
                                Foreground="{DynamicResource AccentBrush}" />
                 </StackPanel>
             </Border>
-
-            <TextBlock Text="{loc:Loc Settings_MoreSoon}" Margin="0,4,0,0"
-                       Foreground="{DynamicResource TextMutedBrush}" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>

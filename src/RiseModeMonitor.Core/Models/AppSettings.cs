@@ -15,4 +15,7 @@ public sealed class AppSettings
 
     /// <summary>The window close button hides the app to the tray instead of exiting.</summary>
     public bool CloseToTray { get; set; } = true;
+
+    /// <summary>Send CPU/GPU/RAM telemetry to the water cooler block display.</summary>
+    public bool DisplayEnabled { get; set; } = true;
 }

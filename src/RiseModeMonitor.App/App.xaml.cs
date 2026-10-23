@@ -2,6 +2,7 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using RiseModeMonitor.Core.Services;
 using RiseModeMonitor.Hardware;
+using RiseModeMonitor.Hid;
 using RiseModeMonitor.Localization;
 using RiseModeMonitor.Services;
 using RiseModeMonitor.ViewModels;
@@ -40,6 +41,8 @@ public partial class App : Application
         services.AddSingleton<ThemeService>();
         services.AddSingleton<TrayService>();
         services.AddSingleton<ISensorService, LibreHardwareSensorService>();
+        services.AddSingleton<IDisplayService, HidDisplayService>();
+        services.AddSingleton<DisplayCoordinator>();
         services.AddSingleton<DashboardViewModel>();
         services.AddSingleton<HardwareViewModel>();
         services.AddSingleton<SettingsViewModel>();
@@ -50,6 +53,9 @@ public partial class App : Application
         var settings = _services.GetRequiredService<ISettingsService>();
         LocalizationService.Instance.SetLanguage(settings.Current.Language);
         _services.GetRequiredService<ThemeService>().Apply(settings.Current.Theme);
+
+        // Create the coordinator before the sensors start so it receives the first snapshot.
+        _services.GetRequiredService<DisplayCoordinator>();
         _services.GetRequiredService<ISensorService>().Start(TimeSpan.FromSeconds(1));
 
         var window = _services.GetRequiredService<MainWindow>();

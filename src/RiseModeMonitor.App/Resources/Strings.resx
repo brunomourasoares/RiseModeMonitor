@@ -50,6 +50,18 @@
   <data name="Settings_AutostartError" xml:space="preserve"><value>Could not update the startup task. Run the app as administrator and try again.</value></data>
   <data name="Settings_MoreSoon" xml:space="preserve"><value>More options (water cooler display) coming soon.</value></data>
 
+  <data name="Settings_Display" xml:space="preserve"><value>Water cooler display</value></data>
+  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Show system data on the display</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>Sends CPU and GPU temperature and load, and RAM usage, to the water cooler block.</value></data>
+  <data name="Display_Status_Disabled" xml:space="preserve"><value>Display output is turned off.</value></data>
+  <data name="Display_Status_Waiting" xml:space="preserve"><value>Waiting for the first reading…</value></data>
+  <data name="Display_Status_Sent" xml:space="preserve"><value>Connected. Data is being sent to the display.</value></data>
+  <data name="Display_Status_DeviceNotFound" xml:space="preserve"><value>Display not found. Check the USB connection.</value></data>
+  <data name="Display_Status_InvalidTelemetry" xml:space="preserve"><value>No valid CPU temperature to send.</value></data>
+  <data name="Display_Status_IncompatibleReport" xml:space="preserve"><value>Display found, but its HID interface is not compatible.</value></data>
+  <data name="Display_Status_OpenFailed" xml:space="preserve"><value>Could not open the display. Another program may be using it.</value></data>
+  <data name="Display_Status_Error" xml:space="preserve"><value>Communication error. See hid-diagnostic.log in %LocalAppData%\RiseModeMonitor.</value></data>
+
   <data name="Fans_Description" xml:space="preserve"><value>Fan speed control and curves. Coming soon.</value></data>
   <data name="Lighting_Description" xml:space="preserve"><value>RGB / ARGB colors and effects. Coming soon.</value></data>
 

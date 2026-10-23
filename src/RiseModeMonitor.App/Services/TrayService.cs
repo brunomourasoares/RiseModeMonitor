@@ -29,8 +29,7 @@ public sealed class TrayService : IDisposable
 
         _icon = new WinForms.NotifyIcon
         {
-            // TODO: replace with the Rise Mode brand icon (.ico) and also set <ApplicationIcon>.
-            Icon = System.Drawing.SystemIcons.Application,
+            Icon = LoadIcon(),
             Text = "Rise Mode Monitor",
             ContextMenuStrip = menu,
             Visible = true
@@ -43,6 +42,28 @@ public sealed class TrayService : IDisposable
         };
 
         _loc.LanguageChanged += OnLanguageChanged;
+    }
+
+    /// <summary>Brand icon from Resources/Images/rise-monitor.ico, or the generic icon if it is not embedded.</summary>
+    private static System.Drawing.Icon LoadIcon()
+    {
+        try
+        {
+            var resource = System.Windows.Application.GetResourceStream(
+                new Uri("pack://application:,,,/Resources/Images/rise-monitor.ico", UriKind.Absolute));
+
+            if (resource is not null)
+            {
+                using var stream = resource.Stream;
+                return new System.Drawing.Icon(stream);
+            }
+        }
+        catch (Exception)
+        {
+            // Missing resource: fall through to the generic icon.
+        }
+
+        return System.Drawing.SystemIcons.Application;
     }
 
     private void OnLanguageChanged(object? sender, EventArgs e)
