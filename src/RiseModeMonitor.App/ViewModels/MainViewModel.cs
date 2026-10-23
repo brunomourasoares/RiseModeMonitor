@@ -56,6 +56,7 @@ public sealed partial class MainViewModel : ObservableObject
     public MainViewModel(
         DashboardViewModel dashboard,
         HardwareViewModel hardware,
+        FansViewModel fans,
         SettingsViewModel settings,
         LocalizationService loc)
     {
@@ -63,7 +64,7 @@ public sealed partial class MainViewModel : ObservableObject
         {
             new("Nav_Dashboard", dashboard, loc),
             new("Nav_Hardware", hardware, loc),
-            new("Nav_Fans", new PlaceholderViewModel("Nav_Fans", "Fans_Description", loc), loc),
+            new("Nav_Fans", fans, loc),
             new("Nav_Lighting", new PlaceholderViewModel("Nav_Lighting", "Lighting_Description", loc), loc),
             new("Nav_Settings", settings, loc),
         };
