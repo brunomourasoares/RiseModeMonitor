@@ -1,13 +1,12 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--
-        Palette from the risemode.com CSS tokens:
-          --color-rise-black   #060709   --color-rise-dark   #0B0C10   --color-rise-darker #0E1016
-          --color-rise-gray    #14161C   --color-rise-light  #20242E   --color-rise-lighter #2B3040
-          --color-rise-blue    #1E7FFF   --color-rise-blue-hover #3D86FF
-          --color-rise-text    #ECEEF2   --color-rise-text-muted #8E94A3
+        Palette from the risemode.com CSS tokens (color-rise-*):
+          black #060709, dark #0B0C10, darker #0E1016, gray #14161C, light #20242E, lighter #2B3040,
+          blue #1E7FFF, blue-hover #3D86FF, text #ECEEF2, text-muted #8E94A3.
         How the site uses each token is not confirmed; the mapping below follows the token names
-        (a dark elevation scale + one blue accent). Adjust here if it looks different from the site.
+        (a dark elevation scale plus one blue accent). Adjust here if it looks different from the site.
+        NOTE: never put two consecutive hyphens inside an XML comment, it breaks the XAML build.
     -->
     <SolidColorBrush x:Key="DeepBrush" Color="#060709" />
     <SolidColorBrush x:Key="BgBrush" Color="#0B0C10" />
