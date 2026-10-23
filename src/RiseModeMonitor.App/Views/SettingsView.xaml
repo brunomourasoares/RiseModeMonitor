@@ -64,6 +64,8 @@
 
                     <TextBlock Text="{Binding DisplayStatusText}" TextWrapping="Wrap" Margin="0,4,0,0"
                                Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="{Binding DisplayTelemetryText}" TextWrapping="Wrap" Margin="0,4,0,0" FontSize="12"
+                               Foreground="{DynamicResource TextMutedBrush}" />
                 </StackPanel>
             </Border>
 
