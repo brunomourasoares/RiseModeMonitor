@@ -40,11 +40,17 @@ public partial class App : Application
         services.AddSingleton<IAutostartService, TaskSchedulerAutostartService>();
         services.AddSingleton<ThemeService>();
         services.AddSingleton<TrayService>();
-        services.AddSingleton<ISensorService, LibreHardwareSensorService>();
+
+        // One LibreHardwareMonitor instance serves both sensor reading and fan control.
+        services.AddSingleton<LibreHardwareSensorService>();
+        services.AddSingleton<ISensorService>(sp => sp.GetRequiredService<LibreHardwareSensorService>());
+        services.AddSingleton<IFanControlService>(sp => sp.GetRequiredService<LibreHardwareSensorService>());
+
         services.AddSingleton<IDisplayService, HidDisplayService>();
         services.AddSingleton<DisplayCoordinator>();
         services.AddSingleton<DashboardViewModel>();
         services.AddSingleton<HardwareViewModel>();
+        services.AddSingleton<FansViewModel>();
         services.AddSingleton<SettingsViewModel>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<MainWindow>();
@@ -90,6 +96,7 @@ public partial class App : Application
 
     protected override void OnExit(ExitEventArgs e)
     {
+        // Disposing the services also hands every manually controlled fan back to automatic control.
         _services?.Dispose();
         _singleInstance?.Dispose();
         base.OnExit(e);
