@@ -25,6 +25,12 @@ public sealed partial class FanChannelViewModel : ObservableObject
     [ObservableProperty] private bool _isManual;
     [ObservableProperty] private string _rpmText = "--";
 
+    /// <summary>
+    /// False for channels with nothing spinning on them (0 RPM while in automatic mode), e.g. an
+    /// unused header. Channels under manual control always stay usable so they can be restored.
+    /// </summary>
+    [ObservableProperty] private bool _isConnected = true;
+
     public FanChannelViewModel(FanChannel channel, IFanControlService fans)
     {
         _fans = fans;
@@ -59,6 +65,7 @@ public sealed partial class FanChannelViewModel : ObservableObject
             MaxPercent = channel.MaxPercent;
             RpmText = channel.Rpm is float rpm ? $"{rpm:0} RPM" : "--";
             IsManual = channel.IsManual;
+            IsConnected = channel.IsManual || (channel.Rpm ?? 0) > 0;
 
             // In automatic mode the slider just mirrors what the BIOS is doing.
             if (!channel.IsManual && channel.CurrentPercent is float current)
