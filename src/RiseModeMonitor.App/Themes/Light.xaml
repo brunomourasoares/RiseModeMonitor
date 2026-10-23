@@ -1,11 +1,11 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- TODO: replace the placeholder palette with the official Rise Mode brand colors. -->
+    <!-- Accent #4064AC = blue of the Rise Mode flame logo. -->
     <SolidColorBrush x:Key="BgBrush" Color="#F4F5F7" />
     <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
     <SolidColorBrush x:Key="SurfaceAltBrush" Color="#E9ECF1" />
     <SolidColorBrush x:Key="LineBrush" Color="#D5DAE1" />
     <SolidColorBrush x:Key="TextBrush" Color="#14171C" />
     <SolidColorBrush x:Key="TextMutedBrush" Color="#5B6472" />
-    <SolidColorBrush x:Key="AccentBrush" Color="#E5383B" />
+    <SolidColorBrush x:Key="AccentBrush" Color="#4064AC" />
 </ResourceDictionary>
