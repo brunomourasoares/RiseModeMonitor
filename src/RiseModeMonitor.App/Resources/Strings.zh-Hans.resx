@@ -50,6 +50,18 @@
   <data name="Settings_AutostartError" xml:space="preserve"><value>无法更新启动任务。请以管理员身份运行应用后重试。</value></data>
   <data name="Settings_MoreSoon" xml:space="preserve"><value>更多选项（水冷屏幕）即将推出。</value></data>
 
+  <data name="Settings_Display" xml:space="preserve"><value>水冷屏幕</value></data>
+  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>在屏幕上显示系统数据</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>将 CPU 和 GPU 的温度与负载以及内存使用率发送到水冷头。</value></data>
+  <data name="Display_Status_Disabled" xml:space="preserve"><value>屏幕输出已关闭。</value></data>
+  <data name="Display_Status_Waiting" xml:space="preserve"><value>正在等待首次读数…</value></data>
+  <data name="Display_Status_Sent" xml:space="preserve"><value>已连接，数据正在发送到屏幕。</value></data>
+  <data name="Display_Status_DeviceNotFound" xml:space="preserve"><value>未找到屏幕，请检查 USB 连接。</value></data>
+  <data name="Display_Status_InvalidTelemetry" xml:space="preserve"><value>没有可发送的有效 CPU 温度。</value></data>
+  <data name="Display_Status_IncompatibleReport" xml:space="preserve"><value>已找到屏幕，但其 HID 接口不兼容。</value></data>
+  <data name="Display_Status_OpenFailed" xml:space="preserve"><value>无法打开屏幕，可能被其他程序占用。</value></data>
+  <data name="Display_Status_Error" xml:space="preserve"><value>通信错误。请查看 %LocalAppData%\RiseModeMonitor 中的 hid-diagnostic.log。</value></data>
+
   <data name="Fans_Description" xml:space="preserve"><value>风扇转速控制与曲线。即将推出。</value></data>
   <data name="Lighting_Description" xml:space="preserve"><value>RGB / ARGB 颜色与灯效。即将推出。</value></data>
 
