@@ -5,6 +5,7 @@
         xmlns:vm="clr-namespace:RiseModeMonitor.ViewModels"
         xmlns:views="clr-namespace:RiseModeMonitor.Views"
         Title="Rise Mode Monitor" Height="720" Width="1180" MinHeight="560" MinWidth="900"
+        Icon="pack://application:,,,/Resources/Images/rise-monitor.ico"
         ExtendsContentIntoTitleBar="True" WindowBackdropType="None" WindowCornerPreference="Round"
         Background="{DynamicResource BgBrush}" Foreground="{DynamicResource TextBrush}"
         FontFamily="Segoe UI">
@@ -42,8 +43,12 @@
 
             <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,0,1,0" Padding="12">
                 <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" Text="RISE MODE" FontSize="18" FontWeight="Bold" Margin="8,8,8,24"
-                               Foreground="{DynamicResource AccentBrush}" />
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="8,8,8,24">
+                        <Image Source="/Resources/Images/rise-monitor-256.png" Width="30" Height="30"
+                               RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock Text="RISE MODE" FontSize="18" FontWeight="Bold" Margin="10,0,0,0"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource AccentBrush}" />
+                    </StackPanel>
                     <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}"
                              ItemContainerStyle="{StaticResource NavItemStyle}"
                              Background="Transparent" BorderThickness="0">
