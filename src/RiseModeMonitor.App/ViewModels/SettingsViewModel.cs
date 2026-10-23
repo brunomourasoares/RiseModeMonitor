@@ -53,6 +53,13 @@ public sealed partial class SettingsViewModel : ObservableObject
         : _display.LastStatus is { } status ? _loc[$"Display_Status_{status}"]
         : _loc["Display_Status_Waiting"];
 
+    /// <summary>The exact values being sent to the display (diagnostics; acronyms are not translated).</summary>
+    public string DisplayTelemetryText => DisplayEnabled && _display.LastTelemetry is { } t
+        ? $"CPU {Fmt(t.CpuTemperatureC, "°C")} · GPU {Fmt(t.GpuTemperatureC, "°C")} · " +
+          $"CPU load {Fmt(t.CpuLoadPercent, "%")} · GPU load {Fmt(t.GpuLoadPercent, "%")} · " +
+          $"RAM {Fmt(t.MemoryLoadPercent, "%")}"
+        : string.Empty;
+
     public SettingsViewModel(
         ISettingsService settings,
         ThemeService themeService,
@@ -84,7 +91,11 @@ public sealed partial class SettingsViewModel : ObservableObject
         _loc.LanguageChanged += (_, _) => OnPropertyChanged(nameof(DisplayStatusText));
         _display.StatusChanged += (_, _) =>
             Application.Current?.Dispatcher.BeginInvoke(new Action(() => OnPropertyChanged(nameof(DisplayStatusText))));
+        _display.TelemetryUpdated += (_, _) =>
+            Application.Current?.Dispatcher.BeginInvoke(new Action(() => OnPropertyChanged(nameof(DisplayTelemetryText))));
     }
+
+    private static string Fmt(double? value, string unit) => value is double d ? $"{d:0} {unit}" : "--";
 
     partial void OnSelectedThemeChanged(ThemeOption value)
     {
@@ -134,5 +145,6 @@ public sealed partial class SettingsViewModel : ObservableObject
         _settings.Current.DisplayEnabled = value;
         _settings.Save();
         OnPropertyChanged(nameof(DisplayStatusText));
+        OnPropertyChanged(nameof(DisplayTelemetryText));
     }
 }
