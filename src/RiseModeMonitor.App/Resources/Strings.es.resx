@@ -50,6 +50,18 @@
   <data name="Settings_AutostartError" xml:space="preserve"><value>No se pudo actualizar la tarea de inicio. Ejecute la aplicación como administrador e inténtelo de nuevo.</value></data>
   <data name="Settings_MoreSoon" xml:space="preserve"><value>Más opciones (pantalla del water cooler) próximamente.</value></data>
 
+  <data name="Settings_Display" xml:space="preserve"><value>Pantalla del water cooler</value></data>
+  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Mostrar datos del sistema en la pantalla</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>Envía la temperatura y el uso de CPU y GPU, y el uso de RAM, al bloque del water cooler.</value></data>
+  <data name="Display_Status_Disabled" xml:space="preserve"><value>La salida a la pantalla está desactivada.</value></data>
+  <data name="Display_Status_Waiting" xml:space="preserve"><value>Esperando la primera lectura…</value></data>
+  <data name="Display_Status_Sent" xml:space="preserve"><value>Conectado. Los datos se están enviando a la pantalla.</value></data>
+  <data name="Display_Status_DeviceNotFound" xml:space="preserve"><value>Pantalla no encontrada. Compruebe la conexión USB.</value></data>
+  <data name="Display_Status_InvalidTelemetry" xml:space="preserve"><value>No hay una temperatura de CPU válida para enviar.</value></data>
+  <data name="Display_Status_IncompatibleReport" xml:space="preserve"><value>Pantalla encontrada, pero su interfaz HID no es compatible.</value></data>
+  <data name="Display_Status_OpenFailed" xml:space="preserve"><value>No se pudo abrir la pantalla. Es posible que otro programa la esté usando.</value></data>
+  <data name="Display_Status_Error" xml:space="preserve"><value>Error de comunicación. Consulte hid-diagnostic.log en %LocalAppData%\RiseModeMonitor.</value></data>
+
   <data name="Fans_Description" xml:space="preserve"><value>Control de velocidad y curvas de los ventiladores. Próximamente.</value></data>
   <data name="Lighting_Description" xml:space="preserve"><value>Colores y efectos RGB / ARGB. Próximamente.</value></data>
 
