@@ -4,6 +4,24 @@
              xmlns:loc="clr-namespace:RiseModeMonitor.Localization">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+
+        <!-- Card that fades out when nothing is spinning on the channel. -->
+        <Style x:Key="FanCard" TargetType="Border" BasedOn="{StaticResource Card}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="NoFanNote" TargetType="TextBlock">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -25,9 +43,10 @@
             <ItemsControl ItemsSource="{Binding Channels}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Style="{StaticResource Card}" MaxWidth="560" HorizontalAlignment="Left" Margin="0,0,0,12">
+                        <Border Style="{StaticResource FanCard}" MaxWidth="560" HorizontalAlignment="Left" Margin="0,0,0,12">
                             <Grid>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -45,14 +64,19 @@
                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding RpmText}" FontSize="20"
                                            FontWeight="SemiBold" VerticalAlignment="Center" />
 
-                                <CheckBox Grid.Row="1" Grid.ColumnSpan="2" Margin="0,12,0,0"
-                                          IsChecked="{Binding IsManual}" Content="{loc:Loc Fans_Manual}" />
+                                <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Margin="0,8,0,0" FontSize="12"
+                                           Text="{loc:Loc Fans_NoFan}" Style="{StaticResource NoFanNote}"
+                                           Foreground="{DynamicResource TextMutedBrush}" />
 
-                                <Slider Grid.Row="2" Grid.Column="0" Margin="0,8,12,0" VerticalAlignment="Center"
+                                <CheckBox Grid.Row="2" Grid.ColumnSpan="2" Margin="0,12,0,0"
+                                          IsChecked="{Binding IsManual}" IsEnabled="{Binding IsConnected}"
+                                          Content="{loc:Loc Fans_Manual}" />
+
+                                <Slider Grid.Row="3" Grid.Column="0" Margin="0,8,12,0" VerticalAlignment="Center"
                                         Minimum="{Binding MinPercent}" Maximum="{Binding MaxPercent}"
                                         Value="{Binding Percent, Delay=200}" IsEnabled="{Binding IsManual}"
                                         SmallChange="1" LargeChange="5" />
-                                <TextBlock Grid.Row="2" Grid.Column="1" Margin="0,8,0,0" VerticalAlignment="Center"
+                                <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,8,0,0" VerticalAlignment="Center"
                                            Text="{Binding Percent, StringFormat={}{0:0} %}" />
                             </Grid>
                         </Border>
