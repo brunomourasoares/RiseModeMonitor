@@ -11,10 +11,18 @@
     <!-- Strings.resx (no culture suffix) is the English fallback. -->
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
+  <!-- Brand icon: used as the .exe icon once Resources\Images\rise-monitor.ico is committed. -->
+  <PropertyGroup Condition="Exists('Resources\Images\rise-monitor.ico')">
+    <ApplicationIcon>Resources\Images\rise-monitor.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <!-- Avoid WPF/WinForms type ambiguities (Application, Button, Color...). -->
     <Using Remove="System.Windows.Forms" />
     <Using Remove="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Embeds the brand images (pack://application:,,,/Resources/Images/...). Empty folder is fine. -->
+    <Resource Include="Resources\Images\**\*.*" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
@@ -24,5 +32,6 @@
   <ItemGroup>
     <ProjectReference Include="..\RiseModeMonitor.Core\RiseModeMonitor.Core.csproj" />
     <ProjectReference Include="..\RiseModeMonitor.Hardware\RiseModeMonitor.Hardware.csproj" />
+    <ProjectReference Include="..\RiseModeMonitor.Hid\RiseModeMonitor.Hid.csproj" />
   </ItemGroup>
 </Project>
