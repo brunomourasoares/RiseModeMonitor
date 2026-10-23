@@ -5,10 +5,10 @@ using RiseModeMonitor.Core.Services;
 namespace RiseModeMonitor.Hardware;
 
 /// <summary>
-/// ISensorService backed by LibreHardwareMonitorLib. Requires administrator rights
-/// (and the PawnIO driver) to expose most sensors.
+/// ISensorService and IFanControlService backed by LibreHardwareMonitorLib. Requires administrator
+/// rights (and the PawnIO driver) to expose most sensors and to control fans.
 /// </summary>
-public sealed class LibreHardwareSensorService : ISensorService, IDisposable
+public sealed class LibreHardwareSensorService : ISensorService, IFanControlService, IDisposable
 {
     private readonly Computer _computer = new()
     {
@@ -22,6 +22,7 @@ public sealed class LibreHardwareSensorService : ISensorService, IDisposable
     };
 
     private readonly object _gate = new();
+    private readonly HashSet<string> _manualChannels = new();
     private Timer? _timer;
     private bool _opened;
     private int _ticking;
@@ -78,6 +79,115 @@ public sealed class LibreHardwareSensorService : ISensorService, IDisposable
             Interlocked.Exchange(ref _ticking, 0);
         }
     }
+
+    // ---- Fan control -------------------------------------------------------------------------
+
+    public IReadOnlyList<FanChannel> GetChannels()
+    {
+        lock (_gate)
+        {
+            if (!_opened) return Array.Empty<FanChannel>();
+
+            var channels = new List<FanChannel>();
+            foreach (var (hardware, sensor) in _computer.Hardware.SelectMany(ControlSensorsOf))
+            {
+                var control = sensor.Control!;
+                var (min, max) = AllowedRange(control);
+                var rpm = hardware.Sensors
+                    .FirstOrDefault(s => s.SensorType == SensorType.Fan && s.Name == sensor.Name)?.Value;
+
+                channels.Add(new FanChannel(
+                    sensor.Identifier.ToString(),
+                    sensor.Name,
+                    hardware.Name,
+                    sensor.Value,
+                    rpm,
+                    control.ControlMode == ControlMode.Software,
+                    min,
+                    max));
+            }
+            return channels;
+        }
+    }
+
+    public bool SetManual(string channelId, float percent)
+    {
+        lock (_gate)
+        {
+            if (FindControl(channelId) is not { } control) return false;
+
+            try
+            {
+                var (min, max) = AllowedRange(control);
+                control.SetSoftware(Math.Clamp(percent, min, max));
+                _manualChannels.Add(channelId);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+    }
+
+    public bool SetAutomatic(string channelId)
+    {
+        lock (_gate)
+        {
+            if (FindControl(channelId) is not { } control) return false;
+
+            try
+            {
+                control.SetDefault();
+                _manualChannels.Remove(channelId);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+    }
+
+    public void RestoreAll()
+    {
+        string[] ids;
+        lock (_gate) ids = _manualChannels.ToArray();
+
+        foreach (var id in ids)
+            SetAutomatic(id);
+    }
+
+    private IControl? FindControl(string channelId) =>
+        _computer.Hardware
+            .SelectMany(ControlSensorsOf)
+            .FirstOrDefault(x => x.Sensor.Identifier.ToString() == channelId)
+            .Sensor?.Control;
+
+    private static IEnumerable<(IHardware Hardware, ISensor Sensor)> ControlSensorsOf(IHardware hardware)
+    {
+        foreach (var sensor in hardware.Sensors)
+        {
+            if (sensor.SensorType == SensorType.Control && sensor.Control is not null)
+                yield return (hardware, sensor);
+        }
+
+        foreach (var sub in hardware.SubHardware)
+        {
+            foreach (var item in ControlSensorsOf(sub))
+                yield return item;
+        }
+    }
+
+    /// <summary>Hardware limits intersected with the app's safety floor.</summary>
+    private static (float Min, float Max) AllowedRange(IControl control)
+    {
+        var min = Math.Max(control.MinSoftwareValue, IFanControlService.SafeMinimumPercent);
+        var max = Math.Min(control.MaxSoftwareValue, 100f);
+        return (min, Math.Max(min, max));
+    }
+
+    // ---- Sensor mapping ----------------------------------------------------------------------
 
     private static HardwareNode UpdateNode(IHardware hardware)
     {
@@ -136,6 +246,8 @@ public sealed class LibreHardwareSensorService : ISensorService, IDisposable
 
     public void Dispose()
     {
+        // Never leave a fan stuck at a manual speed when the app exits.
+        RestoreAll();
         Stop();
         lock (_gate)
         {
