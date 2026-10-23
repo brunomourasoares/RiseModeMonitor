@@ -62,6 +62,11 @@
   <data name="Display_Status_OpenFailed" xml:space="preserve"><value>Could not open the display. Another program may be using it.</value></data>
   <data name="Display_Status_Error" xml:space="preserve"><value>Communication error. See hid-diagnostic.log in %LocalAppData%\RiseModeMonitor.</value></data>
 
+  <data name="Fans_Intro" xml:space="preserve"><value>Controls the fans connected to the motherboard. The water cooler pump and radiator fans cannot be controlled yet.</value></data>
+  <data name="Fans_Warning" xml:space="preserve"><value>Manual mode overrides the automatic curve and speeds below 20% are blocked. Keep an eye on your temperatures. Closing the app returns every fan to automatic control.</value></data>
+  <data name="Fans_Manual" xml:space="preserve"><value>Manual control</value></data>
+  <data name="Fans_RestoreAll" xml:space="preserve"><value>Restore automatic control</value></data>
+  <data name="Fans_None" xml:space="preserve"><value>No controllable fans were found. Run the app as administrator and make sure PawnIO is installed.</value></data>
   <data name="Fans_Description" xml:space="preserve"><value>Fan speed control and curves. Coming soon.</value></data>
   <data name="Lighting_Description" xml:space="preserve"><value>RGB / ARGB colors and effects. Coming soon.</value></data>
 
