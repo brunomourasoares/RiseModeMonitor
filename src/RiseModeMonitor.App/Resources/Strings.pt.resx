@@ -50,6 +50,18 @@
   <data name="Settings_AutostartError" xml:space="preserve"><value>Não foi possível atualizar a tarefa de inicialização. Execute o app como administrador e tente novamente.</value></data>
   <data name="Settings_MoreSoon" xml:space="preserve"><value>Mais opções (visor do water cooler) em breve.</value></data>
 
+  <data name="Settings_Display" xml:space="preserve"><value>Visor do water cooler</value></data>
+  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Mostrar dados do sistema no visor</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>Envia temperatura e uso da CPU e da GPU, e o uso da RAM, ao bloco do water cooler.</value></data>
+  <data name="Display_Status_Disabled" xml:space="preserve"><value>A saída para o visor está desligada.</value></data>
+  <data name="Display_Status_Waiting" xml:space="preserve"><value>Aguardando a primeira leitura…</value></data>
+  <data name="Display_Status_Sent" xml:space="preserve"><value>Conectado. Os dados estão sendo enviados ao visor.</value></data>
+  <data name="Display_Status_DeviceNotFound" xml:space="preserve"><value>Visor não encontrado. Verifique a conexão USB.</value></data>
+  <data name="Display_Status_InvalidTelemetry" xml:space="preserve"><value>Sem temperatura válida da CPU para enviar.</value></data>
+  <data name="Display_Status_IncompatibleReport" xml:space="preserve"><value>Visor encontrado, mas a interface HID não é compatível.</value></data>
+  <data name="Display_Status_OpenFailed" xml:space="preserve"><value>Não foi possível abrir o visor. Outro programa pode estar usando-o.</value></data>
+  <data name="Display_Status_Error" xml:space="preserve"><value>Erro de comunicação. Veja o hid-diagnostic.log em %LocalAppData%\RiseModeMonitor.</value></data>
+
   <data name="Fans_Description" xml:space="preserve"><value>Controle de velocidade e curvas das ventoinhas. Em breve.</value></data>
   <data name="Lighting_Description" xml:space="preserve"><value>Cores e efeitos RGB / ARGB. Em breve.</value></data>
 
