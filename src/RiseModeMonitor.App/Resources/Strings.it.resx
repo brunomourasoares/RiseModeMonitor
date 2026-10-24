@@ -50,6 +50,24 @@
   <data name="Settings_AutostartError" xml:space="preserve"><value>Impossibile aggiornare l'attività di avvio. Esegui l'app come amministratore e riprova.</value></data>
   <data name="Settings_MoreSoon" xml:space="preserve"><value>Altre opzioni (display del water cooler) in arrivo.</value></data>
 
+  <data name="Settings_Display" xml:space="preserve"><value>Display del water cooler</value></data>
+  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Mostra i dati di sistema sul display</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>Invia i dati di sistema al blocco del water cooler. Il display mostra solo la temperatura della CPU.</value></data>
+  <data name="Display_Status_Disabled" xml:space="preserve"><value>L'invio al display è disattivato.</value></data>
+  <data name="Display_Status_Waiting" xml:space="preserve"><value>In attesa della prima lettura…</value></data>
+  <data name="Display_Status_Sent" xml:space="preserve"><value>Connesso. I dati vengono inviati al display.</value></data>
+  <data name="Display_Status_DeviceNotFound" xml:space="preserve"><value>Display non trovato. Controlla il collegamento USB.</value></data>
+  <data name="Display_Status_InvalidTelemetry" xml:space="preserve"><value>Nessuna temperatura CPU valida da inviare.</value></data>
+  <data name="Display_Status_IncompatibleReport" xml:space="preserve"><value>Display trovato, ma la sua interfaccia HID non è compatibile.</value></data>
+  <data name="Display_Status_OpenFailed" xml:space="preserve"><value>Impossibile aprire il display. Potrebbe essere in uso da un altro programma.</value></data>
+  <data name="Display_Status_Error" xml:space="preserve"><value>Errore di comunicazione. Vedi hid-diagnostic.log in %LocalAppData%\RiseModeMonitor.</value></data>
+
+  <data name="Fans_Intro" xml:space="preserve"><value>Controlla le ventole collegate alla scheda madre. La pompa e le ventole del radiatore del water cooler non sono ancora controllabili.</value></data>
+  <data name="Fans_Warning" xml:space="preserve"><value>La modalità manuale sostituisce la curva automatica e le velocità inferiori al 20% sono bloccate. Tieni d'occhio le temperature. Chiudendo l'app, tutte le ventole tornano al controllo automatico.</value></data>
+  <data name="Fans_Manual" xml:space="preserve"><value>Controllo manuale</value></data>
+  <data name="Fans_RestoreAll" xml:space="preserve"><value>Ripristina controllo automatico</value></data>
+  <data name="Fans_None" xml:space="preserve"><value>Nessuna ventola controllabile trovata. Esegui l'app come amministratore e verifica che PawnIO sia installato.</value></data>
+  <data name="Fans_NoFan" xml:space="preserve"><value>Nessuna ventola rilevata su questo canale (0 RPM).</value></data>
   <data name="Fans_Description" xml:space="preserve"><value>Controllo della velocità e curve delle ventole. In arrivo.</value></data>
   <data name="Lighting_Description" xml:space="preserve"><value>Colori ed effetti RGB / ARGB. In arrivo.</value></data>
 
