@@ -21,8 +21,9 @@
     <Using Remove="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <!-- Embeds the brand images (pack://application:,,,/Resources/Images/...). Empty folder is fine. -->
+    <!-- Embedded brand images and fonts (pack://application:,,,/Resources/...). Empty folders are fine. -->
     <Resource Include="Resources\Images\**\*.*" />
+    <Resource Include="Resources\Fonts\**\*.ttf" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
