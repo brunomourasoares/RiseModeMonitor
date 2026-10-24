@@ -39,6 +39,9 @@ public sealed partial class SettingsViewModel : ObservableObject
 
     public IReadOnlyList<LanguageOption> LanguageOptions => LocalizationService.Languages;
 
+    /// <summary>Temperature and fan alert options (own card in the page).</summary>
+    public AlertSettingsViewModel Alerts { get; }
+
     [ObservableProperty] private ThemeOption _selectedTheme;
     [ObservableProperty] private LanguageOption _selectedLanguage;
     [ObservableProperty] private bool _startWithWindows;
@@ -65,13 +68,15 @@ public sealed partial class SettingsViewModel : ObservableObject
         ThemeService themeService,
         IAutostartService autostart,
         LocalizationService loc,
-        DisplayCoordinator display)
+        DisplayCoordinator display,
+        AlertSettingsViewModel alerts)
     {
         _settings = settings;
         _themeService = themeService;
         _autostart = autostart;
         _loc = loc;
         _display = display;
+        Alerts = alerts;
 
         ThemeOptions = new ThemeOption[]
         {
