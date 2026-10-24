@@ -63,7 +63,7 @@
   <data name="Display_Status_Error" xml:space="preserve"><value>Errore di comunicazione. Vedi hid-diagnostic.log in %LocalAppData%\RiseModeMonitor.</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Avvisi</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>Ogni avviso scatta una volta al raggiungimento del limite e si riarma quando la temperatura scende di 5 °C. Mai più di uno al minuto.</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Una notifica appare una volta al raggiungimento del limite (si riarma quando la temperatura scende di 5 °C). Il suono si ripete ogni 10 secondi finché il valore non torna sotto il limite.</value></data>
   <data name="Alerts_Cpu" xml:space="preserve"><value>Avvisa quando la temperatura della CPU raggiunge il limite</value></data>
   <data name="Alerts_Gpu" xml:space="preserve"><value>Avvisa quando la temperatura della GPU raggiunge il limite</value></data>
   <data name="Alerts_FanStopped" xml:space="preserve"><value>Avvisa quando una ventola in funzione si ferma (0 RPM)</value></data>
