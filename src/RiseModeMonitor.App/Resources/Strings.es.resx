@@ -62,6 +62,20 @@
   <data name="Display_Status_OpenFailed" xml:space="preserve"><value>No se pudo abrir la pantalla. Es posible que otro programa la esté usando.</value></data>
   <data name="Display_Status_Error" xml:space="preserve"><value>Error de comunicación. Consulte hid-diagnostic.log en %LocalAppData%\RiseModeMonitor.</value></data>
 
+  <data name="Settings_Alerts" xml:space="preserve"><value>Alertas</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Cada alerta se activa una vez al alcanzar el límite y se rearma cuando la temperatura baja 5 °C. Nunca más de una por minuto.</value></data>
+  <data name="Alerts_Cpu" xml:space="preserve"><value>Avisar cuando la temperatura de la CPU alcance el límite</value></data>
+  <data name="Alerts_Gpu" xml:space="preserve"><value>Avisar cuando la temperatura de la GPU alcance el límite</value></data>
+  <data name="Alerts_FanStopped" xml:space="preserve"><value>Avisar cuando un ventilador en marcha se detenga (0 RPM)</value></data>
+  <data name="Alerts_Sound" xml:space="preserve"><value>Sonido de alerta</value></data>
+  <data name="Alerts_Volume" xml:space="preserve"><value>Volumen</value></data>
+  <data name="Alerts_Test" xml:space="preserve"><value>Probar sonido</value></data>
+  <data name="Alert_TitleTemp" xml:space="preserve"><value>Alerta de temperatura</value></data>
+  <data name="Alert_TitleFan" xml:space="preserve"><value>Alerta de ventilador</value></data>
+  <data name="Alert_Cpu" xml:space="preserve"><value>La CPU está a {0:0} °C (límite {1:0} °C).</value></data>
+  <data name="Alert_Gpu" xml:space="preserve"><value>La GPU está a {0:0} °C (límite {1:0} °C).</value></data>
+  <data name="Alert_Fan" xml:space="preserve"><value>{0} se ha detenido (0 RPM).</value></data>
+
   <data name="Fans_Intro" xml:space="preserve"><value>Controla los ventiladores conectados a la placa base. La bomba y los ventiladores del radiador del water cooler aún no se pueden controlar.</value></data>
   <data name="Fans_Warning" xml:space="preserve"><value>El modo manual sustituye la curva automática y se bloquean las velocidades inferiores al 20 %. Vigile las temperaturas. Al cerrar la aplicación, todos los ventiladores vuelven al control automático.</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>Control manual</value></data>
