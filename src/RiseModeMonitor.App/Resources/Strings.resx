@@ -52,7 +52,7 @@
 
   <data name="Settings_Display" xml:space="preserve"><value>Water cooler display</value></data>
   <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Show system data on the display</value></data>
-  <data name="Settings_DisplayHint" xml:space="preserve"><value>Sends CPU and GPU temperature and load, and RAM usage, to the water cooler block.</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>Sends system data to the water cooler block. The display itself shows only the CPU temperature.</value></data>
   <data name="Display_Status_Disabled" xml:space="preserve"><value>Display output is turned off.</value></data>
   <data name="Display_Status_Waiting" xml:space="preserve"><value>Waiting for the first reading…</value></data>
   <data name="Display_Status_Sent" xml:space="preserve"><value>Connected. Data is being sent to the display.</value></data>
