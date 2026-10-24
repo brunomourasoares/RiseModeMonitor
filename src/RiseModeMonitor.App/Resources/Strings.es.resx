@@ -50,6 +50,24 @@
   <data name="Settings_AutostartError" xml:space="preserve"><value>No se pudo actualizar la tarea de inicio. Ejecute la aplicación como administrador e inténtelo de nuevo.</value></data>
   <data name="Settings_MoreSoon" xml:space="preserve"><value>Más opciones (pantalla del water cooler) próximamente.</value></data>
 
+  <data name="Settings_Display" xml:space="preserve"><value>Pantalla del water cooler</value></data>
+  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Mostrar datos del sistema en la pantalla</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>Envía datos del sistema al bloque del water cooler. La propia pantalla solo muestra la temperatura de la CPU.</value></data>
+  <data name="Display_Status_Disabled" xml:space="preserve"><value>La salida a la pantalla está desactivada.</value></data>
+  <data name="Display_Status_Waiting" xml:space="preserve"><value>Esperando la primera lectura…</value></data>
+  <data name="Display_Status_Sent" xml:space="preserve"><value>Conectado. Los datos se están enviando a la pantalla.</value></data>
+  <data name="Display_Status_DeviceNotFound" xml:space="preserve"><value>Pantalla no encontrada. Compruebe la conexión USB.</value></data>
+  <data name="Display_Status_InvalidTelemetry" xml:space="preserve"><value>No hay una temperatura de CPU válida para enviar.</value></data>
+  <data name="Display_Status_IncompatibleReport" xml:space="preserve"><value>Pantalla encontrada, pero su interfaz HID no es compatible.</value></data>
+  <data name="Display_Status_OpenFailed" xml:space="preserve"><value>No se pudo abrir la pantalla. Es posible que otro programa la esté usando.</value></data>
+  <data name="Display_Status_Error" xml:space="preserve"><value>Error de comunicación. Consulte hid-diagnostic.log en %LocalAppData%\RiseModeMonitor.</value></data>
+
+  <data name="Fans_Intro" xml:space="preserve"><value>Controla los ventiladores conectados a la placa base. La bomba y los ventiladores del radiador del water cooler aún no se pueden controlar.</value></data>
+  <data name="Fans_Warning" xml:space="preserve"><value>El modo manual sustituye la curva automática y se bloquean las velocidades inferiores al 20 %. Vigile las temperaturas. Al cerrar la aplicación, todos los ventiladores vuelven al control automático.</value></data>
+  <data name="Fans_Manual" xml:space="preserve"><value>Control manual</value></data>
+  <data name="Fans_RestoreAll" xml:space="preserve"><value>Restaurar control automático</value></data>
+  <data name="Fans_None" xml:space="preserve"><value>No se encontraron ventiladores controlables. Ejecute la aplicación como administrador y compruebe que PawnIO esté instalado.</value></data>
+  <data name="Fans_NoFan" xml:space="preserve"><value>No se detectó ningún ventilador en este canal (0 RPM).</value></data>
   <data name="Fans_Description" xml:space="preserve"><value>Control de velocidad y curvas de los ventiladores. Próximamente.</value></data>
   <data name="Lighting_Description" xml:space="preserve"><value>Colores y efectos RGB / ARGB. Próximamente.</value></data>
 
