@@ -62,6 +62,20 @@
   <data name="Display_Status_OpenFailed" xml:space="preserve"><value>Could not open the display. Another program may be using it.</value></data>
   <data name="Display_Status_Error" xml:space="preserve"><value>Communication error. See hid-diagnostic.log in %LocalAppData%\RiseModeMonitor.</value></data>
 
+  <data name="Settings_Alerts" xml:space="preserve"><value>Alerts</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Each alert fires once when the limit is reached and re-arms after the temperature drops 5 °C. Never more than one per minute.</value></data>
+  <data name="Alerts_Cpu" xml:space="preserve"><value>Alert when the CPU temperature reaches the limit</value></data>
+  <data name="Alerts_Gpu" xml:space="preserve"><value>Alert when the GPU temperature reaches the limit</value></data>
+  <data name="Alerts_FanStopped" xml:space="preserve"><value>Alert when a running fan stops (0 RPM)</value></data>
+  <data name="Alerts_Sound" xml:space="preserve"><value>Alert sound</value></data>
+  <data name="Alerts_Volume" xml:space="preserve"><value>Volume</value></data>
+  <data name="Alerts_Test" xml:space="preserve"><value>Test sound</value></data>
+  <data name="Alert_TitleTemp" xml:space="preserve"><value>Temperature alert</value></data>
+  <data name="Alert_TitleFan" xml:space="preserve"><value>Fan alert</value></data>
+  <data name="Alert_Cpu" xml:space="preserve"><value>CPU is at {0:0} °C (limit {1:0} °C).</value></data>
+  <data name="Alert_Gpu" xml:space="preserve"><value>GPU is at {0:0} °C (limit {1:0} °C).</value></data>
+  <data name="Alert_Fan" xml:space="preserve"><value>{0} stopped spinning (0 RPM).</value></data>
+
   <data name="Fans_Intro" xml:space="preserve"><value>Controls the fans connected to the motherboard. The water cooler pump and radiator fans cannot be controlled yet.</value></data>
   <data name="Fans_Warning" xml:space="preserve"><value>Manual mode overrides the automatic curve and speeds below 20% are blocked. Keep an eye on your temperatures. Closing the app returns every fan to automatic control.</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>Manual control</value></data>

@@ -26,6 +26,10 @@
     <Resource Include="Resources\Fonts\**\*.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <!-- Alert sounds are copied next to the exe: MediaPlayer needs real files, not embedded resources. -->
+    <Content Include="Resources\Sounds\**\*.mp3" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="WPF-UI" Version="4.0.3" />

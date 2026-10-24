@@ -62,6 +62,20 @@
   <data name="Display_Status_OpenFailed" xml:space="preserve"><value>Não foi possível abrir o visor. Outro programa pode estar usando-o.</value></data>
   <data name="Display_Status_Error" xml:space="preserve"><value>Erro de comunicação. Veja o hid-diagnostic.log em %LocalAppData%\RiseModeMonitor.</value></data>
 
+  <data name="Settings_Alerts" xml:space="preserve"><value>Alertas</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Cada alerta dispara uma vez ao atingir o limite e é rearmado depois que a temperatura cai 5 °C. Nunca mais de um por minuto.</value></data>
+  <data name="Alerts_Cpu" xml:space="preserve"><value>Alertar quando a temperatura da CPU atingir o limite</value></data>
+  <data name="Alerts_Gpu" xml:space="preserve"><value>Alertar quando a temperatura da GPU atingir o limite</value></data>
+  <data name="Alerts_FanStopped" xml:space="preserve"><value>Alertar quando uma ventoinha em funcionamento parar (0 RPM)</value></data>
+  <data name="Alerts_Sound" xml:space="preserve"><value>Som do alerta</value></data>
+  <data name="Alerts_Volume" xml:space="preserve"><value>Volume</value></data>
+  <data name="Alerts_Test" xml:space="preserve"><value>Testar som</value></data>
+  <data name="Alert_TitleTemp" xml:space="preserve"><value>Alerta de temperatura</value></data>
+  <data name="Alert_TitleFan" xml:space="preserve"><value>Alerta de ventoinha</value></data>
+  <data name="Alert_Cpu" xml:space="preserve"><value>A CPU está em {0:0} °C (limite: {1:0} °C).</value></data>
+  <data name="Alert_Gpu" xml:space="preserve"><value>A GPU está em {0:0} °C (limite: {1:0} °C).</value></data>
+  <data name="Alert_Fan" xml:space="preserve"><value>{0} parou de girar (0 RPM).</value></data>
+
   <data name="Fans_Intro" xml:space="preserve"><value>Controla as ventoinhas ligadas à placa-mãe. A bomba e as ventoinhas do radiador do water cooler ainda não podem ser controladas.</value></data>
   <data name="Fans_Warning" xml:space="preserve"><value>O modo manual substitui a curva automática e velocidades abaixo de 20% são bloqueadas. Fique de olho nas temperaturas. Ao fechar o app, todas as ventoinhas voltam ao controle automático.</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>Controle manual</value></data>

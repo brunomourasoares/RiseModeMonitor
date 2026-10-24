@@ -18,4 +18,25 @@ public sealed class AppSettings
 
     /// <summary>Send CPU/GPU/RAM telemetry to the water cooler block display.</summary>
     public bool DisplayEnabled { get; set; } = true;
+
+    // ---- Alerts (all off by default) ----
+
+    /// <summary>Alert when the CPU temperature reaches <see cref="AlertCpuThreshold"/>.</summary>
+    public bool AlertCpuEnabled { get; set; }
+
+    public double AlertCpuThreshold { get; set; } = 85;
+
+    /// <summary>Alert when the GPU temperature reaches <see cref="AlertGpuThreshold"/>.</summary>
+    public bool AlertGpuEnabled { get; set; }
+
+    public double AlertGpuThreshold { get; set; } = 85;
+
+    /// <summary>Alert when a fan that was spinning stops (0 RPM).</summary>
+    public bool AlertFanStoppedEnabled { get; set; }
+
+    /// <summary>Which of the bundled sounds to play: 1 to 5 (alert-N.mp3).</summary>
+    public int AlertSound { get; set; } = 1;
+
+    /// <summary>Alert volume, 0 to 100.</summary>
+    public double AlertVolume { get; set; } = 70;
 }

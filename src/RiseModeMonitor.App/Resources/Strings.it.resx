@@ -62,6 +62,20 @@
   <data name="Display_Status_OpenFailed" xml:space="preserve"><value>Impossibile aprire il display. Potrebbe essere in uso da un altro programma.</value></data>
   <data name="Display_Status_Error" xml:space="preserve"><value>Errore di comunicazione. Vedi hid-diagnostic.log in %LocalAppData%\RiseModeMonitor.</value></data>
 
+  <data name="Settings_Alerts" xml:space="preserve"><value>Avvisi</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Ogni avviso scatta una volta al raggiungimento del limite e si riarma quando la temperatura scende di 5 °C. Mai più di uno al minuto.</value></data>
+  <data name="Alerts_Cpu" xml:space="preserve"><value>Avvisa quando la temperatura della CPU raggiunge il limite</value></data>
+  <data name="Alerts_Gpu" xml:space="preserve"><value>Avvisa quando la temperatura della GPU raggiunge il limite</value></data>
+  <data name="Alerts_FanStopped" xml:space="preserve"><value>Avvisa quando una ventola in funzione si ferma (0 RPM)</value></data>
+  <data name="Alerts_Sound" xml:space="preserve"><value>Suono di avviso</value></data>
+  <data name="Alerts_Volume" xml:space="preserve"><value>Volume</value></data>
+  <data name="Alerts_Test" xml:space="preserve"><value>Prova suono</value></data>
+  <data name="Alert_TitleTemp" xml:space="preserve"><value>Avviso di temperatura</value></data>
+  <data name="Alert_TitleFan" xml:space="preserve"><value>Avviso ventola</value></data>
+  <data name="Alert_Cpu" xml:space="preserve"><value>La CPU è a {0:0} °C (limite {1:0} °C).</value></data>
+  <data name="Alert_Gpu" xml:space="preserve"><value>La GPU è a {0:0} °C (limite {1:0} °C).</value></data>
+  <data name="Alert_Fan" xml:space="preserve"><value>{0} si è fermata (0 RPM).</value></data>
+
   <data name="Fans_Intro" xml:space="preserve"><value>Controlla le ventole collegate alla scheda madre. La pompa e le ventole del radiatore del water cooler non sono ancora controllabili.</value></data>
   <data name="Fans_Warning" xml:space="preserve"><value>La modalità manuale sostituisce la curva automatica e le velocità inferiori al 20% sono bloccate. Tieni d'occhio le temperature. Chiudendo l'app, tutte le ventole tornano al controllo automatico.</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>Controllo manuale</value></data>

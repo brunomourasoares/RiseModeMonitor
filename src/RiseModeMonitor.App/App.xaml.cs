@@ -48,9 +48,11 @@ public partial class App : Application
 
         services.AddSingleton<IDisplayService, HidDisplayService>();
         services.AddSingleton<DisplayCoordinator>();
+        services.AddSingleton<AlertService>();
         services.AddSingleton<DashboardViewModel>();
         services.AddSingleton<HardwareViewModel>();
         services.AddSingleton<FansViewModel>();
+        services.AddSingleton<AlertSettingsViewModel>();
         services.AddSingleton<SettingsViewModel>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<MainWindow>();
@@ -60,8 +62,9 @@ public partial class App : Application
         LocalizationService.Instance.SetLanguage(settings.Current.Language);
         _services.GetRequiredService<ThemeService>().Apply(settings.Current.Theme);
 
-        // Create the coordinator before the sensors start so it receives the first snapshot.
+        // Create these before the sensors start so they receive the first snapshot.
         _services.GetRequiredService<DisplayCoordinator>();
+        _services.GetRequiredService<AlertService>();
         _services.GetRequiredService<ISensorService>().Start(TimeSpan.FromSeconds(1));
 
         var window = _services.GetRequiredService<MainWindow>();
