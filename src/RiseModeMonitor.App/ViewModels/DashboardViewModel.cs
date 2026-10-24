@@ -30,6 +30,12 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
     [ObservableProperty] private string _memoryUsedText = "--";
     [ObservableProperty] private double _memoryLoad;
 
+    /// <summary>
+    /// The CPU temperature exactly as the water cooler display receives it, as digits only
+    /// (the 7-segment font has no letters or symbols). Padded to 3 characters; blank when unknown.
+    /// </summary>
+    [ObservableProperty] private string _displayPreviewText = "   ";
+
     public ObservableCollection<DriveViewModel> Drives { get; } = new();
 
     public DashboardViewModel(ISensorService sensors, LocalizationService loc)
@@ -70,6 +76,12 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
         MemoryText = Format(memLoad, "%");
         var memUsed = Pick(mem, SensorKind.Data, "Memory Used");
         MemoryUsedText = memUsed is null ? "--" : _loc.Format("Dashboard_MemoryUsed", memUsed.Value);
+
+        // Same selection the display service uses, so the preview matches the real display.
+        var sent = TelemetrySelector.Select(s).CpuTemperatureC;
+        DisplayPreviewText = sent is double temperature
+            ? Math.Round(temperature).ToString("0").PadLeft(3)
+            : "   ";
 
         if (_tick++ % 10 == 0) RefreshDrives();
     }
