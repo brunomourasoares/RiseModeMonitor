@@ -44,6 +44,10 @@ public sealed class TrayService : IDisposable
         _loc.LanguageChanged += OnLanguageChanged;
     }
 
+    /// <summary>Shows a warning balloon / Windows notification from the tray icon.</summary>
+    public void ShowNotification(string title, string message) =>
+        _icon.ShowBalloonTip(8000, title, message, WinForms.ToolTipIcon.Warning);
+
     /// <summary>Brand icon from Resources/Images/rise-monitor.ico, or the generic icon if it is not embedded.</summary>
     private static System.Drawing.Icon LoadIcon()
     {
