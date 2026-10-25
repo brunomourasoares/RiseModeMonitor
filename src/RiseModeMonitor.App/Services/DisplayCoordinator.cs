@@ -21,37 +21,12 @@ public sealed class DisplayCoordinator : IDisposable
         _sensors.SnapshotUpdated += OnSnapshot;
     }
 
-    /// <summary>Result of the last write; null until the first attempt (or while disabled).</summary>
-    public DisplayStatus? LastStatus { get; private set; }
-
-    /// <summary>The values handed to the display in the last attempt (diagnostics).</summary>
-    public DisplayTelemetry? LastTelemetry { get; private set; }
-
-    /// <summary>Raised on a background thread when <see cref="LastStatus"/> changes.</summary>
-    public event EventHandler? StatusChanged;
-
-    /// <summary>Raised on a background thread after every snapshot sent (about once per second).</summary>
-    public event EventHandler? TelemetryUpdated;
-
     private void OnSnapshot(object? sender, HardwareSnapshot snapshot)
     {
-        if (!_settings.Current.DisplayEnabled)
-        {
-            SetStatus(null);
-            return;
-        }
+        if (!_settings.Current.DisplayEnabled) return;
 
-        var telemetry = TelemetrySelector.Select(snapshot);
-        LastTelemetry = telemetry;
-        SetStatus(_display.Send(telemetry));
-        TelemetryUpdated?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void SetStatus(DisplayStatus? status)
-    {
-        if (LastStatus == status) return;
-        LastStatus = status;
-        StatusChanged?.Invoke(this, EventArgs.Empty);
+        // The result (connected, not found...) is written to hid-diagnostic.log by the HID service.
+        _display.Send(TelemetrySelector.Select(snapshot));
     }
 
     public void Dispose() => _sensors.SnapshotUpdated -= OnSnapshot;
