@@ -4,6 +4,11 @@
              xmlns:loc="clr-namespace:RiseModeMonitor.Localization">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+
+        <!-- Leaves a gap on the right so the scrollbar never sits on top of the selected item. -->
+        <Style x:Key="HardwareListItem" TargetType="ListBoxItem" BasedOn="{StaticResource NavItemStyle}">
+            <Setter Property="Margin" Value="0,0,14,0" />
+        </Style>
     </UserControl.Resources>
 
     <DockPanel>
@@ -17,7 +22,7 @@
 
             <!-- Master: hardware list -->
             <ListBox ItemsSource="{Binding Hardware}" SelectedItem="{Binding Selected}"
-                     ItemContainerStyle="{StaticResource NavItemStyle}"
+                     ItemContainerStyle="{StaticResource HardwareListItem}"
                      Background="Transparent" BorderThickness="0" Margin="0,0,20,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
