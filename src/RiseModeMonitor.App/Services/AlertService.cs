@@ -8,8 +8,8 @@ using RiseModeMonitor.Localization;
 namespace RiseModeMonitor.Services;
 
 /// <summary>
-/// Watches every sensor snapshot, asks <see cref="AlertEvaluator"/> whether an alert is due, and
-/// then plays the chosen sound and shows a tray notification.
+/// Watches every sensor snapshot and asks <see cref="AlertEvaluator"/> what is due: a tray notification
+/// (once per occurrence) and the alert sound (repeated every 10 seconds while the condition persists).
 /// </summary>
 public sealed class AlertService : IDisposable
 {
@@ -42,23 +42,29 @@ public sealed class AlertService : IDisposable
     {
         var settings = _settings.Current;
         if (!settings.AlertCpuEnabled && !settings.AlertGpuEnabled && !settings.AlertFanStoppedEnabled)
+        {
+            // Run the evaluator once more so it forgets any old state, then stay idle.
+            _evaluator.Evaluate(new DisplayTelemetry(null, null, null, null, null, null),
+                Array.Empty<FanChannel>(), settings, DateTimeOffset.UtcNow);
             return;
+        }
 
         var telemetry = TelemetrySelector.Select(snapshot);
         var fans = settings.AlertFanStoppedEnabled ? _fans.GetChannels() : Array.Empty<FanChannel>();
 
-        var events = _evaluator.Evaluate(telemetry, fans, settings, DateTimeOffset.UtcNow);
-        if (events.Count == 0) return;
+        var result = _evaluator.Evaluate(telemetry, fans, settings, DateTimeOffset.UtcNow);
+        if (result.Notifications.Count == 0 && !result.PlaySound) return;
 
         Application.Current?.Dispatcher.BeginInvoke(new Action(() =>
         {
-            foreach (var alert in events)
+            foreach (var alert in result.Notifications)
             {
                 var (title, message) = Describe(alert);
                 _tray.ShowNotification(title, message);
             }
 
-            PlaySound(settings.AlertSound, settings.AlertVolume);
+            if (result.PlaySound)
+                PlaySound(settings.AlertSound, settings.AlertVolume);
         }));
     }
 
