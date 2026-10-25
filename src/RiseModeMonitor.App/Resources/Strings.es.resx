@@ -53,14 +53,6 @@
   <data name="Settings_Display" xml:space="preserve"><value>Pantalla del water cooler</value></data>
   <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Mostrar datos del sistema en la pantalla</value></data>
   <data name="Settings_DisplayHint" xml:space="preserve"><value>Envía datos del sistema al bloque del water cooler. La propia pantalla solo muestra la temperatura de la CPU.</value></data>
-  <data name="Display_Status_Disabled" xml:space="preserve"><value>La salida a la pantalla está desactivada.</value></data>
-  <data name="Display_Status_Waiting" xml:space="preserve"><value>Esperando la primera lectura…</value></data>
-  <data name="Display_Status_Sent" xml:space="preserve"><value>Conectado. Los datos se están enviando a la pantalla.</value></data>
-  <data name="Display_Status_DeviceNotFound" xml:space="preserve"><value>Pantalla no encontrada. Compruebe la conexión USB.</value></data>
-  <data name="Display_Status_InvalidTelemetry" xml:space="preserve"><value>No hay una temperatura de CPU válida para enviar.</value></data>
-  <data name="Display_Status_IncompatibleReport" xml:space="preserve"><value>Pantalla encontrada, pero su interfaz HID no es compatible.</value></data>
-  <data name="Display_Status_OpenFailed" xml:space="preserve"><value>No se pudo abrir la pantalla. Es posible que otro programa la esté usando.</value></data>
-  <data name="Display_Status_Error" xml:space="preserve"><value>Error de comunicación. Consulte hid-diagnostic.log en %LocalAppData%\RiseModeMonitor.</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Alertas</value></data>
   <data name="Alerts_Hint" xml:space="preserve"><value>Aparece una notificación una vez al alcanzar el límite (se rearma cuando la temperatura baja 5 °C). El sonido se repite cada 10 segundos hasta que el valor vuelva a estar por debajo del límite.</value></data>
@@ -77,8 +69,10 @@
   <data name="Alert_Fan" xml:space="preserve"><value>{0} se ha detenido (0 RPM).</value></data>
 
   <data name="Fans_Intro" xml:space="preserve"><value>Controla los ventiladores conectados a la placa base. La bomba y los ventiladores del radiador del water cooler aún no se pueden controlar.</value></data>
+  <data name="Fans_HowTo" xml:space="preserve"><value>Marque «Control manual» y arrastre el control deslizante: las RPM deberían seguirlo en pocos segundos. «Informado por el hardware» es el valor que el chip de la placa base dice estar aplicando. Si sigue al control pero las RPM no cambian, ese conector ignora el control por software (revise los ajustes de ventiladores de la BIOS, como Q-Fan y el modo PWM/DC).</value></data>
   <data name="Fans_Warning" xml:space="preserve"><value>El modo manual sustituye la curva automática y se bloquean las velocidades inferiores al 20 %. Vigile las temperaturas. Al cerrar la aplicación, todos los ventiladores vuelven al control automático.</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>Control manual</value></data>
+  <data name="Fans_Reported" xml:space="preserve"><value>Informado por el hardware:</value></data>
   <data name="Fans_RestoreAll" xml:space="preserve"><value>Restaurar control automático</value></data>
   <data name="Fans_None" xml:space="preserve"><value>No se encontraron ventiladores controlables. Ejecute la aplicación como administrador y compruebe que PawnIO esté instalado.</value></data>
   <data name="Fans_NoFan" xml:space="preserve"><value>No se detectó ningún ventilador en este canal (0 RPM).</value></data>

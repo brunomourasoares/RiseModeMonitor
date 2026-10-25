@@ -53,14 +53,6 @@
   <data name="Settings_Display" xml:space="preserve"><value>Water cooler display</value></data>
   <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Show system data on the display</value></data>
   <data name="Settings_DisplayHint" xml:space="preserve"><value>Sends system data to the water cooler block. The display itself shows only the CPU temperature.</value></data>
-  <data name="Display_Status_Disabled" xml:space="preserve"><value>Display output is turned off.</value></data>
-  <data name="Display_Status_Waiting" xml:space="preserve"><value>Waiting for the first reading…</value></data>
-  <data name="Display_Status_Sent" xml:space="preserve"><value>Connected. Data is being sent to the display.</value></data>
-  <data name="Display_Status_DeviceNotFound" xml:space="preserve"><value>Display not found. Check the USB connection.</value></data>
-  <data name="Display_Status_InvalidTelemetry" xml:space="preserve"><value>No valid CPU temperature to send.</value></data>
-  <data name="Display_Status_IncompatibleReport" xml:space="preserve"><value>Display found, but its HID interface is not compatible.</value></data>
-  <data name="Display_Status_OpenFailed" xml:space="preserve"><value>Could not open the display. Another program may be using it.</value></data>
-  <data name="Display_Status_Error" xml:space="preserve"><value>Communication error. See hid-diagnostic.log in %LocalAppData%\RiseModeMonitor.</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Alerts</value></data>
   <data name="Alerts_Hint" xml:space="preserve"><value>A notification appears once when the limit is reached (it re-arms after the temperature drops 5 °C). The sound repeats every 10 seconds until the value is back below the limit.</value></data>
@@ -77,8 +69,10 @@
   <data name="Alert_Fan" xml:space="preserve"><value>{0} stopped spinning (0 RPM).</value></data>
 
   <data name="Fans_Intro" xml:space="preserve"><value>Controls the fans connected to the motherboard. The water cooler pump and radiator fans cannot be controlled yet.</value></data>
+  <data name="Fans_HowTo" xml:space="preserve"><value>Tick “Manual control” and drag the slider: the RPM should follow within a few seconds. “Reported by hardware” is the value the motherboard chip says it is applying. If it follows the slider but the RPM does not change, that header ignores software control (check the BIOS fan settings, such as Q-Fan and PWM/DC mode).</value></data>
   <data name="Fans_Warning" xml:space="preserve"><value>Manual mode overrides the automatic curve and speeds below 20% are blocked. Keep an eye on your temperatures. Closing the app returns every fan to automatic control.</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>Manual control</value></data>
+  <data name="Fans_Reported" xml:space="preserve"><value>Reported by hardware:</value></data>
   <data name="Fans_RestoreAll" xml:space="preserve"><value>Restore automatic control</value></data>
   <data name="Fans_None" xml:space="preserve"><value>No controllable fans were found. Run the app as administrator and make sure PawnIO is installed.</value></data>
   <data name="Fans_NoFan" xml:space="preserve"><value>No fan detected on this channel (0 RPM).</value></data>

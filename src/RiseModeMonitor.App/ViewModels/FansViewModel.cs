@@ -26,6 +26,12 @@ public sealed partial class FanChannelViewModel : ObservableObject
     [ObservableProperty] private string _rpmText = "--";
 
     /// <summary>
+    /// What the motherboard chip reports it is applying right now. In manual mode this is the way to
+    /// tell whether the hardware accepted the slider value (the slider shows what was requested).
+    /// </summary>
+    [ObservableProperty] private string _reportedPercentText = "--";
+
+    /// <summary>
     /// False for channels with nothing spinning on them (0 RPM while in automatic mode), e.g. an
     /// unused header. Channels under manual control always stay usable so they can be restored.
     /// </summary>
@@ -64,6 +70,7 @@ public sealed partial class FanChannelViewModel : ObservableObject
             MinPercent = channel.MinPercent;
             MaxPercent = channel.MaxPercent;
             RpmText = channel.Rpm is float rpm ? $"{rpm:0} RPM" : "--";
+            ReportedPercentText = channel.CurrentPercent is float reported ? $"{reported:0} %" : "--";
             IsManual = channel.IsManual;
             IsConnected = channel.IsManual || (channel.Rpm ?? 0) > 0;
 
