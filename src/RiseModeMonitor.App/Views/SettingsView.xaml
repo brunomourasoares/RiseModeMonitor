@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:loc="clr-namespace:RiseModeMonitor.Localization">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel>
+        <!-- One fixed width for the whole page, so every card has exactly the same size. -->
+        <StackPanel Width="580" HorizontalAlignment="Left">
             <TextBlock Text="{loc:Loc Nav_Settings}" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,16" />
 
-            <Border Style="{StaticResource Card}" MaxWidth="560" HorizontalAlignment="Left" Margin="0,0,0,12">
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
                     <TextBlock Text="{loc:Loc Settings_Theme}" FontWeight="SemiBold" />
                     <TextBlock Text="{loc:Loc Settings_ThemeHint}" Margin="0,2,0,12"
@@ -28,7 +29,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource Card}" MaxWidth="560" HorizontalAlignment="Left" Margin="0,0,0,12">
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
                     <TextBlock Text="{loc:Loc Settings_Language}" FontWeight="SemiBold" />
                     <TextBlock Text="{loc:Loc Settings_LanguageHint}" Margin="0,2,0,12"
@@ -50,28 +51,22 @@
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource Card}" MaxWidth="560" HorizontalAlignment="Left" Margin="0,0,0,12">
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
                     <TextBlock Text="{loc:Loc Settings_Display}" FontWeight="SemiBold" Margin="0,0,0,12" />
 
-                    <CheckBox IsChecked="{Binding DisplayEnabled}" Margin="0,0,0,8">
+                    <CheckBox IsChecked="{Binding DisplayEnabled}">
                         <StackPanel>
                             <TextBlock Text="{loc:Loc Settings_DisplayEnabled}" />
                             <TextBlock Text="{loc:Loc Settings_DisplayHint}" TextWrapping="Wrap"
                                        FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
                         </StackPanel>
                     </CheckBox>
-
-                    <TextBlock Text="{Binding DisplayStatusText}" TextWrapping="Wrap" Margin="0,4,0,0"
-                               Foreground="{DynamicResource TextMutedBrush}" />
-                    <TextBlock Text="{Binding DisplayTelemetryText}" TextWrapping="Wrap" Margin="0,4,0,0" FontSize="12"
-                               Foreground="{DynamicResource TextMutedBrush}" />
                 </StackPanel>
             </Border>
 
             <!-- Alerts: bound to SettingsViewModel.Alerts -->
-            <Border Style="{StaticResource Card}" MaxWidth="560" HorizontalAlignment="Left" Margin="0,0,0,12"
-                    DataContext="{Binding Alerts}">
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12" DataContext="{Binding Alerts}">
                 <StackPanel>
                     <TextBlock Text="{loc:Loc Settings_Alerts}" FontWeight="SemiBold" />
                     <TextBlock Text="{loc:Loc Alerts_Hint}" TextWrapping="Wrap" Margin="0,2,0,12" FontSize="12"
@@ -136,7 +131,7 @@
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource Card}" MaxWidth="560" HorizontalAlignment="Left" Margin="0,0,0,12">
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
                     <TextBlock Text="{loc:Loc Settings_Startup}" FontWeight="SemiBold" Margin="0,0,0,12" />
 
