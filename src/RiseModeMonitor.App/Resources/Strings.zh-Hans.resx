@@ -53,14 +53,6 @@
   <data name="Settings_Display" xml:space="preserve"><value>水冷屏幕</value></data>
   <data name="Settings_DisplayEnabled" xml:space="preserve"><value>在屏幕上显示系统数据</value></data>
   <data name="Settings_DisplayHint" xml:space="preserve"><value>将系统数据发送到水冷头。屏幕本身仅显示 CPU 温度。</value></data>
-  <data name="Display_Status_Disabled" xml:space="preserve"><value>屏幕输出已关闭。</value></data>
-  <data name="Display_Status_Waiting" xml:space="preserve"><value>正在等待首次读数…</value></data>
-  <data name="Display_Status_Sent" xml:space="preserve"><value>已连接，数据正在发送到屏幕。</value></data>
-  <data name="Display_Status_DeviceNotFound" xml:space="preserve"><value>未找到屏幕，请检查 USB 连接。</value></data>
-  <data name="Display_Status_InvalidTelemetry" xml:space="preserve"><value>没有可发送的有效 CPU 温度。</value></data>
-  <data name="Display_Status_IncompatibleReport" xml:space="preserve"><value>已找到屏幕，但其 HID 接口不兼容。</value></data>
-  <data name="Display_Status_OpenFailed" xml:space="preserve"><value>无法打开屏幕，可能被其他程序占用。</value></data>
-  <data name="Display_Status_Error" xml:space="preserve"><value>通信错误。请查看 %LocalAppData%\RiseModeMonitor 中的 hid-diagnostic.log。</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>警报</value></data>
   <data name="Alerts_Hint" xml:space="preserve"><value>达到限值时只弹出一次通知（温度下降 5 °C 后重新待命）。声音每 10 秒重复一次，直到数值回落到限值以下。</value></data>
@@ -77,8 +69,10 @@
   <data name="Alert_Fan" xml:space="preserve"><value>{0} 已停转（0 RPM）。</value></data>
 
   <data name="Fans_Intro" xml:space="preserve"><value>控制连接到主板的风扇。水冷泵和冷排风扇暂时无法控制。</value></data>
+  <data name="Fans_HowTo" xml:space="preserve"><value>勾选“手动控制”并拖动滑块：转速应在几秒内跟随变化。“硬件报告值”是主板芯片声称正在应用的数值。如果它随滑块变化但转速不变，说明该接口忽略软件控制（请检查 BIOS 中的风扇设置，如 Q-Fan 和 PWM/DC 模式）。</value></data>
   <data name="Fans_Warning" xml:space="preserve"><value>手动模式会覆盖自动曲线，且低于 20% 的转速会被禁止。请留意温度。关闭应用后，所有风扇将恢复自动控制。</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>手动控制</value></data>
+  <data name="Fans_Reported" xml:space="preserve"><value>硬件报告值：</value></data>
   <data name="Fans_RestoreAll" xml:space="preserve"><value>恢复自动控制</value></data>
   <data name="Fans_None" xml:space="preserve"><value>未找到可控制的风扇。请以管理员身份运行应用，并确认已安装 PawnIO。</value></data>
   <data name="Fans_NoFan" xml:space="preserve"><value>此通道未检测到风扇（0 RPM）。</value></data>
