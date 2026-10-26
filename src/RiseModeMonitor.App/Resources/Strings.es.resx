@@ -73,6 +73,7 @@
   <data name="Fans_Warning" xml:space="preserve"><value>El modo manual sustituye la curva automática y se bloquean las velocidades inferiores al 20 %. Vigile las temperaturas. Al cerrar la aplicación, todos los ventiladores vuelven al control automático.</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>Control manual</value></data>
   <data name="Fans_Reported" xml:space="preserve"><value>Informado por el hardware:</value></data>
+  <data name="Fans_RenameTip" xml:space="preserve"><value>Escriba un nombre o elija uno de la lista y haga clic fuera del campo. Se guarda para este canal.</value></data>
   <data name="Fans_RestoreAll" xml:space="preserve"><value>Restaurar control automático</value></data>
   <data name="Fans_None" xml:space="preserve"><value>No se encontraron ventiladores controlables. Ejecute la aplicación como administrador y compruebe que PawnIO esté instalado.</value></data>
   <data name="Fans_NoFan" xml:space="preserve"><value>No se detectó ningún ventilador en este canal (0 RPM).</value></data>
