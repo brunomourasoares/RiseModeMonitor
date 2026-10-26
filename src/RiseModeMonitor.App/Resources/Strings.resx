@@ -73,6 +73,7 @@
   <data name="Fans_Warning" xml:space="preserve"><value>Manual mode overrides the automatic curve and speeds below 20% are blocked. Keep an eye on your temperatures. Closing the app returns every fan to automatic control.</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>Manual control</value></data>
   <data name="Fans_Reported" xml:space="preserve"><value>Reported by hardware:</value></data>
+  <data name="Fans_RenameTip" xml:space="preserve"><value>Type a name or pick one from the list, then click outside the field. It is saved for this channel.</value></data>
   <data name="Fans_RestoreAll" xml:space="preserve"><value>Restore automatic control</value></data>
   <data name="Fans_None" xml:space="preserve"><value>No controllable fans were found. Run the app as administrator and make sure PawnIO is installed.</value></data>
   <data name="Fans_NoFan" xml:space="preserve"><value>No fan detected on this channel (0 RPM).</value></data>
