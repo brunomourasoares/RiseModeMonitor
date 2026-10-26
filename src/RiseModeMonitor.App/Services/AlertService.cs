@@ -50,7 +50,7 @@ public sealed class AlertService : IDisposable
         }
 
         var telemetry = TelemetrySelector.Select(snapshot);
-        var fans = settings.AlertFanStoppedEnabled ? _fans.GetChannels() : Array.Empty<FanChannel>();
+        var fans = settings.AlertFanStoppedEnabled ? NamedChannels(settings) : Array.Empty<FanChannel>();
 
         var result = _evaluator.Evaluate(telemetry, fans, settings, DateTimeOffset.UtcNow);
         if (result.Notifications.Count == 0 && !result.PlaySound) return;
@@ -67,6 +67,14 @@ public sealed class AlertService : IDisposable
                 PlaySound(settings.AlertSound, settings.AlertVolume);
         }));
     }
+
+    /// <summary>Fan channels with the names the user gave them, so the alert says "CPU_FAN1" instead of "Fan #1".</summary>
+    private FanChannel[] NamedChannels(AppSettings settings) =>
+        _fans.GetChannels()
+            .Select(c => settings.FanNames.TryGetValue(c.Id, out var custom) && !string.IsNullOrWhiteSpace(custom)
+                ? c with { Name = custom }
+                : c)
+            .ToArray();
 
     private (string Title, string Message) Describe(AlertEvent alert) => alert.Kind switch
     {
