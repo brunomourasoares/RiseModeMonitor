@@ -73,6 +73,7 @@
   <data name="Fans_Warning" xml:space="preserve"><value>手动模式会覆盖自动曲线，且低于 20% 的转速会被禁止。请留意温度。关闭应用后，所有风扇将恢复自动控制。</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>手动控制</value></data>
   <data name="Fans_Reported" xml:space="preserve"><value>硬件报告值：</value></data>
+  <data name="Fans_RenameTip" xml:space="preserve"><value>输入名称或从列表中选择，然后点击输入框外部。名称将保存到此通道。</value></data>
   <data name="Fans_RestoreAll" xml:space="preserve"><value>恢复自动控制</value></data>
   <data name="Fans_None" xml:space="preserve"><value>未找到可控制的风扇。请以管理员身份运行应用，并确认已安装 PawnIO。</value></data>
   <data name="Fans_NoFan" xml:space="preserve"><value>此通道未检测到风扇（0 RPM）。</value></data>
