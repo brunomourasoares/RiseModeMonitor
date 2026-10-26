@@ -11,13 +11,18 @@ namespace RiseModeMonitor.ViewModels;
 public sealed partial class FanChannelViewModel : ObservableObject
 {
     private readonly IFanControlService _fans;
+    private readonly ISettingsService _settings;
     private bool _updating;
 
     public string Id { get; }
 
+    /// <summary>The generic name reported by the hardware library, e.g. "Fan #1".</summary>
     public string Name { get; }
 
     public string HardwareName { get; }
+
+    /// <summary>Name shown on the card. Editable; saved per channel. Empty input restores <see cref="Name"/>.</summary>
+    [ObservableProperty] private string _displayName;
 
     [ObservableProperty] private double _minPercent;
     [ObservableProperty] private double _maxPercent = 100;
@@ -37,13 +42,35 @@ public sealed partial class FanChannelViewModel : ObservableObject
     /// </summary>
     [ObservableProperty] private bool _isConnected = true;
 
-    public FanChannelViewModel(FanChannel channel, IFanControlService fans)
+    public FanChannelViewModel(FanChannel channel, IFanControlService fans, ISettingsService settings)
     {
         _fans = fans;
+        _settings = settings;
         Id = channel.Id;
         Name = channel.Name;
         HardwareName = channel.HardwareName;
+
+        _displayName = settings.Current.FanNames.TryGetValue(Id, out var saved) && !string.IsNullOrWhiteSpace(saved)
+            ? saved
+            : Name;
+
         Update(channel);
+    }
+
+    partial void OnDisplayNameChanged(string value)
+    {
+        var name = (value ?? string.Empty).Trim();
+
+        if (name.Length == 0)
+        {
+            DisplayName = Name; // cleared: back to the generic name (re-enters this method once)
+            return;
+        }
+
+        if (name == Name) _settings.Current.FanNames.Remove(Id);
+        else _settings.Current.FanNames[Id] = name;
+
+        _settings.Save();
     }
 
     partial void OnIsManualChanged(bool value)
@@ -88,17 +115,25 @@ public sealed partial class FanChannelViewModel : ObservableObject
 /// <summary>Fans page: manual speed control for the channels the hardware exposes.</summary>
 public sealed partial class FansViewModel : ObservableObject, IDisposable
 {
+    /// <summary>Common motherboard header labels offered as suggestions when naming a fan.</summary>
+    public static IReadOnlyList<string> SuggestedNames { get; } = new[]
+    {
+        "CPU_FAN1", "CPU_FAN2", "CHA_FAN1", "CHA_FAN2", "CHA_FAN3", "CHA_FAN4", "PWR_FAN1", "AIO_PUMP"
+    };
+
     private readonly ISensorService _sensors;
     private readonly IFanControlService _fans;
+    private readonly ISettingsService _settings;
 
     public ObservableCollection<FanChannelViewModel> Channels { get; } = new();
 
     [ObservableProperty] private bool _isEmpty = true;
 
-    public FansViewModel(ISensorService sensors, IFanControlService fans)
+    public FansViewModel(ISensorService sensors, IFanControlService fans, ISettingsService settings)
     {
         _sensors = sensors;
         _fans = fans;
+        _settings = settings;
         _sensors.SnapshotUpdated += OnSnapshot;
         Refresh();
     }
@@ -114,7 +149,7 @@ public sealed partial class FansViewModel : ObservableObject, IDisposable
         {
             Channels.Clear();
             foreach (var channel in channels)
-                Channels.Add(new FanChannelViewModel(channel, _fans));
+                Channels.Add(new FanChannelViewModel(channel, _fans, _settings));
         }
         else
         {

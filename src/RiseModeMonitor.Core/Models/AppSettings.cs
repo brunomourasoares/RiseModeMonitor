@@ -19,6 +19,12 @@ public sealed class AppSettings
     /// <summary>Send CPU/GPU/RAM telemetry to the water cooler block display.</summary>
     public bool DisplayEnabled { get; set; } = true;
 
+    /// <summary>
+    /// Custom fan names chosen by the user (e.g. CPU_FAN1), keyed by the fan channel id.
+    /// The hardware library cannot tell which motherboard header a channel is wired to.
+    /// </summary>
+    public Dictionary<string, string> FanNames { get; set; } = new();
+
     // ---- Alerts (all off by default) ----
 
     /// <summary>Alert when the CPU temperature reaches <see cref="AlertCpuThreshold"/>.</summary>
