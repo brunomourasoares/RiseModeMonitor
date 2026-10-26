@@ -73,6 +73,7 @@
   <data name="Fans_Warning" xml:space="preserve"><value>O modo manual substitui a curva automática e velocidades abaixo de 20% são bloqueadas. Fique de olho nas temperaturas. Ao fechar o app, todas as ventoinhas voltam ao controle automático.</value></data>
   <data name="Fans_Manual" xml:space="preserve"><value>Controle manual</value></data>
   <data name="Fans_Reported" xml:space="preserve"><value>Informado pelo hardware:</value></data>
+  <data name="Fans_RenameTip" xml:space="preserve"><value>Digite um nome ou escolha um da lista e depois clique fora do campo. Ele fica salvo para este canal.</value></data>
   <data name="Fans_RestoreAll" xml:space="preserve"><value>Restaurar controle automático</value></data>
   <data name="Fans_None" xml:space="preserve"><value>Nenhuma ventoinha controlável encontrada. Execute o app como administrador e verifique se o PawnIO está instalado.</value></data>
   <data name="Fans_NoFan" xml:space="preserve"><value>Nenhuma ventoinha detectada neste canal (0 RPM).</value></data>
