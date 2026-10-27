@@ -14,7 +14,10 @@ public sealed class LocalizationService : INotifyPropertyChanged
 {
     public static LocalizationService Instance { get; } = new();
 
-    /// <summary>Native names are intentionally not translated.</summary>
+    /// <summary>
+    /// Native names are intentionally not translated. Codes match the satellite assembly folders
+    /// of the build output (en is the neutral resource inside the exe).
+    /// </summary>
     public static IReadOnlyList<LanguageOption> Languages { get; } = new LanguageOption[]
     {
         new("en", "English"),
@@ -22,7 +25,7 @@ public sealed class LocalizationService : INotifyPropertyChanged
         new("es", "Español"),
         new("it", "Italiano"),
         new("fr", "Français"),
-        new("zh-Hans", "简体中文"),
+        new("zh", "简体中文"),
     };
 
     private readonly ResourceManager _resources =
@@ -41,9 +44,18 @@ public sealed class LocalizationService : INotifyPropertyChanged
 
     public string Format(string key, params object[] args) => string.Format(Culture, this[key], args);
 
+    /// <summary>Maps codes saved by older versions (zh-Hans) to the current ones (zh).</summary>
+    public static string Normalize(string? code) => code switch
+    {
+        "zh-Hans" or "zh-CN" or "zh-CHS" => "zh",
+        null or "" => "en",
+        _ => code
+    };
+
     public void SetLanguage(string? code)
     {
-        var target = Languages.Any(l => l.Code == code) ? code! : "en";
+        var normalized = Normalize(code);
+        var target = Languages.Any(l => l.Code == normalized) ? normalized : "en";
         Culture = CultureInfo.GetCultureInfo(target);
 
         // "Item[]" is the indexer change notification WPF listens to.

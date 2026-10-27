@@ -68,8 +68,10 @@ public sealed partial class SettingsViewModel : ObservableObject
             new(ThemeMode.Dark, "Theme_Dark", loc),
         };
 
+        var savedLanguage = LocalizationService.Normalize(settings.Current.Language);
+
         _selectedTheme = ThemeOptions.First(o => o.Mode == settings.Current.Theme);
-        _selectedLanguage = LocalizationService.Languages.FirstOrDefault(l => l.Code == settings.Current.Language)
+        _selectedLanguage = LocalizationService.Languages.FirstOrDefault(l => l.Code == savedLanguage)
                             ?? LocalizationService.Languages[0];
         _startWithWindows = autostart.IsEnabled(); // real system state, not a stored flag
         _startMinimized = settings.Current.StartMinimized;
