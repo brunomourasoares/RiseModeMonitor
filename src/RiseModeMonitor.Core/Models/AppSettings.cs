@@ -7,7 +7,7 @@ public sealed class AppSettings
 {
     public ThemeMode Theme { get; set; } = ThemeMode.System;
 
-    /// <summary>UI language code: en (default), pt, es, it, fr, zh-Hans.</summary>
+    /// <summary>UI language code: en (default), pt, es, it, fr, zh. Older files may hold zh-Hans (mapped to zh).</summary>
     public string Language { get; set; } = "en";
 
     /// <summary>When launched by the startup task (--minimized), stay hidden in the tray.</summary>
