@@ -86,7 +86,8 @@ public sealed class AlertService : IDisposable
     /// <summary>Plays one of the bundled alert sounds (1 to 5). Safe to call from the UI thread only.</summary>
     public void PlaySound(int sound, double volumePercent)
     {
-        var path = Path.Combine(AppContext.BaseDirectory, "Resources", "Sounds", $"alert-{Math.Clamp(sound, 1, 5)}.mp3");
+        // Lowercase folders match the build output (see the Link metadata in the csproj).
+        var path = Path.Combine(AppContext.BaseDirectory, "resources", "sounds", $"alert-{Math.Clamp(sound, 1, 5)}.mp3");
         if (!File.Exists(path)) return;
 
         try
