@@ -14,7 +14,7 @@
   <data name="Dashboard_Memory" xml:space="preserve"><value>Memoria</value></data>
   <data name="Dashboard_Storage" xml:space="preserve"><value>Archiviazione</value></data>
   <data name="Dashboard_MemoryUsed" xml:space="preserve"><value>{0:0.#} GB in uso</value></data>
-  <data name="Dashboard_DriveSummary" xml:space="preserve"><value>{0:0.#} GB usati · {1:0.#} GB liberi su {2:0.#} GB</value></data>
+  <data name="Dashboard_VolumeLine" xml:space="preserve"><value>{0} {1:0.#} GB / {2:0.#} GB - {3:0.#} GB liberi</value></data>
 
   <data name="Hardware_Search" xml:space="preserve"><value>Cerca sensori</value></data>
   <data name="Hardware_NoSensors" xml:space="preserve"><value>Nessun sensore da mostrare.</value></data>

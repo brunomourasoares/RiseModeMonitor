@@ -14,7 +14,7 @@
   <data name="Dashboard_Memory" xml:space="preserve"><value>内存</value></data>
   <data name="Dashboard_Storage" xml:space="preserve"><value>存储</value></data>
   <data name="Dashboard_MemoryUsed" xml:space="preserve"><value>已用 {0:0.#} GB</value></data>
-  <data name="Dashboard_DriveSummary" xml:space="preserve"><value>已用 {0:0.#} GB · 可用 {1:0.#} GB / 共 {2:0.#} GB</value></data>
+  <data name="Dashboard_VolumeLine" xml:space="preserve"><value>{0} {1:0.#} GB / {2:0.#} GB - 可用 {3:0.#} GB</value></data>
 
   <data name="Hardware_Search" xml:space="preserve"><value>搜索传感器</value></data>
   <data name="Hardware_NoSensors" xml:space="preserve"><value>没有可显示的传感器。</value></data>
