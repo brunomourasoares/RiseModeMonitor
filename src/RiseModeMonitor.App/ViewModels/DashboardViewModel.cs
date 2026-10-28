@@ -115,23 +115,28 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
         var disks = _catalog.GetDisks();
         var fresh = new List<StorageDiskViewModel>();
 
-        if (disks.Count == 0)
+        // Drive letters that Windows attributed to a physical disk.
+        var covered = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var disk in disks)
         {
-            // Windows did not tell us which disk is which: show each fixed drive letter on its own.
-            foreach (var drive in DriveInfo.GetDrives().Where(d => d.DriveType == DriveType.Fixed))
-            {
-                var letter = drive.Name.TrimEnd('\\');
-                if (BuildVolume(letter) is { } volume)
-                    fresh.Add(new StorageDiskViewModel(letter, new[] { volume }));
-            }
+            foreach (var letter in disk.VolumeLetters) covered.Add(letter);
+
+            var volumes = disk.VolumeLetters.Select(BuildVolume).OfType<VolumeViewModel>().ToList();
+            if (volumes.Count == 0) continue; // nothing mounted (e.g. recovery-only disk): no empty card
+
+            fresh.Add(new StorageDiskViewModel(DisplayModel(disk.Model), volumes));
         }
-        else
+
+        // Fixed drives Windows could not map to a disk (Storage Spaces, RAID, VHD...) or an empty
+        // catalog: show each of them on its own so no drive disappears from the dashboard.
+        foreach (var drive in DriveInfo.GetDrives().Where(d => d.DriveType == DriveType.Fixed))
         {
-            foreach (var disk in disks)
-            {
-                var volumes = disk.VolumeLetters.Select(BuildVolume).OfType<VolumeViewModel>().ToList();
-                fresh.Add(new StorageDiskViewModel(DisplayModel(disk.Model), volumes));
-            }
+            var letter = drive.Name.TrimEnd('\\');
+            if (covered.Contains(letter)) continue;
+
+            if (BuildVolume(letter) is { } volume)
+                fresh.Add(new StorageDiskViewModel(letter, new[] { volume }));
         }
 
         Disks.Clear();
@@ -166,7 +171,7 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
     /// </summary>
     private string DisplayModel(string windowsModel)
     {
-        var match = _storageNames.FirstOrDefault(n => windowsModel.Contains(n, StringComparison.OrdinalIgnoreCase));
+        var match = _storageNames.FirstOrDefault(n => !string.IsNullOrWhiteSpace(n) && windowsModel.Contains(n, StringComparison.OrdinalIgnoreCase));
         if (match is not null) return match;
 
         var cleaned = Regex.Replace(windowsModel, @"\s+(ATA|SCSI|NVMe|USB)(\s+\w+)*\s+Device$", string.Empty, RegexOptions.IgnoreCase);

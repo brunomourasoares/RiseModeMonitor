@@ -47,6 +47,7 @@ public partial class App : Application
         services.AddSingleton<IFanControlService>(sp => sp.GetRequiredService<LibreHardwareSensorService>());
 
         services.AddSingleton<IDisplayService, HidDisplayService>();
+        services.AddSingleton<IStorageCatalog, WmiStorageCatalog>();
         services.AddSingleton<DisplayCoordinator>();
         services.AddSingleton<AlertService>();
         services.AddSingleton<DashboardViewModel>();
