@@ -14,7 +14,7 @@
   <data name="Dashboard_Memory" xml:space="preserve"><value>Mémoire</value></data>
   <data name="Dashboard_Storage" xml:space="preserve"><value>Stockage</value></data>
   <data name="Dashboard_MemoryUsed" xml:space="preserve"><value>{0:0.#} Go utilisés</value></data>
-  <data name="Dashboard_DriveSummary" xml:space="preserve"><value>{0:0.#} Go utilisés · {1:0.#} Go libres sur {2:0.#} Go</value></data>
+  <data name="Dashboard_VolumeLine" xml:space="preserve"><value>{0} {1:0.#} Go / {2:0.#} Go - {3:0.#} Go libres</value></data>
 
   <data name="Hardware_Search" xml:space="preserve"><value>Rechercher des capteurs</value></data>
   <data name="Hardware_NoSensors" xml:space="preserve"><value>Aucun capteur à afficher.</value></data>
