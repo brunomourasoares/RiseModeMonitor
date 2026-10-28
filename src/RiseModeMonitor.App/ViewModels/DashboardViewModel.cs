@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -23,6 +24,8 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
     private IReadOnlyList<string> _storageNames = Array.Empty<string>();
     private bool _catalogReady;
     private int _tick;
+    private int _refreshing;
+    private volatile bool _disposed;
 
     [ObservableProperty] private string _cpuName = "CPU";
     [ObservableProperty] private string _cpuTemperature = "--";
@@ -56,10 +59,10 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
     {
         await Task.Run(() => _catalog.GetDisks());
         _catalogReady = true;
-        RefreshDisks();
+        _ = RefreshDisksAsync();
     }
 
-    private void OnLanguageChanged(object? sender, EventArgs e) => RefreshDisks();
+    private void OnLanguageChanged(object? sender, EventArgs e) => _ = RefreshDisksAsync();
 
     private void OnSnapshot(object? sender, HardwareSnapshot snapshot) =>
         Application.Current?.Dispatcher.BeginInvoke(new Action(() => Apply(snapshot)));
@@ -91,7 +94,7 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
         // Clean model names come from the sensor library (e.g. "Samsung SSD 840 EVO 250GB").
         _storageNames = s.Hardware.Where(h => h.Kind == HardwareKind.Storage).Select(h => h.Name).ToList();
 
-        if (_tick++ % 10 == 0) RefreshDisks();
+        if (_tick++ % 10 == 0) _ = RefreshDisksAsync();
     }
 
     private static float? Pick(HardwareNode? node, SensorKind kind, params string[] preferred)
@@ -108,10 +111,35 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
 
     private static string Format(float? value, string unit) => value is null ? "--" : $"{value:0.#} {unit}";
 
-    private void RefreshDisks()
+    /// <summary>
+    /// Disk and volume queries can block (slow or sleeping drives), so they run in the background and
+    /// only the result is applied on the UI thread. Overlapping refreshes are skipped.
+    /// </summary>
+    private async Task RefreshDisksAsync()
     {
-        if (!_catalogReady) return;
+        if (!_catalogReady || Interlocked.Exchange(ref _refreshing, 1) == 1) return;
 
+        try
+        {
+            var names = _storageNames;
+            var fresh = await Task.Run(() => BuildDisks(names));
+            if (_disposed) return;
+
+            Disks.Clear();
+            foreach (var disk in fresh) Disks.Add(disk);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Storage refresh failed: {ex}");
+        }
+        finally
+        {
+            Interlocked.Exchange(ref _refreshing, 0);
+        }
+    }
+
+    private List<StorageDiskViewModel> BuildDisks(IReadOnlyList<string> sensorNames)
+    {
         var disks = _catalog.GetDisks();
         var fresh = new List<StorageDiskViewModel>();
 
@@ -125,7 +153,7 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
             var volumes = disk.VolumeLetters.Select(BuildVolume).OfType<VolumeViewModel>().ToList();
             if (volumes.Count == 0) continue; // nothing mounted (e.g. recovery-only disk): no empty card
 
-            fresh.Add(new StorageDiskViewModel(DisplayModel(disk.Model), volumes));
+            fresh.Add(new StorageDiskViewModel(DisplayModel(disk.Model, sensorNames), volumes));
         }
 
         // Fixed drives Windows could not map to a disk (Storage Spaces, RAID, VHD...) or an empty
@@ -139,8 +167,7 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
                 fresh.Add(new StorageDiskViewModel(letter, new[] { volume }));
         }
 
-        Disks.Clear();
-        foreach (var disk in fresh) Disks.Add(disk);
+        return fresh;
     }
 
     private VolumeViewModel? BuildVolume(string letter)
@@ -169,9 +196,9 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
     /// Prefers the name the sensor library uses for the same disk; otherwise strips the generic suffix
     /// Windows adds ("... ATA Device", "... SCSI Disk Device").
     /// </summary>
-    private string DisplayModel(string windowsModel)
+    private static string DisplayModel(string windowsModel, IReadOnlyList<string> sensorNames)
     {
-        var match = _storageNames.FirstOrDefault(n => !string.IsNullOrWhiteSpace(n) && windowsModel.Contains(n, StringComparison.OrdinalIgnoreCase));
+        var match = sensorNames.FirstOrDefault(n => !string.IsNullOrWhiteSpace(n) && windowsModel.Contains(n, StringComparison.OrdinalIgnoreCase));
         if (match is not null) return match;
 
         var cleaned = Regex.Replace(windowsModel, @"\s+(ATA|SCSI|NVMe|USB)(\s+\w+)*\s+Device$", string.Empty, RegexOptions.IgnoreCase);
@@ -180,6 +207,7 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
 
     public void Dispose()
     {
+        _disposed = true;
         _sensors.SnapshotUpdated -= OnSnapshot;
         _loc.LanguageChanged -= OnLanguageChanged;
     }

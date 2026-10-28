@@ -6,8 +6,9 @@ namespace RiseModeMonitor.Core.Services;
 public interface IStorageCatalog
 {
     /// <summary>
-    /// Physical disks with their volumes. Computed once and cached (the query is slow), so the first
-    /// call can take a moment. Empty when Windows does not answer.
+    /// Physical disks with their volumes. The result is cached for a couple of minutes (the query is
+    /// slow) and refreshed afterwards, so a disk plugged in later shows up. The call can block while
+    /// the query runs: call it from a background thread. Empty when Windows does not answer.
     /// </summary>
     IReadOnlyList<StorageDisk> GetDisks();
 }
