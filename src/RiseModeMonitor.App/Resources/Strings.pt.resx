@@ -55,7 +55,8 @@
   <data name="Settings_DisplayHint" xml:space="preserve"><value>Envia dados do sistema ao bloco do water cooler. O próprio visor mostra apenas a temperatura da CPU.</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Alertas</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>Uma notificação aparece uma vez ao atingir o limite (e é rearmada depois que a temperatura cai 5 °C). O som se repete a cada 10 segundos até o valor voltar a ficar abaixo do limite.</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Uma notificação aparece uma vez ao atingir o limite (e é rearmada depois que a temperatura cai 5 °C). O som se repete a cada 10 segundos até o valor voltar a ficar abaixo do limite ou até o fim da duração do alarme definida abaixo.</value></data>
+  <data name="Alerts_Duration" xml:space="preserve"><value>Duração do alarme</value></data>
   <data name="Alerts_Cpu" xml:space="preserve"><value>Alertar quando a temperatura da CPU atingir o limite</value></data>
   <data name="Alerts_Gpu" xml:space="preserve"><value>Alertar quando a temperatura da GPU atingir o limite</value></data>
   <data name="Alerts_FanStopped" xml:space="preserve"><value>Alertar quando uma ventoinha em funcionamento parar (0 RPM)</value></data>
