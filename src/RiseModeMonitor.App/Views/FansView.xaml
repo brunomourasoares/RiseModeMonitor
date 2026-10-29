@@ -6,14 +6,14 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
 
-        <!-- Every fan card has exactly the same size; it fades out when nothing is spinning on the channel. -->
+        <!-- Every fan card has exactly the same size; channels with nothing spinning on them are hidden. -->
         <Style x:Key="FanCard" TargetType="Border" BasedOn="{StaticResource Card}">
             <Setter Property="Width" Value="270" />
             <Setter Property="Height" Value="252" />
             <Setter Property="Margin" Value="0,0,12,12" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsConnected}" Value="False">
-                    <Setter Property="Opacity" Value="0.5" />
+                    <Setter Property="Visibility" Value="Collapsed" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -29,7 +29,8 @@
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel>
+        <!-- Right margin: the scrollbar floats over the content, so keep it clear of the cards. -->
+        <StackPanel Margin="0,0,16,0">
             <TextBlock Text="{loc:Loc Nav_Fans}" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,8" />
 
             <TextBlock Text="{loc:Loc Fans_Intro}" TextWrapping="Wrap" MaxWidth="640" HorizontalAlignment="Left"

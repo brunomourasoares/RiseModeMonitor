@@ -46,7 +46,8 @@
 
                 <Grid>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding Groups}">
+                        <!-- Right margin: the scrollbar floats over the content, so keep it clear of the cards. -->
+                        <ItemsControl ItemsSource="{Binding Groups}" Margin="0,0,16,0">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border Style="{StaticResource Card}" Margin="0,0,0,12">
