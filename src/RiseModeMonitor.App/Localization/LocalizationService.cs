@@ -15,17 +15,17 @@ public sealed class LocalizationService : INotifyPropertyChanged
     public static LocalizationService Instance { get; } = new();
 
     /// <summary>
-    /// Native names are intentionally not translated. Codes match the satellite assembly folders
+    /// Native names (with a region code) are intentionally not translated. Codes match the satellite assembly folders
     /// of the build output (en is the neutral resource inside the exe).
     /// </summary>
     public static IReadOnlyList<LanguageOption> Languages { get; } = new LanguageOption[]
     {
-        new("en", "English"),
-        new("pt", "Português"),
-        new("es", "Español"),
-        new("it", "Italiano"),
-        new("fr", "Français"),
-        new("zh", "简体中文"),
+        new("en", "English (US)"),
+        new("pt", "Português (BR)"),
+        new("es", "Español (ES)"),
+        new("it", "Italiano (IT)"),
+        new("fr", "Français (FR)"),
+        new("zh", "简体中文 (CN)"),
     };
 
     private readonly ResourceManager _resources =

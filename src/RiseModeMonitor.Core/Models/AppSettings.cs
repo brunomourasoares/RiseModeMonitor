@@ -40,9 +40,12 @@ public sealed class AppSettings
     /// <summary>Alert when a fan that was spinning stops (0 RPM).</summary>
     public bool AlertFanStoppedEnabled { get; set; }
 
-    /// <summary>Which of the bundled sounds to play: 1 to 5 (alert-N.mp3).</summary>
+    /// <summary>Which of the bundled sounds to play: 1 to 12 (alert-N.mp3).</summary>
     public int AlertSound { get; set; } = 1;
 
     /// <summary>Alert volume, 0 to 100.</summary>
     public double AlertVolume { get; set; } = 70;
+
+    /// <summary>How long the alert sound keeps repeating once an alert starts, in seconds (5 to 120).</summary>
+    public int AlertSoundDurationSeconds { get; set; } = 30;
 }
