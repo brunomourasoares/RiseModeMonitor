@@ -6,7 +6,7 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
 
-        <!-- Every fan card has exactly the same size; channels with nothing spinning on them are hidden. -->
+        <!-- Every fan card has exactly the same size; channels that never had a fan are hidden. -->
         <Style x:Key="FanCard" TargetType="Border" BasedOn="{StaticResource Card}">
             <Setter Property="Width" Value="270" />
             <Setter Property="Height" Value="252" />
@@ -18,10 +18,11 @@
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="NoFanNote" TargetType="TextBlock">
+        <!-- Warning shown on a fan that used to spin and now reads 0 RPM. -->
+        <Style x:Key="StoppedNote" TargetType="TextBlock">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                <DataTrigger Binding="{Binding IsStopped}" Value="True">
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </Style.Triggers>
@@ -85,8 +86,8 @@
                                            FontWeight="SemiBold" VerticalAlignment="Top" Margin="0,4,0,0" />
 
                                 <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap"
-                                           Text="{loc:Loc Fans_NoFan}" Style="{StaticResource NoFanNote}"
-                                           Foreground="{DynamicResource TextMutedBrush}" />
+                                           Text="{Binding StoppedText}" Style="{StaticResource StoppedNote}"
+                                           Foreground="{DynamicResource AccentBrush}" />
 
                                 <CheckBox Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,0"
                                           IsChecked="{Binding IsManual}" IsEnabled="{Binding IsConnected}"

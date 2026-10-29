@@ -25,6 +25,13 @@ public sealed class AppSettings
     /// </summary>
     public Dictionary<string, string> FanNames { get; set; } = new();
 
+    /// <summary>
+    /// Ids of the fan channels that were seen spinning (RPM above 0) at least once. A channel that never spun is
+    /// hidden from the Fans page (empty header); one that did and now reads 0 RPM stays visible with a warning,
+    /// because it may have failed.
+    /// </summary>
+    public HashSet<string> FansSeenSpinning { get; set; } = new();
+
     // ---- Alerts (all off by default) ----
 
     /// <summary>Alert when the CPU temperature reaches <see cref="AlertCpuThreshold"/>.</summary>
