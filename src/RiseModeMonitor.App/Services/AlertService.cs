@@ -87,7 +87,7 @@ public sealed class AlertService : IDisposable
     public void PlaySound(int sound, double volumePercent)
     {
         // Lowercase folders match the build output (see the Link metadata in the csproj).
-        var path = Path.Combine(AppContext.BaseDirectory, "resources", "sounds", $"alert-{Math.Clamp(sound, 1, 5)}.mp3");
+        var path = Path.Combine(AppContext.BaseDirectory, "resources", "sounds", $"alert-{Math.Clamp(sound, 1, 12)}.mp3");
         if (!File.Exists(path)) return;
 
         try

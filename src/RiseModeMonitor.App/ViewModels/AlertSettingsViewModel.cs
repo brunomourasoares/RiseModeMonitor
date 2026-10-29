@@ -11,7 +11,7 @@ public sealed partial class AlertSettingsViewModel : ObservableObject
     private readonly ISettingsService _settings;
     private readonly AlertService _alerts;
 
-    public IReadOnlyList<int> SoundOptions { get; } = new[] { 1, 2, 3, 4, 5 };
+    public IReadOnlyList<int> SoundOptions { get; } = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
     [ObservableProperty] private bool _cpuEnabled;
     [ObservableProperty] private double _cpuThreshold;
@@ -32,7 +32,7 @@ public sealed partial class AlertSettingsViewModel : ObservableObject
         _gpuEnabled = current.AlertGpuEnabled;
         _gpuThreshold = current.AlertGpuThreshold;
         _fanStoppedEnabled = current.AlertFanStoppedEnabled;
-        _selectedSound = Math.Clamp(current.AlertSound, 1, 5);
+        _selectedSound = Math.Clamp(current.AlertSound, 1, 12);
         _volume = current.AlertVolume;
     }
 
