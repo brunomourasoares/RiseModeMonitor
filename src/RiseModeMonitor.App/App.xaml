@@ -10,6 +10,7 @@
                 <!-- Brand palette (Dark.xaml / Light.xaml). ThemeService swaps it at runtime. -->
                 <ResourceDictionary Source="Themes/Dark.xaml" />
                 <ResourceDictionary Source="Themes/Controls.xaml" />
+                <ResourceDictionary Source="Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

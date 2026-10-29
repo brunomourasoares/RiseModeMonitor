@@ -22,7 +22,8 @@ public sealed record AlertEvaluation(IReadOnlyList<AlertEvent> Notifications, bo
 /// <see cref="HysteresisC"/> below the limit, and never more than once per <see cref="MinNotificationInterval"/>.</item>
 /// <item>Sound: plays immediately and then every <see cref="SoundInterval"/> for as long as a condition holds
 /// (temperature at or above its limit, or a fan that stopped and has not recovered). It stops as soon as every
-/// condition is back to normal, so a game or a song cannot hide the alert.</item>
+/// condition is back to normal, or once <see cref="AppSettings.AlertSoundDurationSeconds"/> have passed since the
+/// alert started, so a game or a song cannot hide the alert but it does not ring forever.</item>
 /// <item>Fan: a fan counts as stopped after <see cref="StoppedReadingsRequired"/> consecutive 0 RPM readings of a
 /// channel that was previously spinning, to ignore sensor glitches and empty headers.</item>
 /// </list>
@@ -40,6 +41,7 @@ public sealed class AlertEvaluator
     private readonly HashSet<string> _stopped = new();
     private readonly Dictionary<string, int> _zeroReadings = new();
     private DateTimeOffset _lastSound = DateTimeOffset.MinValue;
+    private DateTimeOffset? _soundWindowStart;
 
     public AlertEvaluation Evaluate(
         DisplayTelemetry telemetry,
@@ -65,7 +67,19 @@ public sealed class AlertEvaluator
             ForgetFans();
         }
 
-        var playSound = active && now - _lastSound >= SoundInterval;
+        var playSound = false;
+        if (active)
+        {
+            // The alarm rings for a limited time counted from the moment the alert started.
+            _soundWindowStart ??= now;
+            var duration = TimeSpan.FromSeconds(Math.Clamp(settings.AlertSoundDurationSeconds, 5, 120));
+            playSound = now - _soundWindowStart.Value < duration && now - _lastSound >= SoundInterval;
+        }
+        else
+        {
+            _soundWindowStart = null; // everything is back to normal: the next alert starts a new window
+        }
+
         if (playSound) _lastSound = now;
 
         return new AlertEvaluation(notifications, playSound);

@@ -14,7 +14,7 @@
   <data name="Dashboard_Memory" xml:space="preserve"><value>Memoria</value></data>
   <data name="Dashboard_Storage" xml:space="preserve"><value>Almacenamiento</value></data>
   <data name="Dashboard_MemoryUsed" xml:space="preserve"><value>{0:0.#} GB en uso</value></data>
-  <data name="Dashboard_DriveSummary" xml:space="preserve"><value>{0:0.#} GB usados · {1:0.#} GB libres de {2:0.#} GB</value></data>
+  <data name="Dashboard_VolumeLine" xml:space="preserve"><value>{0} {1:0.#} GB / {2:0.#} GB - {3:0.#} GB libres</value></data>
 
   <data name="Hardware_Search" xml:space="preserve"><value>Buscar sensores</value></data>
   <data name="Hardware_NoSensors" xml:space="preserve"><value>No hay sensores para mostrar.</value></data>
@@ -55,7 +55,8 @@
   <data name="Settings_DisplayHint" xml:space="preserve"><value>Envía datos del sistema al bloque del water cooler. La propia pantalla solo muestra la temperatura de la CPU.</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Alertas</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>Aparece una notificación una vez al alcanzar el límite (se rearma cuando la temperatura baja 5 °C). El sonido se repite cada 10 segundos hasta que el valor vuelva a estar por debajo del límite.</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Aparece una notificación una vez al alcanzar el límite (se rearma cuando la temperatura baja 5 °C). El sonido se repite cada 10 segundos hasta que el valor vuelva a estar por debajo del límite o termine la duración de la alarma indicada abajo.</value></data>
+  <data name="Alerts_Duration" xml:space="preserve"><value>Duración de la alarma</value></data>
   <data name="Alerts_Cpu" xml:space="preserve"><value>Avisar cuando la temperatura de la CPU alcance el límite</value></data>
   <data name="Alerts_Gpu" xml:space="preserve"><value>Avisar cuando la temperatura de la GPU alcance el límite</value></data>
   <data name="Alerts_FanStopped" xml:space="preserve"><value>Avisar cuando un ventilador en marcha se detenga (0 RPM)</value></data>

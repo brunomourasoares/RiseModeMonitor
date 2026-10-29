@@ -14,7 +14,7 @@
   <data name="Dashboard_Memory" xml:space="preserve"><value>Memoria</value></data>
   <data name="Dashboard_Storage" xml:space="preserve"><value>Archiviazione</value></data>
   <data name="Dashboard_MemoryUsed" xml:space="preserve"><value>{0:0.#} GB in uso</value></data>
-  <data name="Dashboard_DriveSummary" xml:space="preserve"><value>{0:0.#} GB usati · {1:0.#} GB liberi su {2:0.#} GB</value></data>
+  <data name="Dashboard_VolumeLine" xml:space="preserve"><value>{0} {1:0.#} GB / {2:0.#} GB - {3:0.#} GB liberi</value></data>
 
   <data name="Hardware_Search" xml:space="preserve"><value>Cerca sensori</value></data>
   <data name="Hardware_NoSensors" xml:space="preserve"><value>Nessun sensore da mostrare.</value></data>
@@ -55,7 +55,8 @@
   <data name="Settings_DisplayHint" xml:space="preserve"><value>Invia i dati di sistema al blocco del water cooler. Il display mostra solo la temperatura della CPU.</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Avvisi</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>Una notifica appare una volta al raggiungimento del limite (si riarma quando la temperatura scende di 5 °C). Il suono si ripete ogni 10 secondi finché il valore non torna sotto il limite.</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Una notifica appare una volta al raggiungimento del limite (si riarma quando la temperatura scende di 5 °C). Il suono si ripete ogni 10 secondi finché il valore non torna sotto il limite o finché non termina la durata dell'allarme indicata sotto.</value></data>
+  <data name="Alerts_Duration" xml:space="preserve"><value>Durata dell'allarme</value></data>
   <data name="Alerts_Cpu" xml:space="preserve"><value>Avvisa quando la temperatura della CPU raggiunge il limite</value></data>
   <data name="Alerts_Gpu" xml:space="preserve"><value>Avvisa quando la temperatura della GPU raggiunge il limite</value></data>
   <data name="Alerts_FanStopped" xml:space="preserve"><value>Avvisa quando una ventola in funzione si ferma (0 RPM)</value></data>

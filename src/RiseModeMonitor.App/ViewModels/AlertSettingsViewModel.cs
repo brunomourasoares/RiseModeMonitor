@@ -11,7 +11,7 @@ public sealed partial class AlertSettingsViewModel : ObservableObject
     private readonly ISettingsService _settings;
     private readonly AlertService _alerts;
 
-    public IReadOnlyList<int> SoundOptions { get; } = new[] { 1, 2, 3, 4, 5 };
+    public IReadOnlyList<int> SoundOptions { get; } = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
     [ObservableProperty] private bool _cpuEnabled;
     [ObservableProperty] private double _cpuThreshold;
@@ -20,6 +20,7 @@ public sealed partial class AlertSettingsViewModel : ObservableObject
     [ObservableProperty] private bool _fanStoppedEnabled;
     [ObservableProperty] private int _selectedSound;
     [ObservableProperty] private double _volume;
+    [ObservableProperty] private double _soundDuration;
 
     public AlertSettingsViewModel(ISettingsService settings, AlertService alerts)
     {
@@ -32,8 +33,9 @@ public sealed partial class AlertSettingsViewModel : ObservableObject
         _gpuEnabled = current.AlertGpuEnabled;
         _gpuThreshold = current.AlertGpuThreshold;
         _fanStoppedEnabled = current.AlertFanStoppedEnabled;
-        _selectedSound = Math.Clamp(current.AlertSound, 1, 5);
+        _selectedSound = Math.Clamp(current.AlertSound, 1, 12);
         _volume = current.AlertVolume;
+        _soundDuration = Math.Clamp(current.AlertSoundDurationSeconds, 5, 120);
     }
 
     partial void OnCpuEnabledChanged(bool value) => Save(s => s.AlertCpuEnabled = value);
@@ -53,6 +55,8 @@ public sealed partial class AlertSettingsViewModel : ObservableObject
     }
 
     partial void OnVolumeChanged(double value) => Save(s => s.AlertVolume = Math.Round(value));
+
+    partial void OnSoundDurationChanged(double value) => Save(s => s.AlertSoundDurationSeconds = (int)Math.Round(value));
 
     [RelayCommand]
     private void TestSound() => _alerts.PlaySound(SelectedSound, Volume);

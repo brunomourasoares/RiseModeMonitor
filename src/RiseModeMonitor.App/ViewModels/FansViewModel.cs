@@ -14,6 +14,15 @@ public sealed partial class FanChannelViewModel : ObservableObject
     private readonly ISettingsService _settings;
     private bool _updating;
 
+    /// <summary>Consecutive 0 RPM readings (automatic mode) after which a channel counts as unused.</summary>
+    private const int IdleReadingsToHide = 3;
+
+    // Starts at the limit so channels that never spin are hidden from the first reading.
+    private int _idleReadings = IdleReadingsToHide;
+
+    // What the hardware reports right now; used as the starting point when manual mode is switched on.
+    private double? _reportedPercent;
+
     public string Id { get; }
 
     /// <summary>The generic name reported by the hardware library, e.g. "Fan #1".</summary>
@@ -37,8 +46,9 @@ public sealed partial class FanChannelViewModel : ObservableObject
     [ObservableProperty] private string _reportedPercentText = "--";
 
     /// <summary>
-    /// False for channels with nothing spinning on them (0 RPM while in automatic mode), e.g. an
-    /// unused header. Channels under manual control always stay usable so they can be restored.
+    /// False for channels with nothing spinning on them (0 RPM for a few readings in a row while in
+    /// automatic mode), e.g. an unused header: the page hides them. Channels under manual control always
+    /// stay visible so they can be restored.
     /// </summary>
     [ObservableProperty] private bool _isConnected = true;
 
@@ -55,6 +65,14 @@ public sealed partial class FanChannelViewModel : ObservableObject
             : Name;
 
         Update(channel);
+
+        // Initial position of the slider only; afterwards it never follows the RPM.
+        if (channel.CurrentPercent is float initial)
+        {
+            _updating = true;
+            try { Percent = initial; }
+            finally { _updating = false; }
+        }
     }
 
     partial void OnDisplayNameChanged(string value)
@@ -77,9 +95,21 @@ public sealed partial class FanChannelViewModel : ObservableObject
     {
         if (_updating) return;
 
-        // Starting manual mode keeps the speed the fan is running at right now.
-        if (value) _fans.SetManual(Id, (float)Percent);
-        else _fans.SetAutomatic(Id);
+        if (!value)
+        {
+            _fans.SetAutomatic(Id);
+            return;
+        }
+
+        // Starting manual mode keeps the speed the fan is running at right now: the slider jumps there once.
+        if (_reportedPercent is double running)
+        {
+            _updating = true;
+            try { Percent = running; }
+            finally { _updating = false; }
+        }
+
+        _fans.SetManual(Id, (float)Percent);
     }
 
     partial void OnPercentChanged(double value)
@@ -99,11 +129,13 @@ public sealed partial class FanChannelViewModel : ObservableObject
             RpmText = channel.Rpm is float rpm ? $"{rpm:0} RPM" : "--";
             ReportedPercentText = channel.CurrentPercent is float reported ? $"{reported:0} %" : "--";
             IsManual = channel.IsManual;
-            IsConnected = channel.IsManual || (channel.Rpm ?? 0) > 0;
+            _reportedPercent = channel.CurrentPercent;
 
-            // In automatic mode the slider just mirrors what the BIOS is doing.
-            if (!channel.IsManual && channel.CurrentPercent is float current)
-                Percent = current;
+            if (channel.IsManual || (channel.Rpm ?? 0) > 0) _idleReadings = 0;
+            else if (_idleReadings < IdleReadingsToHide) _idleReadings++;
+            IsConnected = _idleReadings < IdleReadingsToHide;
+
+            // The slider is the speed the user asked for: it does not move with the RPM.
         }
         finally
         {
@@ -157,7 +189,7 @@ public sealed partial class FansViewModel : ObservableObject, IDisposable
                 Channels[i].Update(channels[i]);
         }
 
-        IsEmpty = Channels.Count == 0;
+        IsEmpty = !Channels.Any(c => c.IsConnected);
     }
 
     [RelayCommand]

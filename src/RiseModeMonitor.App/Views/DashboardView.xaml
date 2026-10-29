@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:loc="clr-namespace:RiseModeMonitor.Localization">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel>
+        <StackPanel Margin="0,0,16,0">
             <TextBlock Text="{loc:Loc Nav_Dashboard}" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,16" />
 
             <UniformGrid Columns="3">
@@ -42,15 +42,25 @@
             </UniformGrid>
 
             <TextBlock Text="{loc:Loc Dashboard_Storage}" FontSize="18" FontWeight="SemiBold" Margin="0,12,0,12" />
-            <ItemsControl ItemsSource="{Binding Drives}">
+
+            <!-- One card per physical device: model name on top, one line and one usage bar per volume. -->
+            <ItemsControl ItemsSource="{Binding Disks}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                             <StackPanel>
-                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
-                                <TextBlock Text="{Binding Summary}" Foreground="{DynamicResource TextMutedBrush}" Margin="0,2,0,8" />
-                                <ProgressBar Value="{Binding UsedPercent, Mode=OneWay}" Maximum="100" Height="6"
-                                             Foreground="{DynamicResource AccentBrush}" Background="{DynamicResource SurfaceAltBrush}" BorderThickness="0" />
+                                <TextBlock Text="{Binding Model}" FontWeight="SemiBold" FontSize="15" />
+                                <ItemsControl ItemsSource="{Binding Volumes}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="0,10,0,0">
+                                                <TextBlock Text="{Binding Line}" Foreground="{DynamicResource TextMutedBrush}" Margin="0,0,0,6" />
+                                                <ProgressBar Value="{Binding UsedPercent, Mode=OneWay}" Maximum="100" Height="6"
+                                                             Foreground="{DynamicResource AccentBrush}" Background="{DynamicResource SurfaceAltBrush}" BorderThickness="0" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </StackPanel>
                         </Border>
                     </DataTemplate>

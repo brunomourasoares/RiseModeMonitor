@@ -14,7 +14,7 @@
   <data name="Dashboard_Memory" xml:space="preserve"><value>内存</value></data>
   <data name="Dashboard_Storage" xml:space="preserve"><value>存储</value></data>
   <data name="Dashboard_MemoryUsed" xml:space="preserve"><value>已用 {0:0.#} GB</value></data>
-  <data name="Dashboard_DriveSummary" xml:space="preserve"><value>已用 {0:0.#} GB · 可用 {1:0.#} GB / 共 {2:0.#} GB</value></data>
+  <data name="Dashboard_VolumeLine" xml:space="preserve"><value>{0} {1:0.#} GB / {2:0.#} GB - 可用 {3:0.#} GB</value></data>
 
   <data name="Hardware_Search" xml:space="preserve"><value>搜索传感器</value></data>
   <data name="Hardware_NoSensors" xml:space="preserve"><value>没有可显示的传感器。</value></data>
@@ -55,7 +55,8 @@
   <data name="Settings_DisplayHint" xml:space="preserve"><value>将系统数据发送到水冷头。屏幕本身仅显示 CPU 温度。</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>警报</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>达到限值时只弹出一次通知（温度下降 5 °C 后重新待命）。声音每 10 秒重复一次，直到数值回落到限值以下。</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>达到限值时只弹出一次通知（温度下降 5 °C 后重新待命）。声音每 10 秒重复一次，直到数值回落到限值以下，或下方设置的报警时长结束。</value></data>
+  <data name="Alerts_Duration" xml:space="preserve"><value>报警时长</value></data>
   <data name="Alerts_Cpu" xml:space="preserve"><value>CPU 温度达到限值时提醒</value></data>
   <data name="Alerts_Gpu" xml:space="preserve"><value>GPU 温度达到限值时提醒</value></data>
   <data name="Alerts_FanStopped" xml:space="preserve"><value>运转中的风扇停转时提醒（0 RPM）</value></data>

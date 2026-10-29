@@ -14,7 +14,7 @@
   <data name="Dashboard_Memory" xml:space="preserve"><value>Memory</value></data>
   <data name="Dashboard_Storage" xml:space="preserve"><value>Storage</value></data>
   <data name="Dashboard_MemoryUsed" xml:space="preserve"><value>{0:0.#} GB used</value></data>
-  <data name="Dashboard_DriveSummary" xml:space="preserve"><value>{0:0.#} GB used · {1:0.#} GB free of {2:0.#} GB</value></data>
+  <data name="Dashboard_VolumeLine" xml:space="preserve"><value>{0} {1:0.#} GB / {2:0.#} GB - {3:0.#} GB free</value></data>
 
   <data name="Hardware_Search" xml:space="preserve"><value>Search sensors</value></data>
   <data name="Hardware_NoSensors" xml:space="preserve"><value>No sensors to show.</value></data>
@@ -55,7 +55,8 @@
   <data name="Settings_DisplayHint" xml:space="preserve"><value>Sends system data to the water cooler block. The display itself shows only the CPU temperature.</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Alerts</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>A notification appears once when the limit is reached (it re-arms after the temperature drops 5 °C). The sound repeats every 10 seconds until the value is back below the limit.</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>A notification appears once when the limit is reached (it re-arms after the temperature drops 5 °C). The sound repeats every 10 seconds until the value is back below the limit or the alarm duration set below is over.</value></data>
+  <data name="Alerts_Duration" xml:space="preserve"><value>Alarm duration</value></data>
   <data name="Alerts_Cpu" xml:space="preserve"><value>Alert when the CPU temperature reaches the limit</value></data>
   <data name="Alerts_Gpu" xml:space="preserve"><value>Alert when the GPU temperature reaches the limit</value></data>
   <data name="Alerts_FanStopped" xml:space="preserve"><value>Alert when a running fan stops (0 RPM)</value></data>

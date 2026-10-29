@@ -14,7 +14,7 @@
   <data name="Dashboard_Memory" xml:space="preserve"><value>Memória</value></data>
   <data name="Dashboard_Storage" xml:space="preserve"><value>Armazenamento</value></data>
   <data name="Dashboard_MemoryUsed" xml:space="preserve"><value>{0:0.#} GB em uso</value></data>
-  <data name="Dashboard_DriveSummary" xml:space="preserve"><value>{0:0.#} GB usados · {1:0.#} GB livres de {2:0.#} GB</value></data>
+  <data name="Dashboard_VolumeLine" xml:space="preserve"><value>{0} {1:0.#} GB / {2:0.#} GB - {3:0.#} GB livres</value></data>
 
   <data name="Hardware_Search" xml:space="preserve"><value>Pesquisar sensores</value></data>
   <data name="Hardware_NoSensors" xml:space="preserve"><value>Nenhum sensor para mostrar.</value></data>
@@ -55,7 +55,8 @@
   <data name="Settings_DisplayHint" xml:space="preserve"><value>Envia dados do sistema ao bloco do water cooler. O próprio visor mostra apenas a temperatura da CPU.</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Alertas</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>Uma notificação aparece uma vez ao atingir o limite (e é rearmada depois que a temperatura cai 5 °C). O som se repete a cada 10 segundos até o valor voltar a ficar abaixo do limite.</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Uma notificação aparece uma vez ao atingir o limite (e é rearmada depois que a temperatura cai 5 °C). O som se repete a cada 10 segundos até o valor voltar a ficar abaixo do limite ou até o fim da duração do alarme definida abaixo.</value></data>
+  <data name="Alerts_Duration" xml:space="preserve"><value>Duração do alarme</value></data>
   <data name="Alerts_Cpu" xml:space="preserve"><value>Alertar quando a temperatura da CPU atingir o limite</value></data>
   <data name="Alerts_Gpu" xml:space="preserve"><value>Alertar quando a temperatura da GPU atingir o limite</value></data>
   <data name="Alerts_FanStopped" xml:space="preserve"><value>Alertar quando uma ventoinha em funcionamento parar (0 RPM)</value></data>
