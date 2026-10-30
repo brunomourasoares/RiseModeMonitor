@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows; // Necessário para o MessageBox
 using CommunityToolkit.Mvvm.ComponentModel;
 using RiseModeMonitor.Core.Models;
 using RiseModeMonitor.Core.Services;
@@ -6,7 +10,6 @@ using RiseModeMonitor.Services;
 
 namespace RiseModeMonitor.ViewModels;
 
-/// <summary>Theme choice whose label follows the current language.</summary>
 public sealed class ThemeOption : ObservableObject
 {
     private readonly LocalizationService _loc;
@@ -21,7 +24,6 @@ public sealed class ThemeOption : ObservableObject
     }
 
     public ThemeMode Mode { get; }
-
     public string Label => _loc[_labelKey];
 }
 
@@ -33,11 +35,11 @@ public sealed partial class SettingsViewModel : ObservableObject
     private readonly LocalizationService _loc;
     private bool _syncing;
 
+    // Evento limpo para avisar a View quando der erro
+    public event Action<string>? OnErrorOccurred;
+
     public IReadOnlyList<ThemeOption> ThemeOptions { get; }
-
     public IReadOnlyList<LanguageOption> LanguageOptions => LocalizationService.Languages;
-
-    /// <summary>Temperature and fan alert options (own card in the page).</summary>
     public AlertSettingsViewModel Alerts { get; }
 
     [ObservableProperty] private ThemeOption _selectedTheme;
@@ -46,7 +48,6 @@ public sealed partial class SettingsViewModel : ObservableObject
     [ObservableProperty] private bool _startMinimized;
     [ObservableProperty] private bool _closeToTray;
     [ObservableProperty] private bool _displayEnabled;
-    [ObservableProperty] private string _statusMessage = string.Empty;
 
     public SettingsViewModel(
         ISettingsService settings,
@@ -73,7 +74,11 @@ public sealed partial class SettingsViewModel : ObservableObject
         _selectedTheme = ThemeOptions.First(o => o.Mode == settings.Current.Theme);
         _selectedLanguage = LocalizationService.Languages.FirstOrDefault(l => l.Code == savedLanguage)
                             ?? LocalizationService.Languages[0];
-        _startWithWindows = autostart.IsEnabled(); // real system state, not a stored flag
+        
+        _syncing = true;
+        _startWithWindows = autostart.IsEnabled();
+        _syncing = false;
+
         _startMinimized = settings.Current.StartMinimized;
         _closeToTray = settings.Current.CloseToTray;
         _displayEnabled = settings.Current.DisplayEnabled;
@@ -99,15 +104,15 @@ public sealed partial class SettingsViewModel : ObservableObject
 
         if (_autostart.SetEnabled(value))
         {
-            StatusMessage = string.Empty;
             return;
         }
 
-        // Revert the checkbox and explain.
+        // Reverte o checkbox e dispara o evento de erro
         _syncing = true;
         StartWithWindows = !value;
         _syncing = false;
-        StatusMessage = _loc["Settings_AutostartError"];
+
+        OnErrorOccurred?.Invoke(_loc["Settings_AutostartError"]);
     }
 
     partial void OnStartMinimizedChanged(bool value)
