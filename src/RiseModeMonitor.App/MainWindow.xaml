@@ -46,8 +46,9 @@
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="8,8,8,24">
                         <Image Source="/Resources/Images/rise-monitor-256.png" Width="30" Height="30"
                                RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock Text="RISE MODE" FontSize="18" FontWeight="Bold" Margin="10,0,0,0"
-                                   VerticalAlignment="Center" Foreground="{DynamicResource AccentBrush}" />
+                        <TextBlock Text="RISEMODE" FontSize="18" FontWeight="Bold" Margin="10,0,0,0"
+           VerticalAlignment="Center" Foreground="{DynamicResource AccentBrush}"
+           FontFamily="./Resources/Fonts/#Cyberiada" />
                     </StackPanel>
                     <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}"
                              ItemContainerStyle="{StaticResource NavItemStyle}"
