@@ -20,10 +20,9 @@ public sealed record AlertEvaluation(IReadOnlyList<AlertEvent> Notifications, bo
 /// <list type="bullet">
 /// <item>Notification: shown once when the limit is reached; it re-arms only after the temperature drops
 /// <see cref="HysteresisC"/> below the limit, and never more than once per <see cref="MinNotificationInterval"/>.</item>
-/// <item>Sound: plays immediately and then every <see cref="SoundInterval"/> for as long as a condition holds
-/// (temperature at or above its limit, or a fan that stopped and has not recovered). It stops as soon as every
-/// condition is back to normal, or once <see cref="AppSettings.AlertSoundDurationSeconds"/> have passed since the
-/// alert started, so a game or a song cannot hide the alert but it does not ring forever.</item>
+/// <item>Sound: plays immediately and then every <see cref="AppSettings.AlertSoundIntervalSeconds"/> for as long as a
+/// condition holds (temperature at or above its limit, or a fan that stopped and has not recovered). It stops as soon
+/// as every condition is back to normal, so a game or a song cannot hide the alert.</item>
 /// <item>Fan: a fan counts as stopped after <see cref="StoppedReadingsRequired"/> consecutive 0 RPM readings of a
 /// channel that was previously spinning, to ignore sensor glitches and empty headers.</item>
 /// </list>
@@ -33,7 +32,8 @@ public sealed class AlertEvaluator
     public const double HysteresisC = 5;
     public const int StoppedReadingsRequired = 3;
     public static readonly TimeSpan MinNotificationInterval = TimeSpan.FromMinutes(1);
-    public static readonly TimeSpan SoundInterval = TimeSpan.FromSeconds(10);
+    public const int MinSoundIntervalSeconds = 3;
+    public const int MaxSoundIntervalSeconds = 120;
 
     private readonly HashSet<AlertKind> _disarmed = new();
     private readonly Dictionary<AlertKind, DateTimeOffset> _lastNotified = new();
@@ -41,7 +41,6 @@ public sealed class AlertEvaluator
     private readonly HashSet<string> _stopped = new();
     private readonly Dictionary<string, int> _zeroReadings = new();
     private DateTimeOffset _lastSound = DateTimeOffset.MinValue;
-    private DateTimeOffset? _soundWindowStart;
 
     public AlertEvaluation Evaluate(
         DisplayTelemetry telemetry,
@@ -67,19 +66,10 @@ public sealed class AlertEvaluator
             ForgetFans();
         }
 
-        var playSound = false;
-        if (active)
-        {
-            // The alarm rings for a limited time counted from the moment the alert started.
-            _soundWindowStart ??= now;
-            var duration = TimeSpan.FromSeconds(Math.Clamp(settings.AlertSoundDurationSeconds, 5, 120));
-            playSound = now - _soundWindowStart.Value < duration && now - _lastSound >= SoundInterval;
-        }
-        else
-        {
-            _soundWindowStart = null; // everything is back to normal: the next alert starts a new window
-        }
-
+        // While something is wrong the sound repeats at the interval chosen by the user.
+        var interval = TimeSpan.FromSeconds(
+            Math.Clamp(settings.AlertSoundIntervalSeconds, MinSoundIntervalSeconds, MaxSoundIntervalSeconds));
+        var playSound = active && now - _lastSound >= interval;
         if (playSound) _lastSound = now;
 
         return new AlertEvaluation(notifications, playSound);

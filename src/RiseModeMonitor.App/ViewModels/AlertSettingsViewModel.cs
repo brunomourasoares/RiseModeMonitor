@@ -20,7 +20,7 @@ public sealed partial class AlertSettingsViewModel : ObservableObject
     [ObservableProperty] private bool _fanStoppedEnabled;
     [ObservableProperty] private int _selectedSound;
     [ObservableProperty] private double _volume;
-    [ObservableProperty] private double _soundDuration;
+    [ObservableProperty] private double _soundInterval;
 
     public AlertSettingsViewModel(ISettingsService settings, AlertService alerts)
     {
@@ -35,7 +35,8 @@ public sealed partial class AlertSettingsViewModel : ObservableObject
         _fanStoppedEnabled = current.AlertFanStoppedEnabled;
         _selectedSound = Math.Clamp(current.AlertSound, 1, 12);
         _volume = current.AlertVolume;
-        _soundDuration = Math.Clamp(current.AlertSoundDurationSeconds, 5, 120);
+        _soundInterval = Math.Clamp(
+            current.AlertSoundIntervalSeconds, AlertEvaluator.MinSoundIntervalSeconds, AlertEvaluator.MaxSoundIntervalSeconds);
     }
 
     partial void OnCpuEnabledChanged(bool value) => Save(s => s.AlertCpuEnabled = value);
@@ -56,7 +57,7 @@ public sealed partial class AlertSettingsViewModel : ObservableObject
 
     partial void OnVolumeChanged(double value) => Save(s => s.AlertVolume = Math.Round(value));
 
-    partial void OnSoundDurationChanged(double value) => Save(s => s.AlertSoundDurationSeconds = (int)Math.Round(value));
+    partial void OnSoundIntervalChanged(double value) => Save(s => s.AlertSoundIntervalSeconds = (int)Math.Round(value));
 
     [RelayCommand]
     private void TestSound() => _alerts.PlaySound(SelectedSound, Volume);

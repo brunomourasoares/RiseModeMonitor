@@ -53,6 +53,9 @@ public sealed class AppSettings
     /// <summary>Alert volume, 0 to 100.</summary>
     public double AlertVolume { get; set; } = 70;
 
-    /// <summary>How long the alert sound keeps repeating once an alert starts, in seconds (5 to 120).</summary>
-    public int AlertSoundDurationSeconds { get; set; } = 30;
+    /// <summary>
+    /// Seconds between two plays of the alert sound while an alert persists (3 to 120). Older settings files may
+    /// still hold the removed AlertSoundDurationSeconds; it is ignored.
+    /// </summary>
+    public int AlertSoundIntervalSeconds { get; set; } = 10;
 }
