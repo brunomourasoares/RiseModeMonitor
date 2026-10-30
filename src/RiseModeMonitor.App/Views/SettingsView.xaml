@@ -254,19 +254,19 @@
                                    Text="{Binding Volume, StringFormat={}{0:0} %}" />
                     </Grid>
 
-                    <!-- Alarm duration -->
+                    <!-- Interval between two plays of the alert sound -->
                     <StackPanel Orientation="Horizontal" Margin="0,16,0,4">
-                        <TextBlock Text="{loc:Loc Alerts_Duration}" Margin="0,0,0,0" VerticalAlignment="Center" />
+                        <TextBlock Text="{loc:Loc Alerts_Interval}" Margin="0,0,0,0" VerticalAlignment="Center" />
                     </StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="70" />
                         </Grid.ColumnDefinitions>
-                        <Slider Minimum="5" Maximum="120" SmallChange="1" LargeChange="5"
-                                Value="{Binding SoundDuration}" VerticalAlignment="Center" />
+                        <Slider Minimum="3" Maximum="120" SmallChange="1" LargeChange="5"
+                                Value="{Binding SoundInterval}" VerticalAlignment="Center" />
                         <TextBlock Grid.Column="1" TextAlignment="Right" VerticalAlignment="Center"
-                                   Text="{Binding SoundDuration, StringFormat={}{0:0} s}" />
+                                   Text="{Binding SoundInterval, StringFormat={}{0:0} s}" />
                     </Grid>
                     <Button HorizontalAlignment="Left" Margin="0,16,0,0" Padding="14,8"
                             Command="{Binding TestSoundCommand}">
