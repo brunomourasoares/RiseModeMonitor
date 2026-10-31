@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using LibreHardwareMonitor.Hardware;
 using RiseModeMonitor.Core.Models;
 using RiseModeMonitor.Core.Services;
@@ -70,9 +71,10 @@ public sealed class LibreHardwareSensorService : ISensorService, IFanControlServ
             }
             SnapshotUpdated?.Invoke(this, snapshot);
         }
-        catch
+        catch (Exception ex)
         {
-            // TODO: add logging (Microsoft.Extensions.Logging / Serilog).
+            // A failed tick must not stop the timer; the next one retries.
+            Debug.WriteLine($"Sensor update failed: {ex.Message}");
         }
         finally
         {
