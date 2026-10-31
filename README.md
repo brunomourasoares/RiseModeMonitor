@@ -51,4 +51,4 @@ O workflow **Build** (GitHub Actions, `windows-latest`) compila a solução em R
 - [x] Envio de dados ao visor HID
 - [ ] Iluminação RGB/ARGB (a página ainda é um espaço reservado)
 - [ ] Curvas de ventoinha (hoje só há controle manual)
-- [ ] Log de erros (vários `catch` ainda engolem exceções em ssilêncio)
+- [ ] Log de erros (vários `catch` ainda engolem exceções em silêncio)
