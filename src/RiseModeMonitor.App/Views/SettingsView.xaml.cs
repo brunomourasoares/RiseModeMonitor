@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using RiseModeMonitor.Localization;
 using RiseModeMonitor.ViewModels;
 
 namespace RiseModeMonitor.Views;
@@ -43,6 +44,7 @@ public partial class SettingsView : UserControl
 
     private void OnErrorReceived(string message)
     {
-        MessageBox.Show(message, "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
+        // The title follows the current language (reuses the "Settings" menu text; no hardcoded string).
+        MessageBox.Show(message, LocalizationService.Instance["Nav_Settings"], MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 }

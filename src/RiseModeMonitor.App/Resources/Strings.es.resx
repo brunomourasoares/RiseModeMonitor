@@ -55,8 +55,8 @@
   <data name="Settings_DisplayHint" xml:space="preserve"><value>Envía datos del sistema al bloque del water cooler. (Solo para los modelos RM-WAI-0X-ARGB y RM-WAIB-0X-ARGB).</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Alertas</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>Aparece una notificación una vez al alcanzar el límite (se rearma cuando la temperatura baja 5 °C). El sonido se repite hasta que el valor vuelva a estar por debajo del límite o termine la duración de la alarma indicada abajo.</value></data>
-  <data name="Alerts_Duration" xml:space="preserve"><value>Duración de la alarma</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Aparece una notificación una vez al alcanzar el límite (se rearma cuando la temperatura baja 5 °C). El sonido se repite en el intervalo indicado abajo hasta que el valor vuelva a estar por debajo del límite.</value></data>
+  <data name="Alerts_Interval" xml:space="preserve"><value>Intervalo entre sonidos</value></data>
   <data name="Alerts_Cpu" xml:space="preserve"><value>Avisar cuando la temperatura de la CPU alcance el límite</value></data>
   <data name="Alerts_Gpu" xml:space="preserve"><value>Avisar cuando la temperatura de la GPU alcance el límite</value></data>
   <data name="Alerts_FanStopped" xml:space="preserve"><value>Avisar cuando un ventilador en marcha se detenga (0 RPM)</value></data>

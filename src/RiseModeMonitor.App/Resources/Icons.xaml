@@ -1,9 +1,7 @@
 <!--
-  Icons converted from Font Awesome Free 7.3.1 (solid) SVGs in Resources/Images.
-  Font Awesome Free by @fontawesome - https://fontawesome.com - Icons licensed CC BY 4.0
-  (https://fontawesome.com/license/free). Copyright 2026 Fonticons, Inc.
+  Icons as XAML geometries (SVG path data; no icon library needed).
 
-  Usage (no library needed; the path data is the SVG "d" attribute, viewBox 0 0 640 640):
+  Usage:
     <Path Data="{StaticResource Icon.Gear}" Fill="{DynamicResource TextBrush}"
           Stretch="Uniform" Width="18" Height="18" />
 -->

@@ -52,11 +52,11 @@
 
   <data name="Settings_Display" xml:space="preserve"><value>水冷屏幕</value></data>
   <data name="Settings_DisplayEnabled" xml:space="preserve"><value>在屏幕上显示系统数据</value></data>
-  <data name="Settings_DisplayHint" xml:space="preserve"><value>将系统数据发送到水冷头。仅适用于 RM-WAI-0X-ARGB 和 RM-WAIB-0X-ARGB 型号）。</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>将系统数据发送到水冷头。（仅适用于 RM-WAI-0X-ARGB 和 RM-WAIB-0X-ARGB 型号）。</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>警报</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>达到限值时只弹出一次通知（温度下降 5 °C 后重新待命）。声音在重复 直到数值回落到限值以下，或下方设置的报警时长结束。</value></data>
-  <data name="Alerts_Duration" xml:space="preserve"><value>报警时长</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>达到限值时只弹出一次通知（温度下降 5 °C 后重新待命）。声音按下方设置的间隔重复播放，直到数值回落到限值以下。</value></data>
+  <data name="Alerts_Interval" xml:space="preserve"><value>提示音间隔</value></data>
   <data name="Alerts_Cpu" xml:space="preserve"><value>CPU 温度达到限值时提醒</value></data>
   <data name="Alerts_Gpu" xml:space="preserve"><value>GPU 温度达到限值时提醒</value></data>
   <data name="Alerts_FanStopped" xml:space="preserve"><value>运转中的风扇停转时提醒（0 RPM）</value></data>

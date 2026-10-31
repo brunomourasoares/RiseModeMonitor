@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RiseModeMonitor.Core.Models;
 using RiseModeMonitor.Core.Services;
+using RiseModeMonitor.Localization;
 
 namespace RiseModeMonitor.ViewModels;
 
@@ -14,11 +15,10 @@ public sealed partial class FanChannelViewModel : ObservableObject
     private readonly ISettingsService _settings;
     private bool _updating;
 
-    /// <summary>Consecutive 0 RPM readings (automatic mode) after which a channel counts as unused.</summary>
-    private const int IdleReadingsToHide = 3;
+    /// <summary>Consecutive 0 RPM readings (automatic mode) after which a fan that used to spin is reported as stopped.</summary>
+    private const int IdleReadingsToWarn = 3;
 
-    // Starts at the limit so channels that never spin are hidden from the first reading.
-    private int _idleReadings = IdleReadingsToHide;
+    private int _idleReadings;
 
     // What the hardware reports right now; used as the starting point when manual mode is switched on.
     private double? _reportedPercent;
@@ -46,11 +46,16 @@ public sealed partial class FanChannelViewModel : ObservableObject
     [ObservableProperty] private string _reportedPercentText = "--";
 
     /// <summary>
-    /// False for channels with nothing spinning on them (0 RPM for a few readings in a row while in
-    /// automatic mode), e.g. an unused header: the page hides them. Channels under manual control always
-    /// stay visible so they can be restored.
+    /// False only for channels that never had a fan: nothing is spinning now, it is not under manual
+    /// control and it is not in the history of fans seen spinning (<see cref="AppSettings.FansSeenSpinning"/>).
+    /// The page hides them. A fan that spun before and stopped stays visible so the problem is noticed.
     /// </summary>
     [ObservableProperty] private bool _isConnected = true;
+
+    /// <summary>A fan seen spinning before now reads 0 RPM (a few readings in a row): it may have failed.</summary>
+    [ObservableProperty] private bool _isStopped;
+
+    [ObservableProperty] private string _stoppedText = string.Empty;
 
     public FanChannelViewModel(FanChannel channel, IFanControlService fans, ISettingsService settings)
     {
@@ -131,9 +136,18 @@ public sealed partial class FanChannelViewModel : ObservableObject
             IsManual = channel.IsManual;
             _reportedPercent = channel.CurrentPercent;
 
-            if (channel.IsManual || (channel.Rpm ?? 0) > 0) _idleReadings = 0;
-            else if (_idleReadings < IdleReadingsToHide) _idleReadings++;
-            IsConnected = _idleReadings < IdleReadingsToHide;
+            var spinning = (channel.Rpm ?? 0) > 0;
+
+            // History: remember every channel that ever spun, so a later failure is not mistaken for an empty header.
+            if (spinning && _settings.Current.FansSeenSpinning.Add(Id)) _settings.Save();
+            var hasSpun = _settings.Current.FansSeenSpinning.Contains(Id);
+
+            if (channel.IsManual || spinning) _idleReadings = 0;
+            else if (_idleReadings < IdleReadingsToWarn) _idleReadings++;
+
+            IsConnected = channel.IsManual || spinning || hasSpun;
+            IsStopped = hasSpun && !channel.IsManual && !spinning && _idleReadings >= IdleReadingsToWarn;
+            StoppedText = IsStopped ? LocalizationService.Instance.Format("Alert_Fan", DisplayName) : string.Empty;
 
             // The slider is the speed the user asked for: it does not move with the RPM.
         }
