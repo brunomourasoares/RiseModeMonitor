@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -31,8 +32,11 @@ public sealed class JsonSettingsService : ISettingsService
             Directory.CreateDirectory(Path.GetDirectoryName(_path)!);
             File.WriteAllText(_path, JsonSerializer.Serialize(Current, Options));
         }
-        catch (IOException) { /* TODO: logging */ }
-        catch (UnauthorizedAccessException) { /* TODO: logging */ }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            // Settings are best effort: keep running, but leave a trace for the debugger.
+            Debug.WriteLine($"Could not save settings to {_path}: {ex.Message}");
+        }
     }
 
     private AppSettings Load()
@@ -45,6 +49,7 @@ public sealed class JsonSettingsService : ISettingsService
         catch (Exception ex) when (ex is IOException or JsonException or UnauthorizedAccessException)
         {
             // Corrupted or unreadable file: fall back to defaults.
+            Debug.WriteLine($"Settings file ignored ({_path}): {ex.Message}");
         }
         return new AppSettings();
     }
