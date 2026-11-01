@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using RiseModeMonitor.Core.Models;
 using RiseModeMonitor.Core.Services;
 using RiseModeMonitor.Localization;
+using RiseModeMonitor.Services;
 
 namespace RiseModeMonitor.ViewModels;
 
@@ -13,6 +14,7 @@ public sealed partial class FanChannelViewModel : ObservableObject
 {
     private readonly IFanControlService _fans;
     private readonly ISettingsService _settings;
+    private readonly Action<string> _onForget;
     private bool _updating;
 
     /// <summary>Consecutive 0 RPM readings (automatic mode) after which a fan that used to spin is reported as stopped.</summary>
@@ -57,10 +59,12 @@ public sealed partial class FanChannelViewModel : ObservableObject
 
     [ObservableProperty] private string _stoppedText = string.Empty;
 
-    public FanChannelViewModel(FanChannel channel, IFanControlService fans, ISettingsService settings)
+    public FanChannelViewModel(
+        FanChannel channel, IFanControlService fans, ISettingsService settings, Action<string> onForget)
     {
         _fans = fans;
         _settings = settings;
+        _onForget = onForget;
         Id = channel.Id;
         Name = channel.Name;
         HardwareName = channel.HardwareName;
@@ -78,6 +82,22 @@ public sealed partial class FanChannelViewModel : ObservableObject
             try { Percent = initial; }
             finally { _updating = false; }
         }
+    }
+
+    /// <summary>
+    /// The user removed this fan on purpose: forget that it ever spun, so the card disappears and the stopped-fan
+    /// alert stops ringing for it. It comes back by itself if the channel spins again.
+    /// </summary>
+    [RelayCommand]
+    private void Forget()
+    {
+        if (_settings.Current.FansSeenSpinning.Remove(Id)) _settings.Save();
+        _onForget(Id);
+
+        _idleReadings = 0;
+        IsStopped = false;
+        StoppedText = string.Empty;
+        IsConnected = IsManual; // hidden right away; the next reading keeps it hidden while nothing spins
     }
 
     partial void OnDisplayNameChanged(string value)
@@ -170,16 +190,18 @@ public sealed partial class FansViewModel : ObservableObject, IDisposable
     private readonly ISensorService _sensors;
     private readonly IFanControlService _fans;
     private readonly ISettingsService _settings;
+    private readonly AlertService _alerts;
 
     public ObservableCollection<FanChannelViewModel> Channels { get; } = new();
 
     [ObservableProperty] private bool _isEmpty = true;
 
-    public FansViewModel(ISensorService sensors, IFanControlService fans, ISettingsService settings)
+    public FansViewModel(ISensorService sensors, IFanControlService fans, ISettingsService settings, AlertService alerts)
     {
         _sensors = sensors;
         _fans = fans;
         _settings = settings;
+        _alerts = alerts;
         _sensors.SnapshotUpdated += OnSnapshot;
         Refresh();
     }
@@ -195,7 +217,7 @@ public sealed partial class FansViewModel : ObservableObject, IDisposable
         {
             Channels.Clear();
             foreach (var channel in channels)
-                Channels.Add(new FanChannelViewModel(channel, _fans, _settings));
+                Channels.Add(new FanChannelViewModel(channel, _fans, _settings, _alerts.ForgetFan));
         }
         else
         {

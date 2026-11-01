@@ -18,8 +18,8 @@
             </Style.Triggers>
         </Style>
 
-        <!-- Warning shown on a fan that used to spin and now reads 0 RPM. -->
-        <Style x:Key="StoppedNote" TargetType="TextBlock">
+        <!-- Warning row shown on a fan that used to spin and now reads 0 RPM. -->
+        <Style x:Key="StoppedRow" TargetType="Grid">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsStopped}" Value="True">
@@ -85,9 +85,16 @@
                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding RpmText}" FontSize="18"
                                            FontWeight="SemiBold" VerticalAlignment="Top" Margin="0,4,0,0" />
 
-                                <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap"
-                                           Text="{Binding StoppedText}" Style="{StaticResource StoppedNote}"
-                                           Foreground="{DynamicResource AccentBrush}" />
+                                <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,8,0,0" Style="{StaticResource StoppedRow}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontSize="12" TextWrapping="Wrap" Margin="0,0,8,0" VerticalAlignment="Center"
+                                               Text="{Binding StoppedText}" Foreground="{DynamicResource AccentBrush}" />
+                                    <Button Grid.Column="1" VerticalAlignment="Top" Padding="8,3" FontSize="12"
+                                            Content="{loc:Loc Fans_Forget}" Command="{Binding ForgetCommand}" />
+                                </Grid>
 
                                 <CheckBox Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,0"
                                           IsChecked="{Binding IsManual}" IsEnabled="{Binding IsConnected}"
