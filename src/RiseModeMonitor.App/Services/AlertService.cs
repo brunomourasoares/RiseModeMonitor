@@ -9,7 +9,7 @@ namespace RiseModeMonitor.Services;
 
 /// <summary>
 /// Watches every sensor snapshot and asks <see cref="AlertEvaluator"/> what is due: a tray notification
-/// (once per occurrence) and the alert sound (repeated every 10 seconds while the condition persists).
+/// (once per occurrence) and the alert sound (repeated at the interval chosen in Settings while the condition persists).
 /// </summary>
 public sealed class AlertService : IDisposable
 {
@@ -19,6 +19,9 @@ public sealed class AlertService : IDisposable
     private readonly TrayService _tray;
     private readonly LocalizationService _loc;
     private readonly AlertEvaluator _evaluator = new();
+
+    // The evaluator runs on the sensor timer thread; ForgetFan is called from the UI thread.
+    private readonly object _evaluatorGate = new();
 
     // MediaPlayer must be used on the UI thread and kept alive while it plays.
     private MediaPlayer? _player;
@@ -44,15 +47,24 @@ public sealed class AlertService : IDisposable
         if (!settings.AlertCpuEnabled && !settings.AlertGpuEnabled && !settings.AlertFanStoppedEnabled)
         {
             // Run the evaluator once more so it forgets any old state, then stay idle.
-            _evaluator.Evaluate(new DisplayTelemetry(null, null, null, null, null, null),
-                Array.Empty<FanChannel>(), settings, DateTimeOffset.UtcNow);
+            lock (_evaluatorGate)
+            {
+                _evaluator.Evaluate(new DisplayTelemetry(null, null, null, null, null, null),
+                    Array.Empty<FanChannel>(), settings, DateTimeOffset.UtcNow);
+            }
+
             return;
         }
 
         var telemetry = TelemetrySelector.Select(snapshot);
         var fans = settings.AlertFanStoppedEnabled ? NamedChannels(settings) : Array.Empty<FanChannel>();
 
-        var result = _evaluator.Evaluate(telemetry, fans, settings, DateTimeOffset.UtcNow);
+        AlertEvaluation result;
+        lock (_evaluatorGate)
+        {
+            result = _evaluator.Evaluate(telemetry, fans, settings, DateTimeOffset.UtcNow);
+        }
+
         if (result.Notifications.Count == 0 && !result.PlaySound) return;
 
         Application.Current?.Dispatcher.BeginInvoke(new Action(() =>
@@ -83,7 +95,13 @@ public sealed class AlertService : IDisposable
         _ => (_loc["Alert_TitleFan"], _loc.Format("Alert_Fan", alert.Detail ?? string.Empty))
     };
 
-    /// <summary>Plays one of the bundled alert sounds (1 to 5). Safe to call from the UI thread only.</summary>
+    /// <summary>The user removed this fan on purpose: stop alerting about it (until it spins again).</summary>
+    public void ForgetFan(string fanId)
+    {
+        lock (_evaluatorGate) _evaluator.ForgetFan(fanId);
+    }
+
+    /// <summary>Plays one of the bundled alert sounds (1 to 12). Safe to call from the UI thread only.</summary>
     public void PlaySound(int sound, double volumePercent)
     {
         // Lowercase folders match the build output (see the Link metadata in the csproj).

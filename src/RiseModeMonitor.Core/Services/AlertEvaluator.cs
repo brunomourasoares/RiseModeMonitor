@@ -133,6 +133,18 @@ public sealed class AlertEvaluator
         }
     }
 
+    /// <summary>
+    /// Forgets everything known about one fan (the user removed it on purpose), so it stops raising the
+    /// stopped-fan alert. It is tracked again if it ever spins again. Not thread safe: the caller serializes
+    /// it with <see cref="Evaluate"/>.
+    /// </summary>
+    public void ForgetFan(string fanId)
+    {
+        _spinning.Remove(fanId);
+        _stopped.Remove(fanId);
+        _zeroReadings.Remove(fanId);
+    }
+
     private void ForgetFans()
     {
         _spinning.Clear();
