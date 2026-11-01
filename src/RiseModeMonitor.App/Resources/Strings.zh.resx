@@ -76,6 +76,7 @@
   <data name="Fans_Reported" xml:space="preserve"><value>硬件报告值：</value></data>
   <data name="Fans_RenameTip" xml:space="preserve"><value>输入名称或从列表中选择，然后点击输入框外部。名称将保存到此通道。</value></data>
   <data name="Fans_RestoreAll" xml:space="preserve"><value>恢复自动控制</value></data>
+  <data name="Fans_Forget" xml:space="preserve"><value>移除</value></data>
   <data name="Fans_None" xml:space="preserve"><value>未找到可控制的风扇。请以管理员身份运行应用，并确认已安装 PawnIO。</value></data>
   <data name="Fans_NoFan" xml:space="preserve"><value>此通道未检测到风扇（0 RPM）。</value></data>
   <data name="Fans_Description" xml:space="preserve"><value>风扇转速控制与曲线。即将推出。</value></data>
