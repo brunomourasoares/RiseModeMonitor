@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.Input;
 using RiseModeMonitor.Core.Models;
 using RiseModeMonitor.Core.Services;
 using RiseModeMonitor.Localization;
-using RiseModeMonitor.Services;
 
 namespace RiseModeMonitor.ViewModels;
 
@@ -14,10 +13,9 @@ public sealed partial class FanChannelViewModel : ObservableObject
 {
     private readonly IFanControlService _fans;
     private readonly ISettingsService _settings;
-    private readonly Action<string> _onForget;
     private bool _updating;
 
-    /// <summary>Consecutive 0 RPM readings (automatic mode) after which a fan that used to spin is reported as stopped.</summary>
+    /// <summary>Consecutive 0 RPM readings (automatic mode, alert on) after which the card warns that the fan stopped.</summary>
     private const int IdleReadingsToWarn = 3;
 
     private int _idleReadings;
@@ -48,23 +46,26 @@ public sealed partial class FanChannelViewModel : ObservableObject
     [ObservableProperty] private string _reportedPercentText = "--";
 
     /// <summary>
-    /// False only for channels that never had a fan: nothing is spinning now, it is not under manual
-    /// control and it is not in the history of fans seen spinning (<see cref="AppSettings.FansSeenSpinning"/>).
-    /// The page hides them. A fan that spun before and stopped stays visible so the problem is noticed.
+    /// The stopped-fan alert is on for this channel (the switch on the card). The default is on for a fan that
+    /// was seen spinning and off for an empty header; see <see cref="AppSettings.IsFanAlertEnabled"/>.
     /// </summary>
-    [ObservableProperty] private bool _isConnected = true;
+    [ObservableProperty] private bool _alertEnabled;
 
-    /// <summary>A fan seen spinning before now reads 0 RPM (a few readings in a row): it may have failed.</summary>
+    /// <summary>
+    /// Whether the card is shown: always when the alert is on or the channel is under manual control; otherwise
+    /// only while the page is not hiding the fans with the alert off (<see cref="AppSettings.HideDisabledFans"/>).
+    /// </summary>
+    [ObservableProperty] private bool _isShown = true;
+
+    /// <summary>The alert is on and the fan reads 0 RPM (a few readings in a row): it may have failed.</summary>
     [ObservableProperty] private bool _isStopped;
 
     [ObservableProperty] private string _stoppedText = string.Empty;
 
-    public FanChannelViewModel(
-        FanChannel channel, IFanControlService fans, ISettingsService settings, Action<string> onForget)
+    public FanChannelViewModel(FanChannel channel, IFanControlService fans, ISettingsService settings)
     {
         _fans = fans;
         _settings = settings;
-        _onForget = onForget;
         Id = channel.Id;
         Name = channel.Name;
         HardwareName = channel.HardwareName;
@@ -84,20 +85,20 @@ public sealed partial class FanChannelViewModel : ObservableObject
         }
     }
 
-    /// <summary>
-    /// The user removed this fan on purpose: forget that it ever spun, so the card disappears and the stopped-fan
-    /// alert stops ringing for it. It comes back by itself if the channel spins again.
-    /// </summary>
-    [RelayCommand]
-    private void Forget()
+    partial void OnAlertEnabledChanged(bool value)
     {
-        if (_settings.Current.FansSeenSpinning.Remove(Id)) _settings.Save();
-        _onForget(Id);
+        if (_updating) return;
 
-        _idleReadings = 0;
-        IsStopped = false;
-        StoppedText = string.Empty;
-        IsConnected = IsManual; // hidden right away; the next reading keeps it hidden while nothing spins
+        // The user flipped the switch: remember it, and react right away (the next reading would be a second late).
+        _settings.Current.SetFanAlert(Id, value);
+        _settings.Save();
+
+        IsShown = IsManual || value || !_settings.Current.HideDisabledFans;
+        if (!value)
+        {
+            IsStopped = false;
+            StoppedText = string.Empty;
+        }
     }
 
     partial void OnDisplayNameChanged(string value)
@@ -158,15 +159,15 @@ public sealed partial class FanChannelViewModel : ObservableObject
 
             var spinning = (channel.Rpm ?? 0) > 0;
 
-            // History: remember every channel that ever spun, so a later failure is not mistaken for an empty header.
-            if (spinning && _settings.Current.FansSeenSpinning.Add(Id)) _settings.Save();
-            var hasSpun = _settings.Current.FansSeenSpinning.Contains(Id);
+            // History: a channel that spun is expected to keep spinning, which makes its alert on by default.
+            if (spinning && _settings.Current.MarkFanSeenSpinning(Id)) _settings.Save();
+            AlertEnabled = _settings.Current.IsFanAlertEnabled(Id);
 
             if (channel.IsManual || spinning) _idleReadings = 0;
             else if (_idleReadings < IdleReadingsToWarn) _idleReadings++;
 
-            IsConnected = channel.IsManual || spinning || hasSpun;
-            IsStopped = hasSpun && !channel.IsManual && !spinning && _idleReadings >= IdleReadingsToWarn;
+            IsShown = channel.IsManual || AlertEnabled || !_settings.Current.HideDisabledFans;
+            IsStopped = AlertEnabled && !channel.IsManual && !spinning && _idleReadings >= IdleReadingsToWarn;
             StoppedText = IsStopped ? LocalizationService.Instance.Format("Alert_Fan", DisplayName) : string.Empty;
 
             // The slider is the speed the user asked for: it does not move with the RPM.
@@ -190,20 +191,29 @@ public sealed partial class FansViewModel : ObservableObject, IDisposable
     private readonly ISensorService _sensors;
     private readonly IFanControlService _fans;
     private readonly ISettingsService _settings;
-    private readonly AlertService _alerts;
 
     public ObservableCollection<FanChannelViewModel> Channels { get; } = new();
 
     [ObservableProperty] private bool _isEmpty = true;
 
-    public FansViewModel(ISensorService sensors, IFanControlService fans, ISettingsService settings, AlertService alerts)
+    /// <summary>Hide the fan cards whose alert is turned off.</summary>
+    [ObservableProperty] private bool _hideDisabled;
+
+    public FansViewModel(ISensorService sensors, IFanControlService fans, ISettingsService settings)
     {
         _sensors = sensors;
         _fans = fans;
         _settings = settings;
-        _alerts = alerts;
+        _hideDisabled = settings.Current.HideDisabledFans;
         _sensors.SnapshotUpdated += OnSnapshot;
         Refresh();
+    }
+
+    partial void OnHideDisabledChanged(bool value)
+    {
+        _settings.Current.HideDisabledFans = value;
+        _settings.Save();
+        Refresh(); // re-evaluates which cards are shown
     }
 
     private void OnSnapshot(object? sender, HardwareSnapshot snapshot) =>
@@ -217,7 +227,7 @@ public sealed partial class FansViewModel : ObservableObject, IDisposable
         {
             Channels.Clear();
             foreach (var channel in channels)
-                Channels.Add(new FanChannelViewModel(channel, _fans, _settings, _alerts.ForgetFan));
+                Channels.Add(new FanChannelViewModel(channel, _fans, _settings));
         }
         else
         {
@@ -225,7 +235,7 @@ public sealed partial class FansViewModel : ObservableObject, IDisposable
                 Channels[i].Update(channels[i]);
         }
 
-        IsEmpty = !Channels.Any(c => c.IsConnected);
+        IsEmpty = !Channels.Any(c => c.IsShown);
     }
 
     [RelayCommand]

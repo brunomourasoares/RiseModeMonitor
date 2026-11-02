@@ -1,25 +1,26 @@
 <UserControl x:Class="RiseModeMonitor.Views.FansView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:vm="clr-namespace:RiseModeMonitor.ViewModels"
              xmlns:loc="clr-namespace:RiseModeMonitor.Localization">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
 
-        <!-- Every fan card has exactly the same size; channels that never had a fan are hidden. -->
+        <!-- Every fan card has exactly the same size; cards with the alert off can be hidden (the switch above them). -->
         <Style x:Key="FanCard" TargetType="Border" BasedOn="{StaticResource Card}">
             <Setter Property="Width" Value="270" />
             <Setter Property="Height" Value="252" />
             <Setter Property="Margin" Value="0,0,12,12" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                <DataTrigger Binding="{Binding IsShown}" Value="False">
                     <Setter Property="Visibility" Value="Collapsed" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
 
-        <!-- Warning row shown on a fan that used to spin and now reads 0 RPM. -->
-        <Style x:Key="StoppedRow" TargetType="Grid">
+        <!-- Warning shown on a fan with the alert on that now reads 0 RPM. -->
+        <Style x:Key="StoppedNote" TargetType="TextBlock">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsStopped}" Value="True">
@@ -42,7 +43,13 @@
                        Margin="0,8,0,12" Foreground="{DynamicResource AccentBrush}" />
 
             <Button Content="{loc:Loc Fans_RestoreAll}" Command="{Binding RestoreAllCommand}"
-                    HorizontalAlignment="Left" Margin="0,0,0,16" Padding="14,8" />
+                    HorizontalAlignment="Left" Margin="0,0,0,12" Padding="14,8" />
+
+            <!-- Hides the cards whose alert is off (an empty header is off by default). -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,16">
+                <ui:ToggleSwitch IsChecked="{Binding HideDisabled}" VerticalAlignment="Center" />
+                <TextBlock Text="{loc:Loc Fans_HideDisabled}" VerticalAlignment="Center" Margin="10,0,0,0" />
+            </StackPanel>
 
             <TextBlock Text="{loc:Loc Fans_None}" TextWrapping="Wrap" MaxWidth="640" HorizontalAlignment="Left"
                        Foreground="{DynamicResource TextMutedBrush}"
@@ -85,20 +92,24 @@
                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding RpmText}" FontSize="18"
                                            FontWeight="SemiBold" VerticalAlignment="Top" Margin="0,4,0,0" />
 
-                                <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,8,0,0" Style="{StaticResource StoppedRow}">
+                                <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap"
+                                           Text="{Binding StoppedText}" Style="{StaticResource StoppedNote}"
+                                           Foreground="{DynamicResource AccentBrush}" />
+
+                                <!-- Manual control on the left; the alert switch of this fan on the right. -->
+                                <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock FontSize="12" TextWrapping="Wrap" Margin="0,0,8,0" VerticalAlignment="Center"
-                                               Text="{Binding StoppedText}" Foreground="{DynamicResource AccentBrush}" />
-                                    <Button Grid.Column="1" VerticalAlignment="Top" Padding="8,3" FontSize="12"
-                                            Content="{loc:Loc Fans_Forget}" Command="{Binding ForgetCommand}" />
+                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsManual}"
+                                              Content="{loc:Loc Fans_Manual}" />
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="{loc:Loc Settings_Alerts}" FontSize="12" VerticalAlignment="Center"
+                                                   Margin="0,0,8,0" Foreground="{DynamicResource TextMutedBrush}" />
+                                        <ui:ToggleSwitch IsChecked="{Binding AlertEnabled}" VerticalAlignment="Center" />
+                                    </StackPanel>
                                 </Grid>
-
-                                <CheckBox Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,0"
-                                          IsChecked="{Binding IsManual}" IsEnabled="{Binding IsConnected}"
-                                          Content="{loc:Loc Fans_Manual}" />
 
                                 <Slider Grid.Row="3" Grid.Column="0" Margin="0,8,12,0" VerticalAlignment="Center"
                                         Minimum="{Binding MinPercent}" Maximum="{Binding MaxPercent}"
