@@ -1,8 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Windows; // Necessário para o MessageBox
+using System.Media;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using RiseModeMonitor.Core.Models;
 using RiseModeMonitor.Core.Services;
 using RiseModeMonitor.Localization;
@@ -14,7 +19,7 @@ public sealed class ThemeOption : ObservableObject
 {
     private readonly LocalizationService _loc;
     private readonly string _labelKey;
-
+	
     public ThemeOption(ThemeMode mode, string labelKey, LocalizationService loc)
     {
         Mode = mode;
@@ -34,7 +39,7 @@ public sealed partial class SettingsViewModel : ObservableObject
     private readonly IAutostartService _autostart;
     private readonly LocalizationService _loc;
     private bool _syncing;
-
+	
     // Evento limpo para avisar a View quando der erro
     public event Action<string>? OnErrorOccurred;
 
@@ -83,7 +88,7 @@ public sealed partial class SettingsViewModel : ObservableObject
         _closeToTray = settings.Current.CloseToTray;
         _displayEnabled = settings.Current.DisplayEnabled;
     }
-
+	
     partial void OnSelectedThemeChanged(ThemeOption value)
     {
         _settings.Current.Theme = value.Mode;

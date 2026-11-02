@@ -177,7 +177,6 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="{loc:Loc Settings_StartWithWindows}" TextWrapping="Wrap" />
-                            <TextBlock Text="{loc:Loc Settings_StartWithWindowsHint}" Style="{StaticResource HintText}" />
                         </StackPanel>
                         <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding StartWithWindows}"
                                          VerticalAlignment="Center" Margin="16,0,0,0" />
@@ -354,7 +353,7 @@
                     </Button>
                 </StackPanel>
             </Border>
-
+		
         </StackPanel>
     </ScrollViewer>
 </UserControl>

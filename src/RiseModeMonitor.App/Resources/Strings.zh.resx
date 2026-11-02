@@ -36,30 +36,29 @@
   <data name="Group_Other" xml:space="preserve"><value>其他</value></data>
 
   <data name="Settings_Theme" xml:space="preserve"><value>主题</value></data>
-  <data name="Settings_ThemeHint" xml:space="preserve"><value>“跟随系统”将遵循 Windows 的应用模式。</value></data>
+  <data name="Settings_ThemeHint" xml:space="preserve"><value>选择最合你心意的主题。</value></data>
   <data name="Theme_System" xml:space="preserve"><value>跟随系统</value></data>
   <data name="Theme_Light" xml:space="preserve"><value>浅色</value></data>
   <data name="Theme_Dark" xml:space="preserve"><value>深色</value></data>
   <data name="Settings_Language" xml:space="preserve"><value>语言</value></data>
-  <data name="Settings_LanguageHint" xml:space="preserve"><value>更改将立即生效。</value></data>
+  <data name="Settings_LanguageHint" xml:space="preserve"><value>选择您觉得最舒适的语言。</value></data>
   <data name="Settings_Startup" xml:space="preserve"><value>启动与托盘</value></data>
   <data name="Settings_StartWithWindows" xml:space="preserve"><value>随 Windows 启动</value></data>
-  <data name="Settings_StartWithWindowsHint" xml:space="preserve"><value>以管理员身份运行，无需 UAC 提示（计划任务）。</value></data>
   <data name="Settings_StartMinimized" xml:space="preserve"><value>启动时最小化到系统托盘</value></data>
   <data name="Settings_CloseToTray" xml:space="preserve"><value>点击关闭按钮时隐藏到系统托盘</value></data>
   <data name="Settings_AutostartError" xml:space="preserve"><value>无法更新启动任务。请以管理员身份运行应用后重试。</value></data>
   <data name="Settings_MoreSoon" xml:space="preserve"><value>更多选项（水冷屏幕）即将推出。</value></data>
 
   <data name="Settings_Display" xml:space="preserve"><value>水冷屏幕</value></data>
-  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>在屏幕上显示系统数据</value></data>
-  <data name="Settings_DisplayHint" xml:space="preserve"><value>将系统数据发送到水冷头。（仅适用于 RM-WAI-0X-ARGB 和 RM-WAIB-0X-ARGB 型号）。</value></data>
+  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>在显示屏上展示信息</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>向水冷头发送数据。（仅适用于 RM-WAI-0X-ARGB 和 RM-WAIB-0X-ARGB 型号。）</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>警报</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>达到限值时只弹出一次通知（温度下降 5 °C 后重新待命）。声音按下方设置的间隔重复播放，直到数值回落到限值以下。</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>当达到温度上限时触发，在温度下降 5 °C 后复位。&#10;声音警报会持续重复，直到温度恢复正常。</value></data>
   <data name="Alerts_Interval" xml:space="preserve"><value>提示音间隔</value></data>
-  <data name="Alerts_Cpu" xml:space="preserve"><value>CPU 温度达到限值时提醒</value></data>
-  <data name="Alerts_Gpu" xml:space="preserve"><value>GPU 温度达到限值时提醒</value></data>
-  <data name="Alerts_FanStopped" xml:space="preserve"><value>运转中的风扇停转时提醒（0 RPM）</value></data>
+  <data name="Alerts_Cpu" xml:space="preserve"><value>CPU 温度限制</value></data>
+  <data name="Alerts_Gpu" xml:space="preserve"><value>GPU 温度限制</value></data>
+  <data name="Alerts_FanStopped" xml:space="preserve"><value>若运行中的风扇停止转动（0 RPM），则发出警报</value></data>
   <data name="Alerts_Sound" xml:space="preserve"><value>警报声音</value></data>
   <data name="Alerts_Volume" xml:space="preserve"><value>音量</value></data>
   <data name="Alerts_Test" xml:space="preserve"><value>测试声音</value></data>

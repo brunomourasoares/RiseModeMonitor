@@ -47,63 +47,63 @@
                         <Image Source="/Resources/Images/rise-monitor-256.png" Width="30" Height="30"
                                RenderOptions.BitmapScalingMode="HighQuality" />
                         <TextBlock Text="RISEMODE" FontSize="18" FontWeight="Bold" Margin="10,0,0,0"
-           VerticalAlignment="Center" Foreground="{DynamicResource AccentBrush}"
-           FontFamily="./Resources/Fonts/#Cyberiada" />
+								   VerticalAlignment="Center" Foreground="{DynamicResource AccentBrush}"
+								   FontFamily="./Resources/Fonts/#Cyberiada" />
                     </StackPanel>
-                        <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}"
-                             ItemContainerStyle="{StaticResource NavItemStyle}"
-                             Background="Transparent" BorderThickness="0">
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<StackPanel Orientation="Horizontal"
-												VerticalAlignment="Center">
-										<Path Width="18"
-											  Height="18"
-											  Stretch="Uniform"
-											  Margin="0,0,12,0"
-											  VerticalAlignment="Center"
-											  Fill="{Binding Foreground,
-													 RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
-											<Path.Style>
-												<Style TargetType="Path">
-													<Setter Property="Data"
-															Value="{StaticResource Icon.Dashboard}" />
-													<Style.Triggers>
-														<DataTrigger Binding="{Binding Icon}"
-																	 Value="{x:Static vm:NavIcon.Hardware}">
-															<Setter Property="Data"
-																	Value="{StaticResource Icon.Hardware}" />
-														</DataTrigger>
-														<DataTrigger Binding="{Binding Icon}"
-																	 Value="{x:Static vm:NavIcon.Fans}">
-															<Setter Property="Data"
-																	Value="{StaticResource Icon.Fans}" />
-														</DataTrigger>
-														<DataTrigger Binding="{Binding Icon}"
-																	 Value="{x:Static vm:NavIcon.Lighting}">
-															<Setter Property="Data"
-																	Value="{StaticResource Icon.Lighting}" />
-														</DataTrigger>
-														<DataTrigger Binding="{Binding Icon}"
-																	 Value="{x:Static vm:NavIcon.Settings}">
-															<Setter Property="Data"
-																	Value="{StaticResource Icon.Settings}" />
-														</DataTrigger>
-													</Style.Triggers>
-												</Style>
-											</Path.Style>
-										</Path>
-										<TextBlock Text="{Binding Title}"
-												   FontSize="14"
-												   VerticalAlignment="Center" />
-
-									</StackPanel>
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-                    </ListBox>
+					<ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}"
+						 ItemContainerStyle="{StaticResource NavItemStyle}"
+						 Background="Transparent" BorderThickness="0">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal"
+											VerticalAlignment="Center"
+											Cursor="Hand">
+									<Path Width="18"
+										  Height="18"
+										  Stretch="Uniform"
+										  Margin="0,0,12,0"
+										  VerticalAlignment="Center"
+										  Fill="{Binding Foreground,
+												 RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
+										<Path.Style>
+											<Style TargetType="Path">
+												<Setter Property="Data"
+														Value="{StaticResource Icon.Dashboard}" />
+												<Style.Triggers>
+													<DataTrigger Binding="{Binding Icon}"
+																 Value="{x:Static vm:NavIcon.Hardware}">
+														<Setter Property="Data"
+																Value="{StaticResource Icon.Hardware}" />
+													</DataTrigger>
+													<DataTrigger Binding="{Binding Icon}"
+																 Value="{x:Static vm:NavIcon.Fans}">
+														<Setter Property="Data"
+																Value="{StaticResource Icon.Fans}" />
+													</DataTrigger>
+													<DataTrigger Binding="{Binding Icon}"
+																 Value="{x:Static vm:NavIcon.Lighting}">
+														<Setter Property="Data"
+																Value="{StaticResource Icon.Lighting}" />
+													</DataTrigger>
+													<DataTrigger Binding="{Binding Icon}"
+																 Value="{x:Static vm:NavIcon.Settings}">
+														<Setter Property="Data"
+																Value="{StaticResource Icon.Settings}" />
+													</DataTrigger>
+												</Style.Triggers>
+											</Style>
+										</Path.Style>
+									</Path>
+									<TextBlock Text="{Binding Title}"
+											   FontSize="14"
+											   VerticalAlignment="Center" />
+								</StackPanel>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
                 </DockPanel>
             </Border>
-
+			
             <ContentControl Grid.Column="1" Margin="28" Content="{Binding Selected.ViewModel}" />
         </Grid>
     </Grid>

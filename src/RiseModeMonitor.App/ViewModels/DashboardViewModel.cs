@@ -259,10 +259,19 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
         {
             foreach (var letter in disk.VolumeLetters) covered.Add(letter);
 
-            var volumes = disk.VolumeLetters.Select(BuildVolume).OfType<VolumeData>().ToList();
-            if (volumes.Count == 0) continue; // nothing mounted (e.g. recovery-only disk): no empty card
+			var model = DisplayModel(disk.Model, sensorNames);
 
-            fresh.Add(new DiskData(string.Join("|", disk.VolumeLetters), DisplayModel(disk.Model, sensorNames), volumes));
+			var volumes = disk.VolumeLetters
+				.Select(letter => BuildVolume(letter, model))
+				.OfType<VolumeData>()
+				.ToList();
+
+			if (volumes.Count == 0) continue;
+
+			fresh.Add(new DiskData(
+				string.Join("|", disk.VolumeLetters),
+				model,
+				volumes));
         }
 
         // Fixed drives Windows could not map to a disk (Storage Spaces, RAID, VHD...) or an empty
@@ -272,14 +281,14 @@ public sealed partial class DashboardViewModel : ObservableObject, IDisposable
             var letter = drive.Name.TrimEnd('\\');
             if (covered.Contains(letter)) continue;
 
-            if (BuildVolume(letter) is { } volume)
-                fresh.Add(new DiskData(letter, letter, new[] { volume }));
+		if (BuildVolume(letter, letter) is { } volume)
+			fresh.Add(new DiskData(letter, letter, new[] { volume }));
         }
 
         return fresh;
     }
 
-    private VolumeData? BuildVolume(string letter)
+    private VolumeData? BuildVolume(string letter, string diskModel)
     {
         const double gb = 1024d * 1024 * 1024;
 

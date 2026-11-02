@@ -36,30 +36,29 @@
   <data name="Group_Other" xml:space="preserve"><value>Autre</value></data>
 
   <data name="Settings_Theme" xml:space="preserve"><value>Thème</value></data>
-  <data name="Settings_ThemeHint" xml:space="preserve"><value>Le mode Système suit le mode d'application de Windows.</value></data>
+  <data name="Settings_ThemeHint" xml:space="preserve"><value>Choisissez le thème qui correspond le mieux à vos goûts.</value></data>
   <data name="Theme_System" xml:space="preserve"><value>Système</value></data>
   <data name="Theme_Light" xml:space="preserve"><value>Clair</value></data>
   <data name="Theme_Dark" xml:space="preserve"><value>Sombre</value></data>
   <data name="Settings_Language" xml:space="preserve"><value>Langue</value></data>
-  <data name="Settings_LanguageHint" xml:space="preserve"><value>Les changements s'appliquent immédiatement.</value></data>
+  <data name="Settings_LanguageHint" xml:space="preserve"><value>Choisissez la langue avec laquelle vous êtes le plus à l'aise.</value></data>
   <data name="Settings_Startup" xml:space="preserve"><value>Démarrage et zone de notification</value></data>
   <data name="Settings_StartWithWindows" xml:space="preserve"><value>Démarrer avec Windows</value></data>
-  <data name="Settings_StartWithWindowsHint" xml:space="preserve"><value>S'exécute en administrateur sans invite UAC (tâche planifiée).</value></data>
   <data name="Settings_StartMinimized" xml:space="preserve"><value>Démarrer réduit dans la zone de notification</value></data>
   <data name="Settings_CloseToTray" xml:space="preserve"><value>Le bouton fermer masque l'application dans la zone de notification</value></data>
   <data name="Settings_AutostartError" xml:space="preserve"><value>Impossible de mettre à jour la tâche de démarrage. Lancez l'application en administrateur et réessayez.</value></data>
   <data name="Settings_MoreSoon" xml:space="preserve"><value>Plus d'options (écran du water cooler) bientôt.</value></data>
 
-  <data name="Settings_Display" xml:space="preserve"><value>Écran du water cooler</value></data>
+  <data name="Settings_Display" xml:space="preserve"><value>Afficher des informations sur l'écran</value></data>
   <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Afficher les données système sur l'écran</value></data>
-  <data name="Settings_DisplayHint" xml:space="preserve"><value>Envoie les données système au bloc du water cooler. (Uniquement pour les modèles RM-WAI-0X-ARGB et RM-WAIB-0X-ARGB).</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>Envoie des données au bloc du watercooling. (Uniquement pour les modèles RM-WAI-0X-ARGB et RM-WAIB-0X-ARGB).</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Alertes</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>Une notification apparaît une fois lorsque la limite est atteinte (elle se réarme quand la température baisse de 5 °C). Le son se répète à l'intervalle indiqué ci-dessous jusqu'à ce que la valeur repasse sous la limite.</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>Se déclenche lorsque la limite de température est atteinte et se réinitialise après une baisse de 5 °C.&#10;Le signal sonore se répétera jusqu'à ce que la température revienne à la normale.</value></data>
   <data name="Alerts_Interval" xml:space="preserve"><value>Intervalle entre les sons</value></data>
-  <data name="Alerts_Cpu" xml:space="preserve"><value>Alerter quand la température du CPU atteint la limite</value></data>
-  <data name="Alerts_Gpu" xml:space="preserve"><value>Alerter quand la température du GPU atteint la limite</value></data>
-  <data name="Alerts_FanStopped" xml:space="preserve"><value>Alerter quand un ventilateur en marche s'arrête (0 RPM)</value></data>
+  <data name="Alerts_Cpu" xml:space="preserve"><value>Limite de température du CPU</value></data>
+  <data name="Alerts_Gpu" xml:space="preserve"><value>Limite de température du GPU</value></data>
+  <data name="Alerts_FanStopped" xml:space="preserve"><value>Alerter si un ventilateur actif s'arrête (0 RPM)</value></data>
   <data name="Alerts_Sound" xml:space="preserve"><value>Son d'alerte</value></data>
   <data name="Alerts_Volume" xml:space="preserve"><value>Volume</value></data>
   <data name="Alerts_Test" xml:space="preserve"><value>Tester le son</value></data>

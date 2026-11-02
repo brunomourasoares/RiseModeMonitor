@@ -36,30 +36,29 @@
   <data name="Group_Other" xml:space="preserve"><value>Outros</value></data>
 
   <data name="Settings_Theme" xml:space="preserve"><value>Tema</value></data>
-  <data name="Settings_ThemeHint" xml:space="preserve"><value>O modo Sistema segue o modo de aplicativos do Windows.</value></data>
+  <data name="Settings_ThemeHint" xml:space="preserve"><value>Escolha o tema que melhor se adapta ao seu gosto.</value></data>
   <data name="Theme_System" xml:space="preserve"><value>Sistema</value></data>
   <data name="Theme_Light" xml:space="preserve"><value>Claro</value></data>
   <data name="Theme_Dark" xml:space="preserve"><value>Escuro</value></data>
   <data name="Settings_Language" xml:space="preserve"><value>Idioma</value></data>
-  <data name="Settings_LanguageHint" xml:space="preserve"><value>As alterações são aplicadas imediatamente.</value></data>
+  <data name="Settings_LanguageHint" xml:space="preserve"><value>Escolha o idioma que for mais confortável para você.</value></data>
   <data name="Settings_Startup" xml:space="preserve"><value>Inicialização e bandeja</value></data>
   <data name="Settings_StartWithWindows" xml:space="preserve"><value>Iniciar com o Windows</value></data>
-  <data name="Settings_StartWithWindowsHint" xml:space="preserve"><value>Executa como administrador sem aviso do UAC (tarefa agendada).</value></data>
   <data name="Settings_StartMinimized" xml:space="preserve"><value>Iniciar minimizado na bandeja do sistema</value></data>
   <data name="Settings_CloseToTray" xml:space="preserve"><value>O botão fechar oculta o app na bandeja do sistema</value></data>
   <data name="Settings_AutostartError" xml:space="preserve"><value>Não foi possível atualizar a tarefa de inicialização. Execute o app como administrador e tente novamente.</value></data>
   <data name="Settings_MoreSoon" xml:space="preserve"><value>Mais opções (visor do water cooler) em breve.</value></data>
 
   <data name="Settings_Display" xml:space="preserve"><value>Visor do water cooler</value></data>
-  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Mostrar dados do sistema no visor</value></data>
-  <data name="Settings_DisplayHint" xml:space="preserve"><value>Envia dados do sistema ao bloco do water cooler. (Somente para os modelos RM-WAI-0X-ARGB e RM-WAIB-0X-ARGB).</value></data>
+  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Mostrar informações no visor</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>Envia dados para o bloco do water cooler. (Somente para os modelos RM-WAI-0X-ARGB e RM-WAIB-0X-ARGB).</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Alertas</value></data>
-  <data name="Alerts_Hint" xml:space="preserve"><value>Uma notificação aparece uma vez ao atingir o limite (e é rearmada depois que a temperatura cai 5 °C). O som se repete no intervalo definido abaixo até o valor voltar a ficar abaixo do limite.</value></data>
+  <data name="Alerts_Hint" xml:space="preserve"><value>É acionado ao atingir o limite de temperatura e reiniciado após uma queda de 5 °C.&#10;O aviso sonoro se repetirá até que a temperatura volte ao normal.</value></data>
   <data name="Alerts_Interval" xml:space="preserve"><value>Intervalo entre os toques</value></data>
-  <data name="Alerts_Cpu" xml:space="preserve"><value>Alertar quando a temperatura da CPU atingir o limite</value></data>
-  <data name="Alerts_Gpu" xml:space="preserve"><value>Alertar quando a temperatura da GPU atingir o limite</value></data>
-  <data name="Alerts_FanStopped" xml:space="preserve"><value>Alertar quando uma ventoinha em funcionamento parar (0 RPM)</value></data>
+  <data name="Alerts_Cpu" xml:space="preserve"><value>Limite de temperatura da CPU</value></data>
+  <data name="Alerts_Gpu" xml:space="preserve"><value>Limite de temperatura da GPU</value></data>
+  <data name="Alerts_FanStopped" xml:space="preserve"><value>Alertar se uma ventoinha ativa parar (0 RPM)</value></data>
   <data name="Alerts_Sound" xml:space="preserve"><value>Som do alerta</value></data>
   <data name="Alerts_Volume" xml:space="preserve"><value>Volume</value></data>
   <data name="Alerts_Test" xml:space="preserve"><value>Testar som</value></data>
