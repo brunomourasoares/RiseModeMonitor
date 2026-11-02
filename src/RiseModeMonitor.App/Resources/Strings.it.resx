@@ -75,7 +75,7 @@
   <data name="Fans_Reported" xml:space="preserve"><value>Riportato dall'hardware:</value></data>
   <data name="Fans_RenameTip" xml:space="preserve"><value>Digita un nome o scegline uno dall'elenco, poi fai clic fuori dal campo. Viene salvato per questo canale.</value></data>
   <data name="Fans_RestoreAll" xml:space="preserve"><value>Ripristina controllo automatico</value></data>
-  <data name="Fans_Forget" xml:space="preserve"><value>Dimentica</value></data>
+  <data name="Fans_HideDisabled" xml:space="preserve"><value>Nascondi le ventole con avviso disattivato</value></data>
   <data name="Fans_None" xml:space="preserve"><value>Nessuna ventola controllabile trovata. Esegui l'app come amministratore e verifica che PawnIO sia installato.</value></data>
   <data name="Fans_NoFan" xml:space="preserve"><value>Nessuna ventola rilevata su questo canale (0 RPM).</value></data>
   <data name="Fans_Description" xml:space="preserve"><value>Controllo della velocità e curve delle ventole. In arrivo.</value></data>

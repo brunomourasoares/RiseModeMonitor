@@ -75,7 +75,7 @@
   <data name="Fans_Reported" xml:space="preserve"><value>Rapporté par le matériel :</value></data>
   <data name="Fans_RenameTip" xml:space="preserve"><value>Saisissez un nom ou choisissez-en un dans la liste, puis cliquez en dehors du champ. Il est enregistré pour ce canal.</value></data>
   <data name="Fans_RestoreAll" xml:space="preserve"><value>Rétablir le contrôle automatique</value></data>
-  <data name="Fans_Forget" xml:space="preserve"><value>Oublier</value></data>
+  <data name="Fans_HideDisabled" xml:space="preserve"><value>Masquer les ventilateurs dont l'alerte est désactivée</value></data>
   <data name="Fans_None" xml:space="preserve"><value>Aucun ventilateur contrôlable trouvé. Lancez l'application en administrateur et vérifiez que PawnIO est installé.</value></data>
   <data name="Fans_NoFan" xml:space="preserve"><value>Aucun ventilateur détecté sur ce canal (0 RPM).</value></data>
   <data name="Fans_Description" xml:space="preserve"><value>Contrôle de la vitesse et courbes des ventilateurs. Bientôt disponible.</value></data>
