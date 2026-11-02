@@ -20,9 +20,6 @@ public sealed class AlertService : IDisposable
     private readonly LocalizationService _loc;
     private readonly AlertEvaluator _evaluator = new();
 
-    // The evaluator runs on the sensor timer thread; ForgetFan is called from the UI thread.
-    private readonly object _evaluatorGate = new();
-
     // MediaPlayer must be used on the UI thread and kept alive while it plays.
     private MediaPlayer? _player;
 
@@ -47,24 +44,15 @@ public sealed class AlertService : IDisposable
         if (!settings.AlertCpuEnabled && !settings.AlertGpuEnabled && !settings.AlertFanStoppedEnabled)
         {
             // Run the evaluator once more so it forgets any old state, then stay idle.
-            lock (_evaluatorGate)
-            {
-                _evaluator.Evaluate(new DisplayTelemetry(null, null, null, null, null, null),
-                    Array.Empty<FanChannel>(), settings, DateTimeOffset.UtcNow);
-            }
-
+            _evaluator.Evaluate(new DisplayTelemetry(null, null, null, null, null, null),
+                Array.Empty<FanChannel>(), settings, DateTimeOffset.UtcNow);
             return;
         }
 
         var telemetry = TelemetrySelector.Select(snapshot);
         var fans = settings.AlertFanStoppedEnabled ? NamedChannels(settings) : Array.Empty<FanChannel>();
 
-        AlertEvaluation result;
-        lock (_evaluatorGate)
-        {
-            result = _evaluator.Evaluate(telemetry, fans, settings, DateTimeOffset.UtcNow);
-        }
-
+        var result = _evaluator.Evaluate(telemetry, fans, settings, DateTimeOffset.UtcNow);
         if (result.Notifications.Count == 0 && !result.PlaySound) return;
 
         Application.Current?.Dispatcher.BeginInvoke(new Action(() =>
@@ -80,9 +68,13 @@ public sealed class AlertService : IDisposable
         }));
     }
 
-    /// <summary>Fan channels with the names the user gave them, so the alert says "CPU_FAN1" instead of "Fan #1".</summary>
+    /// <summary>
+    /// The fan channels whose alert is on, with the names the user gave them, so the alert says "CPU_FAN1"
+    /// instead of "Fan #1".
+    /// </summary>
     private FanChannel[] NamedChannels(AppSettings settings) =>
         _fans.GetChannels()
+            .Where(c => settings.IsFanAlertEnabled(c.Id))
             .Select(c => settings.FanNames.TryGetValue(c.Id, out var custom) && !string.IsNullOrWhiteSpace(custom)
                 ? c with { Name = custom }
                 : c)
@@ -94,12 +86,6 @@ public sealed class AlertService : IDisposable
         AlertKind.GpuTemperature => (_loc["Alert_TitleTemp"], _loc.Format("Alert_Gpu", alert.Value, alert.Threshold)),
         _ => (_loc["Alert_TitleFan"], _loc.Format("Alert_Fan", alert.Detail ?? string.Empty))
     };
-
-    /// <summary>The user removed this fan on purpose: stop alerting about it (until it spins again).</summary>
-    public void ForgetFan(string fanId)
-    {
-        lock (_evaluatorGate) _evaluator.ForgetFan(fanId);
-    }
 
     /// <summary>Plays one of the bundled alert sounds (1 to 12). Safe to call from the UI thread only.</summary>
     public void PlaySound(int sound, double volumePercent)

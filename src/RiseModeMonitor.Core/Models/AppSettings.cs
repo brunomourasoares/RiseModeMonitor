@@ -26,11 +26,43 @@ public sealed class AppSettings
     public Dictionary<string, string> FanNames { get; set; } = new();
 
     /// <summary>
-    /// Ids of the fan channels that were seen spinning (RPM above 0) at least once. A channel that never spun is
-    /// hidden from the Fans page (empty header); one that did and now reads 0 RPM stays visible with a warning,
-    /// because it may have failed.
+    /// Ids of the fan channels that were seen spinning (RPM above 0) at least once. It only decides the default of
+    /// <see cref="IsFanAlertEnabled"/>: a channel that spun before is expected to keep spinning.
     /// </summary>
     public HashSet<string> FansSeenSpinning { get; set; } = new();
+
+    /// <summary>
+    /// The user's choice per fan channel (id to on/off) for the stopped-fan alert. A channel with no entry follows
+    /// the default described in <see cref="IsFanAlertEnabled"/>.
+    /// </summary>
+    public Dictionary<string, bool> FanAlerts { get; set; } = new();
+
+    /// <summary>Hide the fan cards whose alert is turned off (an empty header is off by default).</summary>
+    public bool HideDisabledFans { get; set; } = true;
+
+    // The sensor timer thread (alerts) reads these sets while the UI thread updates them.
+    private readonly object _fanGate = new();
+
+    /// <summary>
+    /// True when a stopped fan must raise the alert: the user's choice if there is one, otherwise on for a channel
+    /// that was seen spinning and off for one that never was (empty headers always read 0 RPM).
+    /// </summary>
+    public bool IsFanAlertEnabled(string channelId)
+    {
+        lock (_fanGate)
+            return FanAlerts.TryGetValue(channelId, out var on) ? on : FansSeenSpinning.Contains(channelId);
+    }
+
+    public void SetFanAlert(string channelId, bool enabled)
+    {
+        lock (_fanGate) FanAlerts[channelId] = enabled;
+    }
+
+    /// <summary>Remembers that the channel spun. Returns true the first time, so the caller can save.</summary>
+    public bool MarkFanSeenSpinning(string channelId)
+    {
+        lock (_fanGate) return FansSeenSpinning.Add(channelId);
+    }
 
     // ---- Alerts (all off by default) ----
 
