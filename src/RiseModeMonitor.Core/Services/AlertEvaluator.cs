@@ -23,14 +23,18 @@ public sealed record AlertEvaluation(IReadOnlyList<AlertEvent> Notifications, bo
 /// <item>Sound: plays immediately and then every <see cref="AppSettings.AlertSoundIntervalSeconds"/> for as long as a
 /// condition holds (temperature at or above its limit, or a fan that stopped and has not recovered). It stops as soon
 /// as every condition is back to normal, so a game or a song cannot hide the alert.</item>
-/// <item>Fan: a fan counts as stopped after <see cref="StoppedReadingsRequired"/> consecutive 0 RPM readings of a
-/// channel that was previously spinning, to ignore sensor glitches and empty headers.</item>
+/// <item>Fan: the caller passes only the channels whose alert is on (see <see cref="AppSettings.IsFanAlertEnabled"/>).
+/// One counts as stopped after <see cref="StoppedReadingsRequired"/> consecutive 0 RPM readings if it was seen
+/// spinning in this session, or after <see cref="StartupReadingsRequired"/> if it has not spun yet (a fan that is
+/// dead at boot), to ignore sensor glitches while everything settles. A channel that is no longer passed is
+/// forgotten, which stops its alert.</item>
 /// </list>
 /// </summary>
 public sealed class AlertEvaluator
 {
     public const double HysteresisC = 5;
     public const int StoppedReadingsRequired = 3;
+    public const int StartupReadingsRequired = 10;
     public static readonly TimeSpan MinNotificationInterval = TimeSpan.FromMinutes(1);
     public const int MinSoundIntervalSeconds = 3;
     public const int MaxSoundIntervalSeconds = 120;
@@ -107,6 +111,8 @@ public sealed class AlertEvaluator
 
     private void CheckFans(IReadOnlyList<FanChannel> fans, List<AlertEvent> notifications)
     {
+        ForgetUnlisted(fans);
+
         foreach (var fan in fans)
         {
             var rpm = fan.Rpm ?? 0;
@@ -119,13 +125,15 @@ public sealed class AlertEvaluator
                 continue;
             }
 
-            // Only fans that were seen spinning count; empty headers always read 0 RPM.
-            if (!_spinning.Contains(fan.Id) || _stopped.Contains(fan.Id)) continue;
+            if (_stopped.Contains(fan.Id)) continue;
 
+            // A fan seen spinning needs few readings to count as stopped; one that has not spun yet gets a
+            // longer grace period while the sensors and the fan settle after boot.
+            var required = _spinning.Contains(fan.Id) ? StoppedReadingsRequired : StartupReadingsRequired;
             var zeros = _zeroReadings.GetValueOrDefault(fan.Id) + 1;
             _zeroReadings[fan.Id] = zeros;
 
-            if (zeros >= StoppedReadingsRequired)
+            if (zeros >= required)
             {
                 _stopped.Add(fan.Id);
                 notifications.Add(new AlertEvent(AlertKind.FanStopped, 0, 0, fan.Name));
@@ -133,16 +141,15 @@ public sealed class AlertEvaluator
         }
     }
 
-    /// <summary>
-    /// Forgets everything known about one fan (the user removed it on purpose), so it stops raising the
-    /// stopped-fan alert. It is tracked again if it ever spins again. Not thread safe: the caller serializes
-    /// it with <see cref="Evaluate"/>.
-    /// </summary>
-    public void ForgetFan(string fanId)
+    /// <summary>Forgets the channels that are no longer passed (alert turned off): their alert stops.</summary>
+    private void ForgetUnlisted(IReadOnlyList<FanChannel> fans)
     {
-        _spinning.Remove(fanId);
-        _stopped.Remove(fanId);
-        _zeroReadings.Remove(fanId);
+        var listed = new HashSet<string>(fans.Select(f => f.Id));
+        _spinning.RemoveWhere(id => !listed.Contains(id));
+        _stopped.RemoveWhere(id => !listed.Contains(id));
+
+        foreach (var id in _zeroReadings.Keys.Where(id => !listed.Contains(id)).ToList())
+            _zeroReadings.Remove(id);
     }
 
     private void ForgetFans()
