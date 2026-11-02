@@ -3,33 +3,24 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <!-- WinForms is only used for the tray NotifyIcon. -->
     <UseWindowsForms>true</UseWindowsForms>
     <AssemblyName>RiseModeMonitor</AssemblyName>
     <RootNamespace>RiseModeMonitor</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <!-- Strings.resx (no culture suffix) is the English fallback. -->
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
-  <!-- Brand icon: used as the .exe icon once Resources\Images\rise-monitor.ico is committed. -->
   <PropertyGroup Condition="Exists('Resources\Images\rise-monitor.ico')">
     <ApplicationIcon>Resources\Images\rise-monitor.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <!-- Avoid WPF/WinForms type ambiguities (Application, Button, Color...). -->
     <Using Remove="System.Windows.Forms" />
     <Using Remove="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <!-- Embedded brand images and fonts (pack://application:,,,/Resources/...). Empty folders are fine. -->
     <Resource Include="Resources\Images\**\*.*" />
     <Resource Include="Resources\Fonts\**\*.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <!--
-      Alert sounds are copied next to the exe: MediaPlayer needs real files, not embedded resources.
-      Link makes the build output folders lowercase: resources\sounds\alert-N.mp3
-    -->
     <Content Include="Resources\Sounds\**\*.mp3"
              Link="resources\sounds\%(RecursiveDir)%(Filename)%(Extension)"
              CopyToOutputDirectory="PreserveNewest" />

@@ -43,18 +43,48 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                            <Path Style="{StaticResource CardIcon}" Data="{StaticResource Icon.Palette}" />
+                            <Path Style="{StaticResource CardIcon}" Data="{StaticResource Icon.Theme}" />
                             <TextBlock Text="{loc:Loc Settings_Theme}" Style="{StaticResource CardTitle}" />
                         </StackPanel>
                         <TextBlock Text="{loc:Loc Settings_ThemeHint}" Style="{StaticResource HintText}" />
                     </StackPanel>
                     <ComboBox ItemsSource="{Binding ThemeOptions}" SelectedItem="{Binding SelectedTheme}"
                              Grid.Column="2" VerticalAlignment="Center" Width="150">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Label}" FontSize="14" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+									<Path Fill="{DynamicResource TextBrush}"
+										  Stretch="Uniform"
+										  Width="16"
+										  Height="16"
+										  VerticalAlignment="Center"
+										  Margin="0,0,8,0">
+										<Path.Style>
+											<Style TargetType="Path">
+												<Setter Property="Data"
+														Value="{StaticResource Icon.System}" />
+
+												<Style.Triggers>
+													<DataTrigger Binding="{Binding Mode}" Value="Light">
+														<Setter Property="Data"
+																Value="{StaticResource Icon.Light}" />
+													</DataTrigger>
+
+													<DataTrigger Binding="{Binding Mode}" Value="Dark">
+														<Setter Property="Data"
+																Value="{StaticResource Icon.Dark}" />
+													</DataTrigger>
+												</Style.Triggers>
+											</Style>
+										</Path.Style>
+									</Path>
+
+									<TextBlock Text="{Binding Label}"
+											   FontSize="14"
+											   VerticalAlignment="Center" />
+								</StackPanel>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
                     </ComboBox>
                 </Grid>
             </Border>
@@ -70,20 +100,66 @@
                     
                     <StackPanel Grid.Column="0">
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                            <Path Style="{StaticResource CardIcon}" Data="{StaticResource Icon.Globe}" />
+                            <Path Style="{StaticResource CardIcon}" Data="{StaticResource Icon.Language}" />
                             <TextBlock Text="{loc:Loc Settings_Language}" Style="{StaticResource CardTitle}" />
                         </StackPanel>
                         <TextBlock Text="{loc:Loc Settings_LanguageHint}" Style="{StaticResource HintText}" />
                     </StackPanel>
 
-                    <ComboBox ItemsSource="{Binding LanguageOptions}" SelectedItem="{Binding SelectedLanguage}"
-                             Grid.Column="2" VerticalAlignment="Center">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" FontSize="14" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+					<ComboBox ItemsSource="{Binding LanguageOptions}"
+							  SelectedItem="{Binding SelectedLanguage}"
+							  Grid.Column="2"
+							  VerticalAlignment="Center">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal"
+											VerticalAlignment="Center">
+									<Image Width="24"
+										   Height="16"
+										   Stretch="Fill"
+										   VerticalAlignment="Center"
+										   Margin="0,0,8,0">
+										<Image.Style>
+											<Style TargetType="Image">
+												<Setter Property="Source"
+														Value="{StaticResource Flag.US}" />
+												<Style.Triggers>
+													<DataTrigger Binding="{Binding Name}"
+																 Value="Português">
+														<Setter Property="Source"
+																Value="{StaticResource Flag.BR}" />
+													</DataTrigger>
+													<DataTrigger Binding="{Binding Name}"
+																 Value="Español">
+														<Setter Property="Source"
+																Value="{StaticResource Flag.ES}" />
+													</DataTrigger>
+													<DataTrigger Binding="{Binding Name}"
+																 Value="Italiano">
+														<Setter Property="Source"
+																Value="{StaticResource Flag.IT}" />
+													</DataTrigger>
+													<DataTrigger Binding="{Binding Name}"
+																 Value="Français">
+														<Setter Property="Source"
+																Value="{StaticResource Flag.FR}" />
+													</DataTrigger>
+													<DataTrigger Binding="{Binding Name}"
+																 Value="简体中文">
+														<Setter Property="Source"
+																Value="{StaticResource Flag.ZH}" />
+													</DataTrigger>
+												</Style.Triggers>
+											</Style>
+										</Image.Style>
+									</Image>
+									<TextBlock Text="{Binding Name}"
+											   FontSize="14"
+											   VerticalAlignment="Center"/>
+								</StackPanel>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
                 </Grid>
             </Border>
             
@@ -91,7 +167,7 @@
             <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Path Style="{StaticResource CardIcon}" Data="{StaticResource Icon.PowerOff}" />
+                        <Path Style="{StaticResource CardIcon}" Data="{StaticResource Icon.Power}" />
                         <TextBlock Text="{loc:Loc Settings_Startup}" Style="{StaticResource CardTitle}" />
                     </StackPanel>
                     <Grid Margin="0,0,0,12">
@@ -133,7 +209,7 @@
             <Border Style="{StaticResource Card}" Margin="0,0,0,12">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Path Style="{StaticResource CardIcon}" Data="{StaticResource Icon.Microchip}" />
+                        <Path Style="{StaticResource CardIcon}" Data="{StaticResource Icon.USB}" />
                         <TextBlock Text="{loc:Loc Settings_Display}" Style="{StaticResource CardTitle}" />
                     </StackPanel>
 
@@ -156,7 +232,7 @@
             <Border Style="{StaticResource Card}" Margin="0,0,0,12" DataContext="{Binding Alerts}">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Path Style="{StaticResource CardIcon}" Data="{StaticResource Icon.Alert}" />
+                        <Path Style="{StaticResource CardIcon}" Data="{StaticResource Icon.Warning}" />
                         <TextBlock Text="{loc:Loc Settings_Alerts}" Style="{StaticResource CardTitle}" />
                     </StackPanel>
                     <TextBlock Text="{loc:Loc Alerts_Hint}" Style="{StaticResource HintText}" Margin="0,6,0,16" />

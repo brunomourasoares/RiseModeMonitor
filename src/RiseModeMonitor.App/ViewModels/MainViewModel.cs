@@ -3,26 +3,36 @@ using RiseModeMonitor.Localization;
 
 namespace RiseModeMonitor.ViewModels;
 
-/// <summary>Sidebar entry whose title follows the current language.</summary>
+public enum NavIcon
+{
+    Dashboard,
+    Hardware,
+    Fans,
+    Lighting,
+    Settings
+}
+
 public sealed class NavItem : ObservableObject
 {
     private readonly LocalizationService _loc;
     private readonly string _titleKey;
 
-    public NavItem(string titleKey, object viewModel, LocalizationService loc)
+    public NavItem(string titleKey, NavIcon icon, object viewModel, LocalizationService loc)
     {
         _titleKey = titleKey;
         _loc = loc;
+		Icon = icon;
         ViewModel = viewModel;
         _loc.LanguageChanged += (_, _) => OnPropertyChanged(nameof(Title));
     }
 
     public string Title => _loc[_titleKey];
+	
+	public NavIcon Icon { get; }
 
     public object ViewModel { get; }
 }
 
-/// <summary>"Coming soon" page whose texts follow the current language.</summary>
 public sealed class PlaceholderViewModel : ObservableObject
 {
     private readonly LocalizationService _loc;
@@ -62,11 +72,11 @@ public sealed partial class MainViewModel : ObservableObject
     {
         Items = new NavItem[]
         {
-            new("Nav_Dashboard", dashboard, loc),
-            new("Nav_Hardware", hardware, loc),
-            new("Nav_Fans", fans, loc),
-            new("Nav_Lighting", new PlaceholderViewModel("Nav_Lighting", "Lighting_Description", loc), loc),
-            new("Nav_Settings", settings, loc),
+            new("Nav_Dashboard", NavIcon.Dashboard, dashboard, loc),
+            new("Nav_Hardware", NavIcon.Hardware, hardware, loc),
+            new("Nav_Fans", NavIcon.Fans, fans, loc),
+            new("Nav_Lighting", NavIcon.Lighting, new PlaceholderViewModel("Nav_Lighting", "Lighting_Description", loc), loc),
+            new("Nav_Settings", NavIcon.Settings, settings, loc),
         };
         _selected = Items[0];
     }

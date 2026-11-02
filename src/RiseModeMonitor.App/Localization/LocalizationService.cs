@@ -20,12 +20,12 @@ public sealed class LocalizationService : INotifyPropertyChanged
     /// </summary>
     public static IReadOnlyList<LanguageOption> Languages { get; } = new LanguageOption[]
     {
-        new("en", "English (US)"),
-        new("pt", "Português (BR)"),
-        new("es", "Español (ES)"),
-        new("it", "Italiano (IT)"),
-        new("fr", "Français (FR)"),
-        new("zh", "简体中文 (CN)"),
+        new("en", "English"),
+        new("pt", "Português"),
+        new("es", "Español"),
+        new("it", "Italiano"),
+        new("fr", "Français"),
+        new("zh", "简体中文"),
     };
 
     private readonly ResourceManager _resources =

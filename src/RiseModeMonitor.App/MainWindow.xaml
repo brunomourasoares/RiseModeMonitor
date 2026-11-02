@@ -4,7 +4,7 @@
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:vm="clr-namespace:RiseModeMonitor.ViewModels"
         xmlns:views="clr-namespace:RiseModeMonitor.Views"
-        Title="Rise Mode Monitor" Height="720" Width="1180" MinHeight="560" MinWidth="900"
+        Title="Rise Mode Monitor" Height="720" Width="1050" MinHeight="560" MinWidth="900"
         Icon="pack://application:,,,/Resources/Images/rise-monitor.ico"
         ExtendsContentIntoTitleBar="True" WindowBackdropType="None" WindowCornerPreference="Round"
         Background="{DynamicResource BgBrush}" Foreground="{DynamicResource TextBrush}"
@@ -41,7 +41,6 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Same card look as the rest of the app: full border, rounded corners, a gap to the window edges. -->
             <Border Style="{StaticResource Card}" Margin="12,4,0,12" Padding="12">
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="8,8,8,24">
@@ -51,14 +50,56 @@
            VerticalAlignment="Center" Foreground="{DynamicResource AccentBrush}"
            FontFamily="./Resources/Fonts/#Cyberiada" />
                     </StackPanel>
-                    <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}"
+                        <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}"
                              ItemContainerStyle="{StaticResource NavItemStyle}"
                              Background="Transparent" BorderThickness="0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Title}" FontSize="14" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Horizontal"
+												VerticalAlignment="Center">
+										<Path Width="18"
+											  Height="18"
+											  Stretch="Uniform"
+											  Margin="0,0,12,0"
+											  VerticalAlignment="Center"
+											  Fill="{Binding Foreground,
+													 RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
+											<Path.Style>
+												<Style TargetType="Path">
+													<Setter Property="Data"
+															Value="{StaticResource Icon.Dashboard}" />
+													<Style.Triggers>
+														<DataTrigger Binding="{Binding Icon}"
+																	 Value="{x:Static vm:NavIcon.Hardware}">
+															<Setter Property="Data"
+																	Value="{StaticResource Icon.Hardware}" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding Icon}"
+																	 Value="{x:Static vm:NavIcon.Fans}">
+															<Setter Property="Data"
+																	Value="{StaticResource Icon.Fans}" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding Icon}"
+																	 Value="{x:Static vm:NavIcon.Lighting}">
+															<Setter Property="Data"
+																	Value="{StaticResource Icon.Lighting}" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding Icon}"
+																	 Value="{x:Static vm:NavIcon.Settings}">
+															<Setter Property="Data"
+																	Value="{StaticResource Icon.Settings}" />
+														</DataTrigger>
+													</Style.Triggers>
+												</Style>
+											</Path.Style>
+										</Path>
+										<TextBlock Text="{Binding Title}"
+												   FontSize="14"
+												   VerticalAlignment="Center" />
+
+									</StackPanel>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
                     </ListBox>
                 </DockPanel>
             </Border>

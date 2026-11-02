@@ -21,7 +21,6 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        // Only one instance: two copies would fight over the sensor driver and the tray.
         _singleInstance = new Mutex(true, @"Local\RiseModeMonitor.SingleInstance", out var createdNew);
         if (!createdNew)
         {
@@ -31,7 +30,6 @@ public partial class App : Application
             return;
         }
 
-        // The window can be hidden in the tray, so the app only ends on an explicit Shutdown().
         ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
         var services = new ServiceCollection();
@@ -41,7 +39,6 @@ public partial class App : Application
         services.AddSingleton<ThemeService>();
         services.AddSingleton<TrayService>();
 
-        // One LibreHardwareMonitor instance serves both sensor reading and fan control.
         services.AddSingleton<LibreHardwareSensorService>();
         services.AddSingleton<ISensorService>(sp => sp.GetRequiredService<LibreHardwareSensorService>());
         services.AddSingleton<IFanControlService>(sp => sp.GetRequiredService<LibreHardwareSensorService>());
@@ -63,7 +60,6 @@ public partial class App : Application
         LocalizationService.Instance.SetLanguage(settings.Current.Language);
         _services.GetRequiredService<ThemeService>().Apply(settings.Current.Theme);
 
-        // Create these before the sensors start so they receive the first snapshot.
         _services.GetRequiredService<DisplayCoordinator>();
         _services.GetRequiredService<AlertService>();
         _services.GetRequiredService<ISensorService>().Start(TimeSpan.FromSeconds(1));
@@ -100,7 +96,6 @@ public partial class App : Application
 
     protected override void OnExit(ExitEventArgs e)
     {
-        // Disposing the services also hands every manually controlled fan back to automatic control.
         _services?.Dispose();
         _singleInstance?.Dispose();
         base.OnExit(e);

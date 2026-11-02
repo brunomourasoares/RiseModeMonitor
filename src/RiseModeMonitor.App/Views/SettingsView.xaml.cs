@@ -7,7 +7,6 @@ namespace RiseModeMonitor.Views;
 
 public partial class SettingsView : UserControl
 {
-    // Construtor usado quando a injeção de dependências instancia a view
     public SettingsView(SettingsViewModel viewModel)
     {
         InitializeComponent();
@@ -15,7 +14,6 @@ public partial class SettingsView : UserControl
         RegisterEvent(viewModel);
     }
 
-    // Construtor vazio essencial para o WPF não fechar a aplicação ao carregar a rota
     public SettingsView()
     {
         InitializeComponent();
@@ -44,7 +42,6 @@ public partial class SettingsView : UserControl
 
     private void OnErrorReceived(string message)
     {
-        // The title follows the current language (reuses the "Settings" menu text; no hardcoded string).
         MessageBox.Show(message, LocalizationService.Instance["Nav_Settings"], MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 }
