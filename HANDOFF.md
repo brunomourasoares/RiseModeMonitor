@@ -37,6 +37,7 @@ dotnet build RiseModeMonitor.sln -c Release   # o app exige administrador para r
 - **Armazenamento:** um card por disco físico, com o modelo e uma linha por volume (`C: 209,5 GB / 232,3 GB - 22,8 GB livres`). Drives que o WMI não liga a um disco aparecem em card próprio.
 - **Alerta por ventoinha:** cada canal tem um switch (`AppSettings.FanAlerts`). Sem escolha do usuário, o padrão é ligado para canal que já girou (histórico em `FansSeenSpinning`) e desligado para canal que nunca girou (cabeçalho vazio). Um switch geral (`HideDisabledFans`, padrão ligado) oculta os cards com o alerta desligado; o card sempre aparece em modo manual. O alerta cobre também a ventoinha que já nasce parada no boot, depois de 10 leituras seguidas de 0 RPM (3 se ela já girou na sessão). O botão *Esquecer* foi removido: desligar o switch faz o mesmo e é reversível.
 - **Alarme sonoro:** a opção é o *intervalo entre os toques* (3–120 s, padrão 10 s). O alarme não para por tempo: só quando tudo volta ao normal.
+- **Fonte das traduções:** o português é a língua de origem. Ao mudar um texto, mude primeiro o `Strings.pt.resx` e derive as outras 5 línguas dele (mesmas chaves, mesmo sentido, mesmos termos, por exemplo *water cooler*). Cuidado para não aplicar a tradução na chave errada: o título de um card (`Settings_Display`) não é o texto do seu switch (`Settings_DisplayEnabled`).
 - **Idiomas e siglas:** English (US), Português (BR), Español (ES), Italiano (IT), Français (FR), 简体中文 (CN).
 - **Fora de escopo (decisão do dono do projeto):** licença e atribuição dos ícones e da fonte Cyberiada.
 - **Log:** por enquanto só `Debug.WriteLine` nos `catch` que antes eram silenciosos. Um log em arquivo para o usuário final não foi decidido (o `HidDisplayService` já tem o seu).
@@ -54,7 +55,6 @@ _Nada no momento._
 - [ ] **Testar o app no Windows** (o CI só compila): menu lateral, Configurações (switches, intervalo do alarme), switches de alerta por ventoinha e o geral de ocultar, aviso de ventoinha parada, barra manual, cards de armazenamento.
 - [ ] Conferir o CI dos pushes diretos no `main` (`c00d753` e `bcb5ae0`, traduções it/fr/zh).
 - [ ] Testar o alerta de ventoinha que já nasce parada no boot (puxar o cabo de uma ventoinha com o PC desligado e ligar de novo).
-- [ ] O som `alert-13.mp3` existe, mas a tela só oferece os sons 1 a 12 (`AlertSettingsViewModel.SoundOptions` e o limite 12 em `AlertService`).
 - [ ] Iluminação RGB/ARGB e curvas de ventoinha (listadas no README como pendentes).
 - [ ] Log de erros em arquivo, se for desejado.
 - [ ] Apagar os branches antigos já mesclados (`feat/*`, `fix/ui-fans-followups`, `docs/readme-update`).

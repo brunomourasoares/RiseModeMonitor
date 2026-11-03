@@ -49,9 +49,9 @@
   <data name="Settings_AutostartError" xml:space="preserve"><value>No se pudo actualizar la tarea de inicio. Ejecute la aplicación como administrador e inténtelo de nuevo.</value></data>
   <data name="Settings_MoreSoon" xml:space="preserve"><value>Más opciones (pantalla del water cooler) próximamente.</value></data>
 
-  <data name="Settings_Display" xml:space="preserve"><value>Mostrar información en la pantalla</value></data>
-  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Mostrar datos del sistema en la pantalla</value></data>
-  <data name="Settings_DisplayHint" xml:space="preserve"><value>Envía datos al bloque del sistema de refrigeración líquida. (Solo para los modelos RM-WAI-0X-ARGB y RM-WAIB-0X-ARGB).</value></data>
+  <data name="Settings_Display" xml:space="preserve"><value>Pantalla del water cooler</value></data>
+  <data name="Settings_DisplayEnabled" xml:space="preserve"><value>Mostrar información en la pantalla</value></data>
+  <data name="Settings_DisplayHint" xml:space="preserve"><value>Envía datos al bloque del water cooler. (Solo para los modelos RM-WAI-0X-ARGB y RM-WAIB-0X-ARGB).</value></data>
 
   <data name="Settings_Alerts" xml:space="preserve"><value>Alertas</value></data>
   <data name="Alerts_Hint" xml:space="preserve"><value>Se activa al alcanzar el límite de temperatura y se restablece tras un descenso de 5 °C.&#10;El aviso sonoro se repetirá hasta que la temperatura vuelva a la normalidad.</value></data>
